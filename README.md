@@ -22,7 +22,7 @@
 - 日々の体重などの記録をグラフなどで管理できるようにする。
 
 ## 設計書
-
+https://docs.google.com/spreadsheets/d/12th6Ni3bHOwQ_j_E7f5BX2FRmzWb2iyEAmcO06ozQc0/edit#gid=1037227544
 
 ## チャレンジ要素一覧
 https://docs.google.com/spreadsheets/d/11LIolmiFtRGLq7ztpPtjBHQx8L5_c0DKgPxQUITLyao/edit#gid=0
