@@ -1,0 +1,59 @@
+.container
+  .row
+    .col-md-3
+      .sidebar
+        = render "layouts/sidebar"
+    .col-md-9
+      = render "graph"
+      %table.table.table-borderless
+        %tr
+          %td.profile_image.text-center{rowspan: "2"}
+            = attachment_image_tag(@customer, :profile_image, size: "70x70", fallback: "no_image.png")
+            %br
+            Lv24
+          %td.w-25
+            %h3
+              = @customer.name
+          %td.w-25
+            10フォロー中
+            %br
+            10フォロワー
+          %td.w-25
+            フォロー
+          %td.w-25
+            %i.fas.fa-ellipsis-h.icon
+            %i.far.fa-bell.icon
+        - if @customer.introduce.present?
+          %tr
+            %td{colspan: "4"}
+              = @customer.introduce
+      %table.table.table-bordered
+        %tr.bg-secondary.text-light.text-center
+          %th.w-25
+            性別
+          %th.w-25
+            身長
+          %th.w-25
+            目標体重
+          %th.w-25
+            目標体脂肪率
+        %tr.text-center
+          %td
+            = @customer.gender
+          %td
+            = @customer.height
+            cm
+          %td
+            = @customer.target_weight
+            kg
+          %td
+            = @customer.target_body_fat_percentage
+            ％
+        %tr.bg-secondary.text-light.text-center
+          %th{colspan: "4"}
+            ダイエットスタイル
+        %tr.text-center
+          %td{colspan: "4"}
+            - @customer.selected_diet_styles.each do |selected_diet_style|
+              = selected_diet_style.name
+              %br

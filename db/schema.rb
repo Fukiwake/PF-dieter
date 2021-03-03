@@ -10,7 +10,14 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_03_02_110624) do
+ActiveRecord::Schema.define(version: 2021_03_03_072914) do
+
+  create_table "customer_diet_styles", force: :cascade do |t|
+    t.integer "customer_id"
+    t.integer "diet_style_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
 
   create_table "customers", force: :cascade do |t|
     t.string "email", default: "", null: false
@@ -45,6 +52,28 @@ ActiveRecord::Schema.define(version: 2021_03_02_110624) do
     t.index ["reset_password_token"], name: "index_customers_on_reset_password_token", unique: true
     t.index ["target_body_fat_percentage"], name: "index_customers_on_target_body_fat_percentage"
     t.index ["target_weight"], name: "index_customers_on_target_weight"
+  end
+
+  create_table "diaries", force: :cascade do |t|
+    t.integer "customer_id", null: false
+    t.string "title"
+    t.text "body"
+    t.float "weight", null: false
+    t.float "body_fat_percentage"
+    t.date "post_date", null: false
+    t.string "image_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["body"], name: "index_diaries_on_body"
+    t.index ["body_fat_percentage"], name: "index_diaries_on_body_fat_percentage"
+    t.index ["title"], name: "index_diaries_on_title"
+    t.index ["weight"], name: "index_diaries_on_weight"
+  end
+
+  create_table "diet_styles", force: :cascade do |t|
+    t.string "name", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
 end
