@@ -3,14 +3,10 @@
     .col-md-3
       = render "layouts/sidebar"
     .col-md-9
-      %h1.mb-4 新規会員登録
-      %p
-        既に登録済みの方は
-        = link_to "こちら", new_session_path(resource_name)
-        からログインしてください。
-      = render "devise/shared/error_messages", resource: resource
-      .new-registration-form
-        = form_with model: resource, url: customer_registration_path, local: true do |f|
+      %h1.mb-4 会員情報編集
+      .customer-setting-form
+        = form_with model: @customer, url: customer_registration_path, local: true do |f|
+          = render "devise/shared/error_messages", resource: @customer
           %table.table.table-borderless
             %tr
               %th.w-25 ユーザー名
@@ -18,12 +14,6 @@
             %tr
               %th メールアドレス
               %td= f.text_field :email, placeholder: "dieter@sample.com"
-            %tr
-              %th パスワード
-              %td= f.password_field :password, placeholder: "パスワード(6文字以上)"
-            %tr
-              %th パスワード
-              %td= f.password_field :password_confirmation, placeholder: "パスワード(確認用)"
             %tr
               %th 性別
               %td
@@ -58,5 +48,5 @@
                 ％
             %tr
               %th
-              %td= f.submit "新規登録", class: "btn btn-success px-5"
+              %td= f.submit "編集内容を保存", class: "btn btn-success px-5"
 

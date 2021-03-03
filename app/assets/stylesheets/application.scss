@@ -29,3 +29,22 @@ h2 {
   border-bottom: thin solid #6c757d;
   padding: 5px;
 }
+
+.profile_image {
+  border-radius: 50%;
+  width: 70px;
+}
+
+.table_link:hover{
+  cursor:  pointer;
+  background-color: lightgray;
+}
+
+.sidebar {
+  position: sticky;
+  top: 110px;
+}
+
+.icon {
+  font-size: 30px;
+}

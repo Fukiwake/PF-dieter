@@ -1,0 +1,26 @@
+- customers.each do |customer|
+  = link_to customer_path(customer.id), class: "text-decoration-none", data: {"turbolinks" => false} do
+    .table_link.border-bottom
+      %table.table.table-borderless
+        %tr
+          %td.profile_image{rowspan: "2"}
+            = attachment_image_tag(customer, :profile_image, size: "70x70", fallback: "no_image.png")
+          %td.font-weight-bold.w-25
+            = customer.name
+          %td.small.text-secondary
+            now：
+            = customer.height
+            cm
+            %br
+            goal：
+            = customer.target_weight
+            kg
+            =customer.target_body_fat_percentage
+            ％
+          %td
+            フォロー
+        - if customer.introduce.present?
+          %tr{colspan: "3"}
+            %td= customer.introduce
+.d-flex.justify-content-center.mt-4
+  = paginate customers

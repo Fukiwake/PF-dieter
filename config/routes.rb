@@ -1,7 +1,10 @@
 Rails.application.routes.draw do
-  devise_for :customers
-  get 'homes/top'
-  get 'homes/about'
-  # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
+
+  devise_for :customers, controllers: {
+    registrations: 'customers/registrations'
+  }
   root "homes#top"
+  get 'homes/about'
+  get 'settings/setting'
+  resources :customers, only: [:show, :update, :index]
 end
