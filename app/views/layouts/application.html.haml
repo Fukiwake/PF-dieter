@@ -1,0 +1,37 @@
+!!!
+%html
+  %head
+    %title Dieter
+    = csrf_meta_tags
+    = csp_meta_tag
+    %meta{name: "viewport", content: "width=device-width, initial-scale=1, maximum-scale=1"}
+    = stylesheet_link_tag    "application", media: "all", "data-turbolinks-track": "reload"
+    = javascript_include_tag 'application', 'data-turbolinks-track': 'reload'
+    %link{href: "https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css", rel: "stylesheet"}
+  %body
+    %header.border-bottom
+      %nav.navbar.navbar-expand-lg.navbar-light.bg-light
+        %a.navbar-brand{href: "/"}
+          %span Dieter
+        // - if admin_signed_in? && request.fullpath.include?("admin")
+        //   = render "layouts/admin_signed_in_nav"
+        // - if admin_signed_in? == false && request.fullpath.include?("admin")
+        //   = render "layouts/before_signed_in_nav"
+        - if customer_signed_in? && request.fullpath.exclude?("admin")
+          = render "layouts/signed_in_nav"
+        // - if customer_signed_in? == false && request.fullpath.exclude?("admin")
+        //   = render "layouts/before_signed_in_nav"
+
+    %main
+      - flash.each do |key, value|
+        - if key == 'notice'
+          %p.alert.alert-success
+            = value
+            %button.close{"type" => "button", "data-dismiss" => "alert"} &times;
+        - else
+          %p.alert.alert-danger
+            = value
+            %button.close{"type" => "button", "data-dismiss" => "alert"} &times;
+      .mt-5
+        = yield
+    %footer.border-top.mt-5
