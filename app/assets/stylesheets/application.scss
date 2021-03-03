@@ -13,3 +13,19 @@
  *= require_tree .
  *= require_self
  */
+@import "bootstrap";
+@import 'font-awesome-sprockets';
+@import 'font-awesome';
+
+h1 {
+  background-color: #6c757d;
+  color: white;
+  padding: 10px;
+  font-size: 2rem;
+}
+
+h2 {
+  border-left: thick solid #6c757d;
+  border-bottom: thin solid #6c757d;
+  padding: 5px;
+}
