@@ -1,0 +1,52 @@
+.container
+  .row
+    .col-md-3
+      = render "layouts/sidebar"
+    .col-md-9
+      %h1.mb-4 会員情報編集
+      .customer-setting-form
+        = form_with model: @customer, url: customer_registration_path, local: true do |f|
+          = render "devise/shared/error_messages", resource: @customer
+          %table.table.table-borderless
+            %tr
+              %th.w-25 ユーザー名
+              %td.w-25= f.text_field :name, placeholder: "10文字以内"
+            %tr
+              %th メールアドレス
+              %td= f.text_field :email, placeholder: "dieter@sample.com"
+            %tr
+              %th 性別
+              %td
+                = f.radio_button :gender, 1
+                男性
+                = f.radio_button :gender, 2
+                女性
+            %tr
+              %th 生年月日
+              %td
+                = f.text_field :birthyear, placeholder: "2000"
+              %td
+                年
+                = f.date_select :birthdate, {discard_year: true, use_month_numbers: true}
+            %tr
+              %th 身長
+              %td
+                = f.text_field :height, placeholder: "170.9"
+              %td
+                cm
+            %tr
+              %th 目標体重
+              %td
+                = f.text_field :target_weight, placeholder: "67.6"
+              %td
+                kg
+            %tr
+              %th 目標体脂肪率
+              %td
+                = f.text_field :target_body_fat_percentage, placeholder: "15.3"
+              %td
+                ％
+            %tr
+              %th
+              %td= f.submit "編集内容を保存", class: "btn btn-success px-5"
+
