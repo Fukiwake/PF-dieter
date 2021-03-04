@@ -29,8 +29,13 @@
         - if diary.image_id.present?
           %tr
             %td{colspan: "3"}= attachment_image_tag(diary, :image, size: "600x340", fallback: "no_image.png")
-        %tr{colspan: "3"}
-          %td
+        %tr
+          %td{colspan: "3"}
             いいね　コメント
+            - if diary.customer = current_customer
+              = link_to "編集", edit_diary_path(diary)
+              |
+              = link_to "削除", diary_path(diary), method: :delete, data: { confirm: "日記を削除してもよろしいですか？" }
+
 .d-flex.justify-content-center.mt-4
   = paginate diaries
