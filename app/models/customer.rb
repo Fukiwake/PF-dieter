@@ -7,8 +7,6 @@ class Customer < ApplicationRecord
   attachment :profile_image
 
   has_many :diaries, dependent: :destroy
-  has_many :customer_diet_styles, dependent: :destroy
-  has_many :selected_diet_styles, through: :customer_diet_styles, source: :diet_style
 
   validates :name, length: { maximum: 10, minimum: 2 }
   validates :gender, presence: true

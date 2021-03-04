@@ -14,7 +14,7 @@
   = link_to "日記を投稿", new_diary_path, class: "btn btn-outline-primary w-100 mt-4"
   %h2.mt-4 クイック投稿
   = form_with model: @diary, local: true do |f|
-    .field
+    .field.mt-4
       = f.label :post_date, "投稿日"
       %br/
       = f.date_select :post_date

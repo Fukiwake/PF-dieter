@@ -49,12 +49,21 @@
           %td
             = @customer.target_body_fat_percentage
             ％
-        - if @customer.selected_diet_styles.present?
+        - if @customer.diet_style1 || @customer.diet_style2 || @customer.diet_style3 || @customer.diet_style4
           %tr.bg-secondary.text-light.text-center
             %th{colspan: "4"}
               ダイエットスタイル
           %tr.text-center
             %td{colspan: "4"}
-              - @customer.selected_diet_styles.each do |selected_diet_style|
-                = selected_diet_style.name
+              - if @customer.diet_style1
+                運動メイン
                 %br
+              - if @customer.diet_style2
+                食事制限メイン
+                %br
+              - if @customer.diet_style3
+                長期継続
+                %br
+              - if @customer.diet_style1
+                短期集中
+                
