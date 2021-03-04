@@ -1,0 +1,8 @@
+.container
+  .row
+    .col-md-3
+      .sidebar
+        = render "layouts/sidebar"
+    .col-md-9
+      %h1 日記一覧
+      = render "index", diaries: @diaries

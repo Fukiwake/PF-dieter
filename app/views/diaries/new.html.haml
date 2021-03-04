@@ -1,0 +1,37 @@
+.container
+  .row
+    .col-md-3
+      = render "layouts/sidebar"
+    .col-md-9
+      %h1.mb-4 日記の投稿
+      = render "layouts/errors", obj: @diary
+      .new-diary-form
+        = form_with model: @diary, local: true do |f|
+          .field
+            = f.label :post_date, "投稿日"
+            %br/
+            = f.date_select :post_date
+          .field
+            = f.label :weight, "体重"
+            %br/
+            = f.text_field :weight, autofocus: true
+            kg
+          .field
+            = f.label :body_fat_percentage, "体脂肪率"
+            %br/
+            = f.text_field :body_fat_percentage
+            \%
+          .field
+            = f.label :title, "タイトル"
+            %br/
+            = f.text_field :title
+          .field
+            = f.label :body, "本文"
+            %br/
+            = f.text_area :body, size: "100x5"
+          .field
+            = f.label :image, "画像"
+            %br/
+            = f.attachment_field :image
+          .actions
+            = f.submit "投稿", class: "btn btn-success"

@@ -7,7 +7,7 @@
       = render "graph"
       %table.table.table-borderless
         %tr
-          %td.profile_image.text-center{rowspan: "2"}
+          %td.text-center{rowspan: "2"}
             = attachment_image_tag(@customer, :profile_image, size: "70x70", fallback: "no_image.png")
             %br
             Lv24
@@ -49,11 +49,12 @@
           %td
             = @customer.target_body_fat_percentage
             ％
-        %tr.bg-secondary.text-light.text-center
-          %th{colspan: "4"}
-            ダイエットスタイル
-        %tr.text-center
-          %td{colspan: "4"}
-            - @customer.selected_diet_styles.each do |selected_diet_style|
-              = selected_diet_style.name
-              %br
+        - if @customer.selected_diet_styles.present?
+          %tr.bg-secondary.text-light.text-center
+            %th{colspan: "4"}
+              ダイエットスタイル
+          %tr.text-center
+            %td{colspan: "4"}
+              - @customer.selected_diet_styles.each do |selected_diet_style|
+                = selected_diet_style.name
+                %br

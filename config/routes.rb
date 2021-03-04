@@ -5,6 +5,7 @@ Rails.application.routes.draw do
   }
   root "homes#top"
   get 'homes/about'
-  get 'settings/setting'
+  get 'setting' => "settings#setting", as: "setting"
   resources :customers, only: [:show, :update, :index]
+  resources :diaries
 end
