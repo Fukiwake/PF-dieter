@@ -1,8 +1,30 @@
-%h2 初めての方へ
-= link_to "新規登録", new_customer_registration_path, class: "btn btn-outline-primary w-100 mt-4"
-= link_to "ログイン", new_customer_session_path, class: "btn btn-outline-primary w-100 mt-4"
-%ul.mt-4
-  %li
-    = link_to "このサイトについて", homes_about_path, class: "text-dark"
-  %li
-    お問い合わせ
+-if customer_signed_in?
+  %h2 投稿
+  = link_to "日記を投稿", new_diary_path, class: "btn btn-outline-primary w-100 mt-4"
+  %h2.mt-4 クイック投稿
+  = form_with model: @diary, local: true do |f|
+    .field
+      = f.label :post_date, "投稿日"
+      %br/
+      = f.date_select :post_date
+    .field
+      = f.label :weight, "体重"
+      %br/
+      = f.text_field :weight, autofocus: true
+      kg
+    .field
+      = f.label :body_fat_percentage, "体脂肪率"
+      %br/
+      = f.text_field :body_fat_percentage
+      ％
+    .actions
+      = f.submit "投稿", class: "btn btn-success"
+- else
+  %h2 初めての方へ
+  = link_to "新規登録", new_customer_registration_path, class: "btn btn-outline-primary w-100 mt-4"
+  = link_to "ログイン", new_customer_session_path, class: "btn btn-outline-primary w-100 mt-4"
+  %ul.mt-4
+    %li
+      = link_to "このサイトについて", homes_about_path, class: "text-dark"
+    %li
+      お問い合わせ

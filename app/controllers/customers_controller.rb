@@ -16,6 +16,4 @@ class CustomersController < ApplicationController
     @diary = Diary.new
   end
 
-  def edit
-  end
 end

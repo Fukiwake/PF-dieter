@@ -5,8 +5,9 @@
         %tr
           %td.profile_image{rowspan: "2"}
             = attachment_image_tag(customer, :profile_image, size: "70x70", fallback: "no_image.png")
-          %td.font-weight-bold.w-25
-            = customer.name
+          %td.w-25
+            %h3
+              = customer.name
           %td.small.text-secondary
             now：
             = customer.height

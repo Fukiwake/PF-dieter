@@ -35,6 +35,11 @@ h2 {
   width: 70px;
 }
 
+.profile_image_large {
+  border-radius: 50%;
+  width: 120px;
+}
+
 .table_link:hover{
   cursor:  pointer;
   background-color: lightgray;
@@ -47,4 +52,21 @@ h2 {
 
 .icon {
   font-size: 30px;
+}
+
+.fa-camera {
+  position: absolute;
+  top: 60px;
+  left: 60px;
+  &:hover {
+    cursor: pointer;
+  }
+}
+
+#file {
+  display: none;
+}
+
+.field {
+  margin-bottom: 20px;
 }
