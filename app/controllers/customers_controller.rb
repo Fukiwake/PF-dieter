@@ -15,5 +15,13 @@ class CustomersController < ApplicationController
     @dates = @diaries.pluck(:post_date)
     @diary = Diary.new
   end
+  
+  def withdraw
+    current_customer.is_deleted = true
+    current_customer.save
+    reset_session
+    flash[:notice] = "ありがとうございました。またのご利用を心よりお待ちしております。"
+    redirect_to root_path
+  end
 
 end
