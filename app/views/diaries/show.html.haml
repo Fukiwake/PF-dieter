@@ -36,3 +36,7 @@
         %tr
           %td{colspan: "3"}
             いいね　コメント
+            - if @diary.customer = current_customer
+              = link_to "編集", edit_diary_path(@diary.id)
+              |
+              = link_to "削除", diary_path(@diary.id), method: :delete, data: { confirm: "日記を削除してもよろしいですか？" }
