@@ -35,9 +35,10 @@
               %th 生年月日
               %td
                 = f.text_field :birthyear, placeholder: "2000"
-              %td
                 年
-                = f.date_select :birthdate, {discard_year: true, use_month_numbers: true}
+              %td
+                = f.date_select :birthdate, {discard_year: true, use_month_numbers: true, date_separator: "月"}
+                日
             %tr
               %th 身長
               %td

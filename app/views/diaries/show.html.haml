@@ -1,0 +1,38 @@
+.container
+  .row
+    .col-md-3
+      .sidebar
+        = render "layouts/sidebar"
+    .col-md-9
+      %table.table.table-borderless
+        %tr
+          %td.profile_image.text-center{rowspan: "4"}
+            = link_to customer_path(@diary.customer), class: "text-dark" do
+              = attachment_image_tag(@diary.customer, :profile_image, size: "70x70", fallback: "no_image.png")
+              %br
+              = @diary.customer.name
+          %td.w-25
+            %h3
+              = @diary.title
+          %td.small.text-secondary
+            now：
+            = @diary.weight
+            cm
+            = @diary.body_fat_percentage
+            %br
+            goal：
+            = @diary.customer.target_weight
+            kg
+            =@diary.customer.target_body_fat_percentage
+            ％
+          %td
+            = @diary.created_at.strftime("%m月%d日 %H:%M")
+        - if @diary.body.present?
+          %tr
+            %td{colspan: "3"}= @diary.body
+        - if @diary.image_id.present?
+          %tr
+            %td{colspan: "3"}= attachment_image_tag(@diary, :image, size: "700x400", fallback: "no_image.png")
+        %tr
+          %td{colspan: "3"}
+            いいね　コメント
