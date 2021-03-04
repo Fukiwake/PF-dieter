@@ -1,4 +1,15 @@
--if customer_signed_in?
+-if request.fullpath.include?("setting")
+  %h2 設定
+  %ul#tab-menu
+    %li.mt-4.active
+      = link_to "プロフィール", "#profile", class: "text-dark"
+    %li.mt-4
+      = link_to "会員ブロック", "#block", class: "text-dark"
+    %li.mt-4
+      = link_to "通知", "#notification", class: "text-dark"
+    %li.mt-4
+      = link_to "退会", "#withdraw", class: "text-dark"
+-elsif customer_signed_in?
   %h2 投稿
   = link_to "日記を投稿", new_diary_path, class: "btn btn-outline-primary w-100 mt-4"
   %h2.mt-4 クイック投稿
