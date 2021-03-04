@@ -10,14 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_03_03_072914) do
-
-  create_table "customer_diet_styles", force: :cascade do |t|
-    t.integer "customer_id"
-    t.integer "diet_style_id"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-  end
+ActiveRecord::Schema.define(version: 2021_03_04_082711) do
 
   create_table "customers", force: :cascade do |t|
     t.string "email", default: "", null: false
@@ -45,6 +38,10 @@ ActiveRecord::Schema.define(version: 2021_03_03_072914) do
     t.boolean "favorite_notification", default: true
     t.boolean "chat_notification", default: true
     t.boolean "follow_notification", default: true
+    t.boolean "diet_style1", default: false
+    t.boolean "diet_style2", default: false
+    t.boolean "diet_style3", default: false
+    t.boolean "diet_style4", default: false
     t.index ["birthyear"], name: "index_customers_on_birthyear"
     t.index ["email"], name: "index_customers_on_email", unique: true
     t.index ["introduce"], name: "index_customers_on_introduce"
@@ -68,12 +65,6 @@ ActiveRecord::Schema.define(version: 2021_03_03_072914) do
     t.index ["body_fat_percentage"], name: "index_diaries_on_body_fat_percentage"
     t.index ["title"], name: "index_diaries_on_title"
     t.index ["weight"], name: "index_diaries_on_weight"
-  end
-
-  create_table "diet_styles", force: :cascade do |t|
-    t.string "name", null: false
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
   end
 
 end
