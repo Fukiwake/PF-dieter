@@ -9,6 +9,9 @@ Rails.application.routes.draw do
   get 'setting' => "settings#setting", as: "setting"
   patch "customers/withdraw" => "customers#withdraw"
   resources :customers, only: [:show, :update, :index]
-  resources :diaries
+  resources :diaries do
+    resource :diary_favorites, only: [:create, :destroy]
+    resources :diary_comments, only: [:create, :destroy]
+  end
   resources :diet_methods
 end
