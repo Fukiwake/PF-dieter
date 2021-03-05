@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_03_05_062501) do
+ActiveRecord::Schema.define(version: 2021_03_05_073104) do
 
   create_table "check_list_diaries", force: :cascade do |t|
     t.integer "diary_id", null: false
@@ -93,6 +93,21 @@ ActiveRecord::Schema.define(version: 2021_03_05_062501) do
   create_table "diary_favorites", force: :cascade do |t|
     t.integer "customer_id", null: false
     t.integer "diary_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "diet_method_comments", force: :cascade do |t|
+    t.integer "customer_id", null: false
+    t.integer "diet_method_id", null: false
+    t.text "body", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "diet_method_favorites", force: :cascade do |t|
+    t.integer "customer_id", null: false
+    t.integer "diet_method_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end

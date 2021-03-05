@@ -13,5 +13,8 @@ Rails.application.routes.draw do
     resource :diary_favorites, only: [:create, :destroy]
     resources :diary_comments, only: [:create, :destroy]
   end
-  resources :diet_methods
+  resources :diet_methods do
+    resource :diet_method_favorites, only: [:create, :destroy]
+    resources :diet_method_comments, only: [:create, :destroy]
+  end
 end
