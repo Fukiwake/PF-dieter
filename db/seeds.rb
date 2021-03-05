@@ -36,27 +36,11 @@ end
   )
 end
 
-DietStyle.create!(
-  name: "筋トレメイン"
-)
-
-DietStyle.create!(
-  name: "食事制限メイン"
-)
-
-DietStyle.create!(
-  name: "長期継続"
-)
-
-DietStyle.create!(
-  name: "短期集中"
-)
-
-CustomerDietStyle.create!(
-  customer_id: "50",
-  diet_style_id: "1"
-)
-CustomerDietStyle.create!(
-  customer_id: "50",
-  diet_style_id: "4"
-)
+50.times do |n|
+  DietMethod.create!(
+    title: "test",
+    way: "test",
+    attention: "test",
+    customer_id: "50"
+  )
+end
