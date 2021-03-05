@@ -28,7 +28,7 @@
                 %td{colspan: "2"}
                   いいね　コメント
                   - if diet_method.customer = current_customer
-                    = link_to "編集", edit_diet_method_path(diet_method)
+                    = link_to "編集", edit_diet_method_path(diet_method), data: {"turbolinks" => false}
                     |
                     = link_to "削除", diet_method_path(diet_method), method: :delete, data: { confirm: "日記を削除してもよろしいですか？" }
       
