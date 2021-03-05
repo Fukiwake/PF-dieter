@@ -1,0 +1,11 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  diary_id: 1
+  check_list_id: 1
+  status: false
+
+two:
+  diary_id: 1
+  check_list_id: 1
+  status: false

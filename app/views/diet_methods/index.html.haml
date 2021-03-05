@@ -1,0 +1,36 @@
+.container
+  .row
+    .col-md-3
+      .sidebar
+        = render "layouts/sidebar"
+    .col-md-9
+      %h1 ダイエット方法一覧
+      - @diet_methods.each do |diet_method|
+        = link_to diet_method_path(diet_method.id), class: "text-decoration-none" do
+          .table_link.border-bottom
+            %table.table.table-borderless
+              %tr
+                %td.profile_image.text-center{rowspan: "4"}
+                  = attachment_image_tag(diet_method.customer, :profile_image, size: "70x70", fallback: "no_image.png")
+                  %br
+                  = diet_method.customer.name
+                %td.w-25
+                  %h3
+                    = diet_method.title
+                %td
+                  実践する
+              %tr
+                %td{colspan: "2"}= diet_method.way.truncate(200)
+              - if diet_method.image_id.present?
+                %tr
+                  %td{colspan: "2"}= attachment_image_tag(diet_method, :image, size: "600x340", fallback: "no_image.png")
+              %tr
+                %td{colspan: "2"}
+                  いいね　コメント
+                  - if diet_method.customer = current_customer
+                    = link_to "編集", edit_diet_method_path(diet_method), data: {"turbolinks" => false}
+                    |
+                    = link_to "削除", diet_method_path(diet_method), method: :delete, data: { confirm: "日記を削除してもよろしいですか？" }
+      
+      .d-flex.justify-content-center.mt-4
+        = paginate @diet_methods

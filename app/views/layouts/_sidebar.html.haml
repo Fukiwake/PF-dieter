@@ -12,6 +12,7 @@
 -elsif customer_signed_in?
   %h2 投稿
   = link_to "日記を投稿", new_diary_path, class: "btn btn-outline-primary w-100 mt-4"
+  = link_to "ダイエット方法を投稿", new_diet_method_path, class: "btn btn-outline-primary w-100 mt-4", data: {"turbolinks" => false}
   %h2.mt-4 クイック投稿
   = form_with model: @diary, local: true do |f|
     .field.mt-4
@@ -21,7 +22,7 @@
     .field
       = f.label :weight, "体重"
       %br/
-      = f.text_field :weight, autofocus: true
+      = f.text_field :weight
       kg
     .field
       = f.label :body_fat_percentage, "体脂肪率"

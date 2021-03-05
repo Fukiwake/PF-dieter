@@ -10,7 +10,22 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_03_04_082711) do
+ActiveRecord::Schema.define(version: 2021_03_05_000541) do
+
+  create_table "check_list_diaries", force: :cascade do |t|
+    t.integer "diary_id", null: false
+    t.integer "check_list_id", null: false
+    t.boolean "status"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "check_lists", force: :cascade do |t|
+    t.integer "diet_method_id", null: false
+    t.string "body", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
 
   create_table "customers", force: :cascade do |t|
     t.string "email", default: "", null: false
@@ -65,6 +80,18 @@ ActiveRecord::Schema.define(version: 2021_03_04_082711) do
     t.index ["body_fat_percentage"], name: "index_diaries_on_body_fat_percentage"
     t.index ["title"], name: "index_diaries_on_title"
     t.index ["weight"], name: "index_diaries_on_weight"
+  end
+
+  create_table "diet_methods", force: :cascade do |t|
+    t.integer "customer_id", null: false
+    t.string "title", null: false
+    t.text "way", null: false
+    t.text "attention"
+    t.string "image_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["title"], name: "index_diet_methods_on_title"
+    t.index ["way"], name: "index_diet_methods_on_way"
   end
 
 end

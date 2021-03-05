@@ -10,4 +10,5 @@ Rails.application.routes.draw do
   patch "customers/withdraw" => "customers#withdraw"
   resources :customers, only: [:show, :update, :index]
   resources :diaries
+  resources :diet_methods
 end
