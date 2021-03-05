@@ -2,10 +2,7 @@ class DietMethodsController < ApplicationController
 
   def new
     @diet_method = DietMethod.new
-    @check_lists = CheckListCollection.new
-    @check_lists.collection.each do |list|
-      list.diet_method_id = @diet_method.id
-    end
+    @check_list = @diet_method.check_lists.new
   end
 
   def create
@@ -49,6 +46,6 @@ class DietMethodsController < ApplicationController
   private
 
   def diet_method_params
-    params.require(:diet_method).permit(:title, :way, :attention, :image, check_list_collections_attributes: [:body, :_destroy, :id])
+    params.require(:diet_method).permit(:title, :way, :attention, :image, check_lists_attributes: [:body, :_destroy, :id])
   end
 end

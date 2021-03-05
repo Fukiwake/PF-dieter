@@ -24,12 +24,19 @@
             = @diet_method.created_at.strftime("%m月%d日 %H:%M")
       %h2 やり方・効果
       = @diet_method.way
+      %h2 注意点
+      = @diet_method.attention
       %br
-      = attachment_image_tag(@diet_method, :image, size: "700x400", fallback: "no_image.png")
+      = attachment_image_tag(@diet_method, :image, size: "700x400")
+      %h2 チェックリスト
+      %ul
+        - @diet_method.check_lists.each do |list|
+          %li
+            = list.body
       %br
       いいね　コメント
       - if @diet_method.customer = current_customer
-        = link_to "編集", edit_diet_method_path(@diet_method.id)
+        = link_to "編集", edit_diet_method_path(@diet_method.id), data: {"turbolinks" => false}
         |
         = link_to "削除", diet_method_path(@diet_method.id), method: :delete, data: { confirm: "ダイエット方法を削除してもよろしいですか？" }
       実践する

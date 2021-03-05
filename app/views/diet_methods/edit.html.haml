@@ -23,5 +23,17 @@
             = f.label :image, "画像"
             %br/
             = f.attachment_field :image
-          .actions
-            = f.submit "投稿", class: "btn btn-success"
+          .check_list_field
+            = f.fields_for :check_lists do |list|
+              .js-file-group{ data: {index: "#{list.index}"} }
+                = list.label :body, "チェックリスト"
+                %br
+                = list.text_field :body
+                %span.delete-form-btn
+                  削除する
+                - if @diet_method.persisted?
+                  = list.check_box :_destroy, data:{ index: list.index }, class: "hidden-destroy"
+          .add-form-btn
+            追加する
+          .actions.mt-4
+            = f.submit "編集", class: "btn btn-success"
