@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_03_05_032553) do
+ActiveRecord::Schema.define(version: 2021_03_05_062501) do
 
   create_table "check_list_diaries", force: :cascade do |t|
     t.integer "diary_id", null: false
@@ -80,6 +80,21 @@ ActiveRecord::Schema.define(version: 2021_03_05_032553) do
     t.index ["body_fat_percentage"], name: "index_diaries_on_body_fat_percentage"
     t.index ["title"], name: "index_diaries_on_title"
     t.index ["weight"], name: "index_diaries_on_weight"
+  end
+
+  create_table "diary_comments", force: :cascade do |t|
+    t.integer "customer_id"
+    t.integer "diary_id", null: false
+    t.text "body", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "diary_favorites", force: :cascade do |t|
+    t.integer "customer_id", null: false
+    t.integer "diary_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   create_table "diet_methods", force: :cascade do |t|
