@@ -35,8 +35,15 @@
             %td{colspan: "3"}= attachment_image_tag(@diary, :image, size: "700x400", fallback: "no_image.png")
         %tr
           %td{colspan: "3"}
-            いいね　コメント
+            %div{:id => "favorites_buttons_#{@diary.id}"}
+              = render "diary_favorites/favorite", diary: @diary
             - if @diary.customer = current_customer
               = link_to "編集", edit_diary_path(@diary.id)
               |
               = link_to "削除", diary_path(@diary.id), method: :delete, data: { confirm: "日記を削除してもよろしいですか？" }
+      #comments
+        = render "diary_comments/index", diary: @diary
+      #new-comments
+        = form_with(model: [@diary, @diary_comment]) do |f|
+          = f.text_area :body, size: "50x3", placeholder: "コメントする"
+          = f.submit "送信"

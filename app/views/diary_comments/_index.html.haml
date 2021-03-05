@@ -1,0 +1,8 @@
+コメント件数：#{diary.diary_comments.count}
+- diary.diary_comments.each do |diary_comment|
+  = attachment_image_tag diary.customer, :profile_image, fallback: "no_image.png", size: "70x70"
+  = diary_comment.customer.name
+  = diary_comment.created_at.strftime('%Y/%m/%d')
+  = diary_comment.body
+  - if diary_comment.customer = current_customer
+    = link_to "削除", diary_diary_comment_path(diary_comment.diary, diary_comment), method: :delete, remote: true
