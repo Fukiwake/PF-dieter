@@ -1,0 +1,2 @@
+module DietMethodFavoritesHelper
+end

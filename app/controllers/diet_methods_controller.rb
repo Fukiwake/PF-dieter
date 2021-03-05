@@ -18,7 +18,7 @@ class DietMethodsController < ApplicationController
 
   def index
     @diet_methods = DietMethod.page(params[:page]).per(20)
-    @tags = DietMethod.tag_counts_on(:tags).most_used(20) 
+    @tags = DietMethod.tag_counts_on(:tags).most_used(20)
     if @tag = params[:tag]   # タグ検索用
       @diet_methods = DietMethod.tagged_with(params[:tag]).page(params[:page]).per(20)   # タグに紐付く投稿
     end
@@ -27,6 +27,7 @@ class DietMethodsController < ApplicationController
   def show
     @diet_method = DietMethod.find(params[:id])
     @tags = @diet_method.tag_counts_on(:tags)
+    @diet_method_comment = DietMethodComment.new
   end
 
   def edit
