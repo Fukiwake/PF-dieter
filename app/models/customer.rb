@@ -8,7 +8,9 @@ class Customer < ApplicationRecord
 
   has_many :diaries, dependent: :destroy
   has_many :diet_methods, dependent: :destroy
-
+  has_many :diary_favorites, dependent: :destroy
+  has_many :diary_comments, dependent: :destroy
+  
   validates :name, length: { maximum: 10, minimum: 2 }
   validates :gender, presence: true
   validates :birthyear, numericality: true, presence: true
