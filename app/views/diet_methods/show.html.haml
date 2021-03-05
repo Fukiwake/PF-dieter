@@ -29,7 +29,7 @@
                 = link_to "#{tag.name}(#{tag.taggings_count})", diet_methods_path(tag: tag.name)
             - else
               %p 登録されているタグはありません
-        
+
       %h2 やり方・効果
       = @diet_method.way
       %h2 注意点
@@ -42,9 +42,16 @@
           %li
             = list.body
       %br
-      いいね　コメント
+      %div{:id => "favorites_buttons_#{@diet_method.id}"}
+        = render "diet_method_favorites/favorite", diet_method: @diet_method
       - if @diet_method.customer = current_customer
         = link_to "編集", edit_diet_method_path(@diet_method.id), data: {"turbolinks" => false}
         |
         = link_to "削除", diet_method_path(@diet_method.id), method: :delete, data: { confirm: "ダイエット方法を削除してもよろしいですか？" }
       実践する
+      #comments
+        = render "diet_method_comments/index", diet_method: @diet_method
+      #new-comments
+        = form_with(model: [@diet_method, @diet_method_comment]) do |f|
+          = f.text_area :body, size: "50x3", placeholder: "コメントする"
+          = f.submit "送信"
