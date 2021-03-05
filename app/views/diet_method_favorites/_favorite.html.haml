@@ -1,0 +1,6 @@
+- if diet_method.favorited_by?(current_customer)
+  = link_to diet_method_diet_method_favorites_path(diet_method.id), method: :delete, remote: true do
+    ♥#{diet_method.diet_method_favorites.count}
+- else
+  = link_to diet_method_diet_method_favorites_path(diet_method.id), method: :post, remote: true do
+    ♡#{diet_method.diet_method_favorites.count}

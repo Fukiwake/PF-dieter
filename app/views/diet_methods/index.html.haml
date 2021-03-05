@@ -34,7 +34,9 @@
                   %td{colspan: "2"}= attachment_image_tag(diet_method, :image, size: "600x340", fallback: "no_image.png")
               %tr
                 %td{colspan: "2"}
-                  いいね　コメント
+                  %div{:id => "favorites_buttons_#{diet_method.id}"}
+                    = render "diet_method_favorites/favorite", diet_method: diet_method
+                  コメント
                   - if diet_method.customer = current_customer
                     = link_to "編集", edit_diet_method_path(diet_method), data: {"turbolinks" => false}
                     |
