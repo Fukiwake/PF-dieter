@@ -1,6 +1,7 @@
 class DietMethod < ApplicationRecord
   
   attachment :image
+  acts_as_taggable
   
   belongs_to :customer
   has_many :check_lists
