@@ -4,7 +4,15 @@
       .sidebar
         = render "layouts/sidebar"
     .col-md-9
-      %h1 ダイエット方法一覧
+      -if @tag.present?
+        %h1 #{@tag}のダイエット方法一覧
+      -else
+        %h1 ダイエット方法一覧
+      - if @tags.present?
+        - @tags.each do |tag|
+          = link_to "#{tag.name}(#{tag.taggings_count})", diet_methods_path(tag: tag.name)
+      - else
+        %p 登録されているタグはありません
       - @diet_methods.each do |diet_method|
         = link_to diet_method_path(diet_method.id), class: "text-decoration-none" do
           .table_link.border-bottom
@@ -31,6 +39,6 @@
                     = link_to "編集", edit_diet_method_path(diet_method), data: {"turbolinks" => false}
                     |
                     = link_to "削除", diet_method_path(diet_method), method: :delete, data: { confirm: "日記を削除してもよろしいですか？" }
-      
+
       .d-flex.justify-content-center.mt-4
         = paginate @diet_methods

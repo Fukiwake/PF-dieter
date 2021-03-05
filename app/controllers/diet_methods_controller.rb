@@ -3,6 +3,7 @@ class DietMethodsController < ApplicationController
   def new
     @diet_method = DietMethod.new
     @check_list = @diet_method.check_lists.new
+    @tags = DietMethod.tag_counts_on(:tags).most_used(20)
   end
 
   def create
@@ -17,10 +18,15 @@ class DietMethodsController < ApplicationController
 
   def index
     @diet_methods = DietMethod.page(params[:page]).per(20)
+    @tags = DietMethod.tag_counts_on(:tags).most_used(20) 
+    if @tag = params[:tag]   # タグ検索用
+      @diet_methods = DietMethod.tagged_with(params[:tag]).page(params[:page]).per(20)   # タグに紐付く投稿
+    end
   end
 
   def show
     @diet_method = DietMethod.find(params[:id])
+    @tags = @diet_method.tag_counts_on(:tags)
   end
 
   def edit
@@ -46,6 +52,6 @@ class DietMethodsController < ApplicationController
   private
 
   def diet_method_params
-    params.require(:diet_method).permit(:title, :way, :attention, :image, check_lists_attributes: [:body, :_destroy, :id])
+    params.require(:diet_method).permit(:title, :way, :attention, :image, :tag_list, check_lists_attributes: [:body, :_destroy, :id])
   end
 end

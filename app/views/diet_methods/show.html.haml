@@ -22,6 +22,14 @@
             ％
           %td
             = @diet_method.created_at.strftime("%m月%d日 %H:%M")
+        %tr
+          %td{colspan: "3"}
+            - if @tags.present?
+              - @tags.each do |tag|
+                = link_to "#{tag.name}(#{tag.taggings_count})", diet_methods_path(tag: tag.name)
+            - else
+              %p 登録されているタグはありません
+        
       %h2 やり方・効果
       = @diet_method.way
       %h2 注意点

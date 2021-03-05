@@ -12,6 +12,10 @@
             %br/
             = f.text_field :title
           .field
+            = f.label :tag_list, "タグ"
+            %br/
+            = f.text_field :tag_list, value: @diet_method.tag_list.join(','), id: "tags"
+          .field
             = f.label :way, "やり方・効果"
             %br/
             = f.text_area :way, size: "100x5"
