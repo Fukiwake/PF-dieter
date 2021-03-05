@@ -1,0 +1,2 @@
+class CheckListDiary < ApplicationRecord
+end

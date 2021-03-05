@@ -1,0 +1,27 @@
+.container
+  .row
+    .col-md-3
+      = render "layouts/sidebar"
+    .col-md-9
+      %h1.mb-4 ダイエット方法の編集
+      = render "layouts/errors", obj: @diet_method
+      .new-diet-method-form
+        = form_with model: @diet_method, local: true do |f|
+          .field
+            = f.label :title, "タイトル"
+            %br/
+            = f.text_field :title
+          .field
+            = f.label :way, "やり方・効果"
+            %br/
+            = f.text_area :way, size: "100x5"
+          .field
+            = f.label :attention, "注意点"
+            %br/
+            = f.text_area :attention, size: "100x5"
+          .field
+            = f.label :image, "画像"
+            %br/
+            = f.attachment_field :image
+          .actions
+            = f.submit "投稿", class: "btn btn-success"
