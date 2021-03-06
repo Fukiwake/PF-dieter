@@ -8,6 +8,7 @@ class DietMethodsController < ApplicationController
 
   def create
     @diet_method = current_customer.diet_methods.new(diet_method_params)
+    p current_customer
     if @diet_method.save
       flash[:notice] = "ダイエット方法を投稿しました"
       redirect_to diet_methods_path
@@ -17,10 +18,12 @@ class DietMethodsController < ApplicationController
   end
 
   def index
+    @diary = Diary.new
+    @check_list_diary = @diary.check_list_diaries.new
     @diet_methods = DietMethod.page(params[:page]).per(20)
     @tags = DietMethod.tag_counts_on(:tags).most_used(20)
-    if @tag = params[:tag]   # タグ検索用
-      @diet_methods = DietMethod.tagged_with(params[:tag]).page(params[:page]).per(20)   # タグに紐付く投稿
+    if @tag = params[:tag]
+      @diet_methods = DietMethod.tagged_with(params[:tag]).page(params[:page]).per(20)
     end
   end
 
