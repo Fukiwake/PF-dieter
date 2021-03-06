@@ -5,7 +5,9 @@
     .col-md-9
       #tab-contents
         #profile.tab
-          = render "profile", customer: @customer
+          = render "profile", customer: current_customer
+        #block.tab
+          = render "block", customers: @customers
         #withdraw.tab
-          = render "withdraw", customer: @customer
+          = render "withdraw", customer: current_customer
 

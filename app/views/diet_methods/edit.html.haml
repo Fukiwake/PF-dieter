@@ -1,7 +1,7 @@
 .container
   .row
     .col-md-3
-      = render "layouts/sidebar"
+      = render "layouts/sidebar", diary: @diary
     .col-md-9
       %h1.mb-4 ダイエット方法の編集
       = render "layouts/errors", obj: @diet_method
@@ -24,10 +24,9 @@
             %br/
             = f.attachment_field :image
           .check_list_field
+            チェックリスト
             = f.fields_for :check_lists do |list|
               .js-file-group{ data: {index: "#{list.index}"} }
-                = list.label :body, "チェックリスト"
-                %br
                 = list.text_field :body
                 %span.delete-form-btn
                   削除する
