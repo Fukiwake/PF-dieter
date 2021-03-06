@@ -2,7 +2,7 @@
   .row
     .col-md-3
       .sidebar
-        = render "layouts/sidebar"
+        = render "layouts/sidebar", diary: @diary
     .col-md-9
       = render "graph"
       %table.table.table-borderless
@@ -15,11 +15,19 @@
             %h3
               = @customer.name
           %td.w-25
-            10フォロー中
+            = link_to followings_customer_path(@customer), class: "text-dark" do
+              %span{:id => "followings_count_#{@customer.id}"}
+                = @customer.followings.count
+              フォロー中
             %br
-            10フォロワー
+            = link_to followers_customer_path(@customer), class: "text-dark" do
+              %span{:id => "followers_count_#{@customer.id}"}
+                = @customer.followers.count
+              フォロワー
           %td.w-25
-            フォロー
+            - if current_customer != @customer
+              %span{:id => "follow_bottons_#{@customer.id}"}
+                = render "relationships/follow_form", customer: @customer
           %td.w-25
             %i.fas.fa-ellipsis-h.icon
             %i.far.fa-bell.icon
@@ -27,6 +35,9 @@
           %tr
             %td{colspan: "4"}
               = @customer.introduce
+      - if current_customer != @customer
+        %span{:id => "block_bottons_#{@customer.id}"}
+          = render "blocks/block_form", customer: @customer
       %table.table.table-bordered
         %tr.bg-secondary.text-light.text-center
           %th.w-25

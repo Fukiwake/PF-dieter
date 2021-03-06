@@ -2,7 +2,7 @@
   .row
     .col-md-3
       .sidebar
-        = render "layouts/sidebar"
+        = render "layouts/sidebar", diary: @diary
     .col-md-9
       -if @tag.present?
         %h1 #{@tag}のダイエット方法一覧
