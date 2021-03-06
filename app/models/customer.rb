@@ -12,6 +12,8 @@ class Customer < ApplicationRecord
   has_many :diary_comments, dependent: :destroy
   has_many :diet_method_favorites, dependent: :destroy
   has_many :diet_method_comments, dependent: :destroy
+  has_many :tries, dependent: :destroy
+  has_many :trying_diet_methods, through: :tries, source: :diet_method
   
   validates :name, length: { maximum: 10, minimum: 2 }
   validates :gender, presence: true

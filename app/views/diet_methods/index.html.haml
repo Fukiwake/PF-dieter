@@ -26,7 +26,8 @@
                   %h3
                     = diet_method.title
                 %td
-                  実践する
+                  %div{:id => "tries_buttons_#{diet_method.id}"}
+                    = render "tries/try", diet_method: diet_method
               %tr
                 %td{colspan: "2"}= diet_method.way.truncate(200)
               - if diet_method.image_id.present?
