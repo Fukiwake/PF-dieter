@@ -21,6 +21,9 @@ class Customer < ApplicationRecord
   has_many :active_blocks, class_name: "Block", foreign_key: "blocker_id", dependent: :destroy
   has_many :passive_blocks, class_name: "Block", foreign_key: "blocked_id", dependent: :destroy
   has_many :blockings, through: :active_blocks, source: :blocked
+  has_many :entries
+  has_many :chats
+  has_many :rooms, through: :entries
   
   validates :name, length: { maximum: 10, minimum: 2 }
   validates :gender, presence: true

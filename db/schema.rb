@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_03_06_025715) do
+ActiveRecord::Schema.define(version: 2021_03_06_062112) do
 
   create_table "blocks", force: :cascade do |t|
     t.integer "blocker_id"
@@ -20,6 +20,14 @@ ActiveRecord::Schema.define(version: 2021_03_06_025715) do
     t.index ["blocked_id"], name: "index_blocks_on_blocked_id"
     t.index ["blocker_id", "blocked_id"], name: "index_blocks_on_blocker_id_and_blocked_id", unique: true
     t.index ["blocker_id"], name: "index_blocks_on_blocker_id"
+  end
+
+  create_table "chats", force: :cascade do |t|
+    t.string "message"
+    t.integer "customer_id"
+    t.integer "room_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   create_table "check_list_diaries", force: :cascade do |t|
@@ -134,6 +142,13 @@ ActiveRecord::Schema.define(version: 2021_03_06_025715) do
     t.index ["way"], name: "index_diet_methods_on_way"
   end
 
+  create_table "entries", force: :cascade do |t|
+    t.integer "customer_id"
+    t.integer "room_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
   create_table "relationships", force: :cascade do |t|
     t.integer "follower_id"
     t.integer "followed_id"
@@ -143,6 +158,12 @@ ActiveRecord::Schema.define(version: 2021_03_06_025715) do
     t.index ["followed_id"], name: "index_relationships_on_followed_id"
     t.index ["follower_id", "followed_id"], name: "index_relationships_on_follower_id_and_followed_id", unique: true
     t.index ["follower_id"], name: "index_relationships_on_follower_id"
+  end
+
+  create_table "rooms", force: :cascade do |t|
+    t.string "name"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   create_table "taggings", force: :cascade do |t|

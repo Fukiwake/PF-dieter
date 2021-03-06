@@ -38,6 +38,7 @@
       - if current_customer != @customer
         %span{:id => "block_bottons_#{@customer.id}"}
           = render "blocks/block_form", customer: @customer
+        = link_to "チャット", chat_path(@customer.id)
       %table.table.table-bordered
         %tr.bg-secondary.text-light.text-center
           %th.w-25
