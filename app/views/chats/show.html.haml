@@ -1,0 +1,9 @@
+%h1{id: "customer_room", "data-room_id": "#{@room.id}", "data-customer_id": "#{current_customer.id}"}
+  = @customer.name
+  さんとのチャット
+#chat_area
+  - @chats.each do |chat|
+    = chat.message
+  %p#new-message
+#chat_form
+  %input{type: "text", id: "message-form", placeholder: "新しいメッセージを作成"}

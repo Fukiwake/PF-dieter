@@ -24,4 +24,6 @@ Rails.application.routes.draw do
     resource :tries, only: [:create, :destroy]
     resources :diet_method_comments, only: [:create, :destroy]
   end
+  resources :chats, only: [:create]
+  get "chat/:id" => "chats#show", as: "chat"
 end
