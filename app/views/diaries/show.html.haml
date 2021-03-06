@@ -27,20 +27,24 @@
             ％
           %td
             = @diary.created_at.strftime("%m月%d日 %H:%M")
-        - if @diary.body.present?
-          %tr
-            %td{colspan: "3"}= @diary.body
-        - if @diary.image_id.present?
-          %tr
-            %td{colspan: "3"}= attachment_image_tag(@diary, :image, size: "700x400", fallback: "no_image.png")
-        %tr
-          %td{colspan: "3"}
-            %div{:id => "favorites_buttons_#{@diary.id}"}
-              = render "diary_favorites/favorite", diary: @diary
-            - if @diary.customer = current_customer
-              = link_to "編集", edit_diary_path(@diary.id)
-              |
-              = link_to "削除", diary_path(@diary.id), method: :delete, data: { confirm: "日記を削除してもよろしいですか？" }
+      - @diary.checked_lists.each do |checked_list|
+        %i.far.fa-check-square
+        = checked_list.body
+      - current_customer.trying_diet_methods.each do |trying_method|
+        - checked_list_ids = @diary.checked_lists.pluck(:id)
+        - trying_method.check_lists.where.not(id: checked_list_ids).each do |unchecked_list|
+          %i.far.fa-square
+          = unchecked_list.body
+      - if @diary.body.present?
+        = @diary.body
+      - if @diary.image_id.present?
+        = attachment_image_tag(@diary, :image, size: "700x400", fallback: "no_image.png")
+      %div{:id => "favorites_buttons_#{@diary.id}"}
+        = render "diary_favorites/favorite", diary: @diary
+      - if @diary.customer = current_customer
+        = link_to "編集", edit_diary_path(@diary.id)
+        |
+        = link_to "削除", diary_path(@diary.id), method: :delete, data: { confirm: "日記を削除してもよろしいですか？" }
       #comments
         = render "diary_comments/index", diary: @diary
       #new-comments

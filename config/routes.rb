@@ -15,6 +15,7 @@ Rails.application.routes.draw do
   end
   resources :diet_methods do
     resource :diet_method_favorites, only: [:create, :destroy]
+    resource :tries, only: [:create, :destroy]
     resources :diet_method_comments, only: [:create, :destroy]
   end
 end

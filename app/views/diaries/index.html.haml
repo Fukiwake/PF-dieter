@@ -41,6 +41,7 @@
                   %div{:id => "favorites_buttons_#{diary.id}"}
                     = render "diary_favorites/favorite", diary: diary
                   コメント
+                  = diary.diary_comments.count
                   - if diary.customer = current_customer
                     = link_to "編集", edit_diary_path(diary)
                     |
