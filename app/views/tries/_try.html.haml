@@ -1,0 +1,4 @@
+- if diet_method.tried_by?(current_customer)
+  = link_to "実践中", diet_method_tries_path(diet_method.id), method: :delete, remote: true, class: "btn btn-danger"
+- else
+  = link_to "実践する", diet_method_tries_path(diet_method.id), method: :post, remote: true, class: "btn btn-outline-danger"

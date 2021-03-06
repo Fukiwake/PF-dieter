@@ -48,7 +48,8 @@
         = link_to "編集", edit_diet_method_path(@diet_method.id), data: {"turbolinks" => false}
         |
         = link_to "削除", diet_method_path(@diet_method.id), method: :delete, data: { confirm: "ダイエット方法を削除してもよろしいですか？" }
-      実践する
+      %div{:id => "tries_buttons_#{@diet_method.id}"}
+        = render "tries/try", diet_method: @diet_method
       #comments
         = render "diet_method_comments/index", diet_method: @diet_method
       #new-comments

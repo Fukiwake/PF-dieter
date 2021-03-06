@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_03_05_073104) do
+ActiveRecord::Schema.define(version: 2021_03_05_100905) do
 
   create_table "check_list_diaries", force: :cascade do |t|
     t.integer "diary_id", null: false
@@ -149,6 +149,13 @@ ActiveRecord::Schema.define(version: 2021_03_05_073104) do
     t.datetime "updated_at"
     t.integer "taggings_count", default: 0
     t.index ["name"], name: "index_tags_on_name", unique: true
+  end
+
+  create_table "tries", force: :cascade do |t|
+    t.integer "customer_id", null: false
+    t.integer "diet_method_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
 end

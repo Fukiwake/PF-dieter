@@ -1,4 +1,4 @@
--if request.fullpath.include?("setting")
+- if customer_signed_in? && request.fullpath.include?("setting")
   %h2 設定
   %ul#tab-menu
     %li.mt-4.active
@@ -9,28 +9,32 @@
       = link_to "通知", "#notification", class: "text-dark"
     %li.mt-4
       = link_to "退会", "#withdraw", class: "text-dark"
--elsif customer_signed_in?
+- elsif customer_signed_in? && request.fullpath.include?("diaries/new")
+  %h2 
+    実践中の
+    %br
+    ダイエット方法
+  - current_customer.trying_diet_methods.each do |trying_diet_method|
+    %table.table.table-borderless.border-bottom
+      %tr 
+        %td.profile_image.text-center{rowspan: "2"}
+          = attachment_image_tag(trying_diet_method.customer, :profile_image, size: "70x70", fallback: "no_image.png")
+          %br
+          = trying_diet_method.customer.name 
+        %td
+          %h3
+            = trying_diet_method.title
+      %tr
+        %td.pt-0
+          %div{:id => "tries_buttons_#{trying_diet_method.id}"}
+            = render "tries/try", diet_method: trying_diet_method
+- elsif customer_signed_in?
   %h2 投稿
   = link_to "日記を投稿", new_diary_path, class: "btn btn-outline-primary w-100 mt-4"
   = link_to "ダイエット方法を投稿", new_diet_method_path, class: "btn btn-outline-primary w-100 mt-4", data: {"turbolinks" => false}
   %h2.mt-4 クイック投稿
-  = form_with model: @diary, local: true do |f|
-    .field.mt-4
-      = f.label :post_date, "投稿日"
-      %br/
-      = f.date_select :post_date
-    .field
-      = f.label :weight, "体重"
-      %br/
-      = f.text_field :weight
-      kg
-    .field
-      = f.label :body_fat_percentage, "体脂肪率"
-      %br/
-      = f.text_field :body_fat_percentage
-      ％
-    .actions
-      = f.submit "投稿", class: "btn btn-success"
+  #quick-diary-form
+    = render "diaries/quick_form"
 - else
   %h2 初めての方へ
   = link_to "新規登録", new_customer_registration_path, class: "btn btn-outline-primary w-100 mt-4"
