@@ -4,12 +4,18 @@ class DietMethodsController < ApplicationController
     @diet_method = DietMethod.new
     @check_list = @diet_method.check_lists.new
     @tags = DietMethod.tag_counts_on(:tags).most_used(20)
+    @diary = Diary.new
+    @check_list_diary = @diary.check_list_diaries.new
   end
 
   def create
     @diet_method = current_customer.diet_methods.new(diet_method_params)
-    p current_customer
     if @diet_method.save
+      @diet_method.check_lists.each do |check_list|
+        if check_list.body.blank?
+          check_list.destroy
+        end
+      end
       flash[:notice] = "ダイエット方法を投稿しました"
       redirect_to diet_methods_path
     else
@@ -31,10 +37,14 @@ class DietMethodsController < ApplicationController
     @diet_method = DietMethod.find(params[:id])
     @tags = @diet_method.tag_counts_on(:tags)
     @diet_method_comment = DietMethodComment.new
+    @diary = Diary.new
+    @check_list_diary = @diary.check_list_diaries.new
   end
 
   def edit
     @diet_method = DietMethod.find(params[:id])
+    @diary = Diary.new
+    @check_list_diary = @diary.check_list_diaries.new
   end
 
   def update

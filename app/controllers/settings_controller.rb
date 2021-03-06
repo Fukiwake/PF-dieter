@@ -1,6 +1,6 @@
 class SettingsController < ApplicationController
   
   def setting
-    @customer = Customer.find(current_customer.id)
+    @customers = current_customer.blockings
   end
 end

@@ -1,3 +1,4 @@
+%h1 ブロックしているユーザー一覧
 - customers.each do |customer|
   = link_to customer_path(customer.id), class: "text-decoration-none", data: {"turbolinks" => false} do
     .table_link.border-bottom
@@ -8,20 +9,9 @@
           %td.w-25
             %h3
               = customer.name
-          %td.small.text-secondary
-            now：
-            = customer.height
-            cm
-            %br
-            goal：
-            = customer.target_weight
-            kg
-            =customer.target_body_fat_percentage
-            ％
           %td
-            フォロー
+            %span{:id => "block_bottons_#{customer.id}"}
+              = render "blocks/block_form", customer: customer
         - if customer.introduce.present?
           %tr{colspan: "3"}
             %td= customer.introduce
-.d-flex.justify-content-center.mt-4
-  = paginate customers

@@ -1,0 +1,4 @@
+- if current_customer.blocking?(customer)
+  = link_to "ブロック中", customer_blocks_path(customer.id), method: :delete, remote: true
+- else
+  = link_to "ブロック", customer_blocks_path(customer.id), method: :post, remote: true

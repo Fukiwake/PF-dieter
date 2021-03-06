@@ -1,11 +1,17 @@
 class DiariesController < ApplicationController
 
   def index
-    @diaries = Diary.page(params[:page]).per(20)
+    following_ids = current_customer.followings.pluck(:id)
+    blocking_ids = current_customer.blockings.pluck(:id)
+    @diaries = Diary.where(customer_id: following_ids).where.not(customer_id: blocking_ids).page(params[:page]).per(20)
+    @diary = Diary.new
+    @check_list_diary = @diary.check_list_diaries.new
   end
 
   def show
     @diary = Diary.find(params[:id])
+    @new_diary = Diary.new
+    @check_list_diary = @new_diary.check_list_diaries.new
     @diary_comment = DiaryComment.new
   end
 
@@ -28,6 +34,8 @@ class DiariesController < ApplicationController
 
   def edit
     @diary = Diary.find(params[:id])
+    @diary = Diary.new
+    @check_list_diary = @diary.check_list_diaries.new
   end
 
   def update

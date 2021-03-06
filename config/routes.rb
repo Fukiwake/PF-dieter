@@ -8,7 +8,13 @@ Rails.application.routes.draw do
   get 'homes/about'
   get 'setting' => "settings#setting", as: "setting"
   patch "customers/withdraw" => "customers#withdraw"
-  resources :customers, only: [:show, :update, :index]
+  resources :customers, only: [:show, :update, :index] do
+    resource :relationships, only: [:create, :destroy]
+    member do
+      get :followings, :followers
+    end
+    resource :blocks, only: [:create, :destroy]
+  end
   resources :diaries do
     resource :diary_favorites, only: [:create, :destroy]
     resources :diary_comments, only: [:create, :destroy]
