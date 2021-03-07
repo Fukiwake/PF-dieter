@@ -1,5 +1,5 @@
 class ChatsController < ApplicationController
-  
+
   def show
     @customer = Customer.find(params[:id])
     rooms_ids = current_customer.entries.pluck(:room_id)
@@ -13,17 +13,25 @@ class ChatsController < ApplicationController
     end
     @chats = @room.chats
     @chat = Chat.new(room_id: @room.id)
+    @other_rooms = current_customer.rooms.where.not(id: @room.id)
+    @other_rooms = @other_rooms.each do |other_room|
+      if other_room.chats.blank?
+        other_room.destroy
+      end
+    end
+    @diary = Diary.new
+    @check_list_diary = @diary.check_list_diaries.new
   end
-  
+
   def create
     @chat = current_customer.chats.new(chat_params)
     @chat.save
   end
-  
+
   private
 
   def chat_params
     params.require(:chat).permit(:message, :room_id)
   end
-  
+
 end
