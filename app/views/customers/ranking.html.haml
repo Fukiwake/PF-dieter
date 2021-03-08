@@ -1,0 +1,20 @@
+.container
+  .row
+    .col-md-3
+      = render "layouts/sidebar", diary: @diary
+    .col-md-9
+      %h1 ランキング
+      %button#dropdownMenuButton.range.btn.btn-outline-secondary.dropdown-toggle{type: "button", "data-toggle": "dropdown", "aria-haspopup": "true", "aria-expanded": "false"}
+        day
+      .dropdown-menu.text-center#ranking-tab-menu{"aria-labelledby": "dropdownMenuButton"}
+        = link_to "day", "#day", class: "text-dark  d-block"
+        = link_to "week", "#week", class: "text-dark d-block"
+        = link_to "month", "#month", class: "text-dark d-block"
+        = @range
+      #ranking-tab-contents
+        #day.tab
+          = render "ranking", customers: @day_ranking, range: "day"
+        #week.tab
+          = render "ranking", customers: @week_ranking, range: "week"
+        #month.tab
+          = render "ranking", customers: @month_ranking, range: "month"

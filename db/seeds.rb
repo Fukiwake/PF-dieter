@@ -43,4 +43,12 @@ end
     attention: "test",
     customer_id: "50"
   )
+  
+end
+
+999.times do |n|
+  LevelSetting.create!(
+    level: n + 2,
+    threshold: 10 + n * 10
+  )
 end

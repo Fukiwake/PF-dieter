@@ -1,12 +1,12 @@
 class CustomersController < ApplicationController
+  before_action :set_new_diary, except: [:withdraw]
+  before_action :set_customer, only: [:show, :followings, :followers]
+  
   def index
     @customers = Customer.page(params[:page]).per(20)
-    @diary = Diary.new
-    @check_list_diary = @diary.check_list_diaries.new
   end
 
   def show
-    @customer = Customer.find(params[:id])
     @diaries = @customer.diaries.all.order(post_date: "ASC")
     # 日記を過去1年分に限定する
     if @diaries.present?
@@ -15,8 +15,6 @@ class CustomersController < ApplicationController
     @weights = @diaries.pluck(:weight)
     @body_fat_percentages = @diaries.pluck(:body_fat_percentage)
     @dates = @diaries.pluck(:post_date)
-    @diary = Diary.new
-    @check_list_diary = @diary.check_list_diaries.new
   end
   
   def withdraw
@@ -28,16 +26,23 @@ class CustomersController < ApplicationController
   end
   
   def followings
-    customer = Customer.find(params[:id])
-    @customers = customer.followings.page(params[:page]).per(20)
-    @diary = Diary.new
-    @check_list_diary = @diary.check_list_diaries.new
+    @customers = @customer.followings.page(params[:page]).per(20)
   end
   
   def followers
-    customer = Customer.find(params[:id])
-    @customers = customer.followers.page(params[:page]).per(20)
-    @diary = Diary.new
-    @check_list_diary = @diary.check_list_diaries.new
+    @customers = @customer.followers.page(params[:page]).per(20)
+  end
+  
+  def ranking
+    @day_ranking = Customer.order(day_exp: "DESC").order(level: "DESC").limit(20)
+    @week_ranking = Customer.order(week_exp: "DESC").order(level: "DESC").limit(20)
+    @month_ranking = Customer.order(month_exp: "DESC").order(level: "DESC").limit(20)
+    @range = params[:range]
+  end
+  
+  private
+  
+  def set_customer
+    @customer = Customer.find(params[:id])
   end
 end

@@ -23,6 +23,12 @@ class DiariesController < ApplicationController
   def create
     @diary = current_customer.diaries.new(diary_params)
     if @diary.save
+      level_up(20, current_customer)
+      previous_diary = current_customer.diaries.last(2)[0]
+      if previous_diary.present?
+        level_up(previous_diary.weight * 10 - @diary.weight * 10, current_customer)
+        level_up(previous_diary.body_fat_percentage * 30 - @diary.body_fat_percentage * 30, current_customer)
+      end
       flash[:notice] = "日記を投稿しました"
       redirect_to diaries_path
     else
