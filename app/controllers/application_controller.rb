@@ -17,6 +17,25 @@ class ApplicationController < ActionController::Base
   def after_sign_out_path_for(resource)
     root_path
   end
+  
+  def level_up(exp, customer)
+    total_exp = customer.total_exp + exp
+    day_exp = customer.day_exp + exp
+    week_exp = customer.week_exp + exp
+    month_exp = customer.month_exp + exp
+    customer.update(total_exp: total_exp, day_exp: day_exp, week_exp: week_exp, month_exp: month_exp)
+    level_settings = LevelSetting.where("level > #{customer.level}").limit(2)
+    level_settings.each do |setting|
+      if setting.threshold <= customer.total_exp
+        customer.update(level: setting.level, total_exp: customer.total_exp - setting.threshold)
+      end
+    end
+  end
+  
+  def set_new_diary
+    @diary = Diary.new
+    @check_list_diary = @diary.check_list_diaries.new
+  end
 
   protected
 

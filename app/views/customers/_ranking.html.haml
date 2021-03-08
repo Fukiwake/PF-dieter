@@ -1,0 +1,25 @@
+- customers.each do |customer|
+  = link_to customer_path(customer.id), class: "text-decoration-none", data: {"turbolinks" => false} do
+    .table_link.border-bottom
+      %table.table.table-borderless
+        %tr
+          %td.profile_image{rowspan: "2"}
+            = attachment_image_tag(customer, :profile_image, size: "70x70", fallback: "no_image.png")
+          %td.w-25
+            %h3
+              = customer.name
+          %td
+            - if current_customer != customer
+              %span{:id => "follow_bottons_#{customer.id}"}
+                = render "relationships/follow_form", customer: customer
+        %tr{colspan: "2"}
+          %td
+            Lv.
+            = customer.level
+            Exp.
+            - if range == "day"
+              = customer.day_exp
+            - if range == "week"
+              = customer.week_exp
+            - if range == "month"
+              = customer.month_exp

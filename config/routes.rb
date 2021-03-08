@@ -14,6 +14,9 @@ Rails.application.routes.draw do
       get :followings, :followers
     end
     resource :blocks, only: [:create, :destroy]
+    collection do
+      get :ranking
+    end
   end
   resources :diaries do
     resource :diary_favorites, only: [:create, :destroy]
