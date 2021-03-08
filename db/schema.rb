@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_03_06_062112) do
+ActiveRecord::Schema.define(version: 2021_03_07_072707) do
 
   create_table "blocks", force: :cascade do |t|
     t.integer "blocker_id"
@@ -75,6 +75,7 @@ ActiveRecord::Schema.define(version: 2021_03_06_062112) do
     t.boolean "diet_style2", default: false
     t.boolean "diet_style3", default: false
     t.boolean "diet_style4", default: false
+    t.integer "level", default: 1
     t.index ["birthyear"], name: "index_customers_on_birthyear"
     t.index ["email"], name: "index_customers_on_email", unique: true
     t.index ["introduce"], name: "index_customers_on_introduce"
@@ -145,6 +146,13 @@ ActiveRecord::Schema.define(version: 2021_03_06_062112) do
   create_table "entries", force: :cascade do |t|
     t.integer "customer_id"
     t.integer "room_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "level_settings", force: :cascade do |t|
+    t.integer "level"
+    t.integer "threshold"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end

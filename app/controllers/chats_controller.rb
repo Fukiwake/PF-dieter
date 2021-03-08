@@ -1,4 +1,5 @@
 class ChatsController < ApplicationController
+  before_action :set_new_diary, only: [:show]
 
   def show
     @customer = Customer.find(params[:id])
@@ -19,8 +20,6 @@ class ChatsController < ApplicationController
         other_room.destroy
       end
     end
-    @diary = Diary.new
-    @check_list_diary = @diary.check_list_diaries.new
   end
 
   def create
