@@ -10,7 +10,8 @@
           %td.text-center{rowspan: "2"}
             = attachment_image_tag(@customer, :profile_image, size: "70x70", fallback: "no_image.png")
             %br
-            Lv24
+            Lv
+            = @customer.level
           %td.w-25
             %h3
               = @customer.name
@@ -78,4 +79,3 @@
                 %br
               - if @customer.diet_style1
                 短期集中
-                

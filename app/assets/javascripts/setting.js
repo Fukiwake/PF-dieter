@@ -1,5 +1,5 @@
 $(function() {
- 
+
   $('#tab-contents .tab[id != "profile"]').hide();
 
   $('#tab-menu a').on('click', function(event) {
@@ -9,5 +9,7 @@ $(function() {
     $($(this).attr("href")).show();
     event.preventDefault();
   });
+
+  
 
 });
