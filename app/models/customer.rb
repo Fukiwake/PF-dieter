@@ -6,6 +6,7 @@ class Customer < ApplicationRecord
 
   attachment :profile_image
 
+  default_scope -> { order(created_at: :desc) }
   has_many :diaries, dependent: :destroy
   has_many :diet_methods, dependent: :destroy
   has_many :diary_favorites, dependent: :destroy
@@ -24,6 +25,8 @@ class Customer < ApplicationRecord
   has_many :entries
   has_many :chats
   has_many :rooms, through: :entries
+  has_many :active_notifications, class_name: 'Notification', foreign_key: 'visitor_id', dependent: :destroy
+  has_many :passive_notifications, class_name: 'Notification', foreign_key: 'visited_id', dependent: :destroy
   
   validates :name, length: { maximum: 10, minimum: 2 }
   validates :gender, presence: true
@@ -68,6 +71,17 @@ class Customer < ApplicationRecord
 
   def unblock(customer_id)
     active_blocks.find_by(blocked_id: customer_id).destroy
+  end
+  
+  def create_notification_follow(current_customer)
+    temp = Notification.where(["visitor_id = ? and visited_id = ? and action = ? ",current_customer.id, id, 'follow'])
+    if temp.blank?
+      notification = current_customer.active_notifications.new(
+        visited_id: id,
+        action: 'follow'
+      )
+      notification.save if notification.valid?
+    end
   end
   
 end

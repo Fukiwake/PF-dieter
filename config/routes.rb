@@ -7,6 +7,8 @@ Rails.application.routes.draw do
   root "homes#top"
   get 'homes/about'
   get 'setting' => "settings#setting", as: "setting"
+  resources :notifications, only: [:index]
+  patch "notifications/checked" => "notifications#checked"
   patch "customers/withdraw" => "customers#withdraw"
   resources :customers, only: [:show, :update, :index] do
     resource :relationships, only: [:create, :destroy]

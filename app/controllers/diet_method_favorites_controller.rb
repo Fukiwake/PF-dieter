@@ -4,6 +4,7 @@ class DietMethodFavoritesController < ApplicationController
     @diet_method = DietMethod.find(params[:diet_method_id])
     favorite = current_customer.diet_method_favorites.new(diet_method_id: @diet_method.id)
     favorite.save
+    @diet_method.create_notification_favorite(current_customer)
   end
   
   def destroy
