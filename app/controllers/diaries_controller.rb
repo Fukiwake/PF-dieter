@@ -3,7 +3,8 @@ class DiariesController < ApplicationController
   def index
     following_ids = current_customer.followings.pluck(:id)
     blocking_ids = current_customer.blockings.pluck(:id)
-    @diaries = Diary.where(customer_id: following_ids).where.not(customer_id: blocking_ids).page(params[:page]).per(20)
+    # @diaries = Diary.where(customer_id: following_ids).where.not(customer_id: blocking_ids).page(params[:page]).per(20)
+    @diaries = Diary.page(params[:page]).per(20)
     @diary = Diary.new
     @check_list_diary = @diary.check_list_diaries.new
   end
@@ -24,7 +25,7 @@ class DiariesController < ApplicationController
     @diary = current_customer.diaries.new(diary_params)
     if @diary.save
       level_up(20, current_customer)
-      previous_diary = current_customer.diaries.last(2)[0]
+      previous_diary = current_customer.diaries.first(2)[1]
       if previous_diary.present?
         level_up(previous_diary.weight * 10 - @diary.weight * 10, current_customer)
         level_up(previous_diary.body_fat_percentage * 30 - @diary.body_fat_percentage * 30, current_customer)

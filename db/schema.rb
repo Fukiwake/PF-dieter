@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_03_07_072707) do
+ActiveRecord::Schema.define(version: 2021_03_08_061133) do
 
   create_table "blocks", force: :cascade do |t|
     t.integer "blocker_id"
@@ -87,7 +87,7 @@ ActiveRecord::Schema.define(version: 2021_03_07_072707) do
 
   create_table "diaries", force: :cascade do |t|
     t.integer "customer_id", null: false
-    t.string "title"
+    t.string "title", default: "無題"
     t.text "body"
     t.float "weight", null: false
     t.float "body_fat_percentage"
@@ -153,6 +153,19 @@ ActiveRecord::Schema.define(version: 2021_03_07_072707) do
   create_table "level_settings", force: :cascade do |t|
     t.integer "level"
     t.integer "threshold"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "notifications", force: :cascade do |t|
+    t.integer "visitor_id"
+    t.integer "visited_id"
+    t.integer "diary_id"
+    t.integer "diet_method_id"
+    t.integer "diary_comment_id"
+    t.integer "diary_method_comment_id"
+    t.string "action"
+    t.boolean "checked", default: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end

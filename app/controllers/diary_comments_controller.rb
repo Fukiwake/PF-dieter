@@ -5,6 +5,7 @@ class DiaryCommentsController < ApplicationController
     @diary = Diary.find(params[:diary_id])
     diary_comment.diary_id = @diary.id
     diary_comment.save
+    @diary.create_notification_comment(current_customer, diary_comment.id)
   end
   
   def destroy

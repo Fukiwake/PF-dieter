@@ -1,5 +1,6 @@
 class ApplicationController < ActionController::Base
   before_action :configure_permitted_parameters, if: :devise_controller?
+  before_action :set_header_notification
 
   def after_sign_up_path_for(resource)
     root_path
@@ -17,7 +18,7 @@ class ApplicationController < ActionController::Base
   def after_sign_out_path_for(resource)
     root_path
   end
-  
+
   def level_up(exp, customer)
     total_exp = customer.total_exp + exp
     day_exp = customer.day_exp + exp
@@ -31,10 +32,16 @@ class ApplicationController < ActionController::Base
       end
     end
   end
-  
+
   def set_new_diary
     @diary = Diary.new
     @check_list_diary = @diary.check_list_diaries.new
+  end
+
+  def set_header_notification
+    if customer_signed_in?
+      @header_notifications = current_customer.passive_notifications.where.not(visitor_id: current_customer.id).first(5)
+    end
   end
 
   protected

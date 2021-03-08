@@ -1,0 +1,31 @@
+- notifications.each do |notification|
+  - visitor = notification.visitor
+  - visited = notification.visited
+  %span
+    = link_to customer_path(visitor) do
+      = attachment_image_tag(visitor, :profile_image, size: "20x20", fallback: "no_image.png", class: "profile-image-small")
+      %strong
+        = visitor.name
+    さんが
+    - case notification.action
+    - when "follow"
+      あなたをフォローしました
+    - when "diary_favorite"
+      = link_to notification.diary.title, diary_path(notification.diary), class: "font-weight-bold"
+      にいいねしました
+    - when "diary_comment"
+      = link_to notification.diary.title, diary_path(notification.diary), class: "font-weight-bold"
+      にコメントしました
+      %p.text-muted.mb-0
+        = notification.diary_comment.body
+    - when "method_favorite"
+      = link_to "あなたのダイエット方法", diet_method_path(notification.diet_method), class: "font-weight-bold"
+      にいいねしました
+    - when "method_comment"
+      = link_to notification.diet_method.title, diet_method_path(notification.diet_method), class: "font-weight-bold"
+      にコメントしました
+      %p.text-muted.mb-0
+        = notification.diet_method_comment.body
+  .small.text-muted.text-right
+    = time_ago_in_words(notification.created_at).upcase
+  %hr
