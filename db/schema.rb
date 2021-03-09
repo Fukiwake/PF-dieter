@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_03_07_072707) do
+ActiveRecord::Schema.define(version: 2021_03_09_073354) do
 
   create_table "blocks", force: :cascade do |t|
     t.integer "blocker_id"
@@ -53,12 +53,12 @@ ActiveRecord::Schema.define(version: 2021_03_07_072707) do
     t.datetime "remember_created_at"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.string "name", null: false
-    t.integer "gender", null: false
-    t.integer "birthyear", null: false
-    t.date "birthdate", null: false
-    t.float "height", null: false
-    t.float "target_weight", null: false
+    t.string "name"
+    t.integer "gender"
+    t.text "birthyear"
+    t.date "birthdate"
+    t.float "height"
+    t.float "target_weight"
     t.float "target_body_fat_percentage"
     t.text "introduce"
     t.string "profile_image_id"
@@ -76,6 +76,9 @@ ActiveRecord::Schema.define(version: 2021_03_07_072707) do
     t.boolean "diet_style3", default: false
     t.boolean "diet_style4", default: false
     t.integer "level", default: 1
+    t.boolean "all_notification", default: true
+    t.string "provider"
+    t.string "uid"
     t.index ["birthyear"], name: "index_customers_on_birthyear"
     t.index ["email"], name: "index_customers_on_email", unique: true
     t.index ["introduce"], name: "index_customers_on_introduce"
@@ -87,7 +90,7 @@ ActiveRecord::Schema.define(version: 2021_03_07_072707) do
 
   create_table "diaries", force: :cascade do |t|
     t.integer "customer_id", null: false
-    t.string "title"
+    t.string "title", default: "無題"
     t.text "body"
     t.float "weight", null: false
     t.float "body_fat_percentage"
@@ -155,6 +158,20 @@ ActiveRecord::Schema.define(version: 2021_03_07_072707) do
     t.integer "threshold"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+  end
+
+  create_table "notifications", force: :cascade do |t|
+    t.integer "visitor_id"
+    t.integer "visited_id"
+    t.integer "diary_id"
+    t.integer "diet_method_id"
+    t.integer "diary_comment_id"
+    t.integer "diet_method_comment_id"
+    t.string "action"
+    t.boolean "checked", default: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.integer "chat_id"
   end
 
   create_table "relationships", force: :cascade do |t|

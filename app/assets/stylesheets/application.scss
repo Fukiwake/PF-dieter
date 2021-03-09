@@ -32,12 +32,6 @@ h2 {
 
 .profile_image {
   border-radius: 50%;
-  width: 70px;
-}
-
-.profile_image_large {
-  border-radius: 50%;
-  width: 120px;
 }
 
 .table_link:hover{
@@ -52,16 +46,16 @@ h2 {
 
 .icon {
   font-size: 30px;
-  text-shadow: 1px 2px 3px black; 
+  &:hover {
+    cursor: pointer;
+  }
 }
 
 .fa-camera {
   position: absolute;
   top: 60px;
   left: 60px;
-  &:hover {
-    cursor: pointer;
-  }
+  text-shadow: 1px 2px 3px black;
 }
 
 #file {
@@ -70,4 +64,30 @@ h2 {
 
 .field {
   margin-bottom: 20px;
+}
+
+.header-notification {
+  width: 300px;
+}
+
+.n-circle {
+  position: absolute;
+  padding-left: 20px;
+  color: #efa04c;
+}
+
+#up-button {
+  display: none;
+}
+
+.header-notification {
+  display: none;
+  position: absolute;
+  top: 40px;
+  background-color: white;
+  z-index: 1;
+}
+
+p.text-muted {
+  overflow-wrap: break-word;
 }

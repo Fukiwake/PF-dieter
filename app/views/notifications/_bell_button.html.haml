@@ -1,0 +1,6 @@
+- if current_customer.passive_notifications.where(checked: false).present?
+  %span.fa-stack
+    %i.far.fa-bell.fa-stack-2x.icon
+    %i.fas.fa-circle.n-circle.fa-stack-1x
+- else
+  %i.far.fa-bell.icon

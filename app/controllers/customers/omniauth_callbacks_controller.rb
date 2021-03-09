@@ -16,7 +16,7 @@ class Customers::OmniauthCallbacksController < Devise::OmniauthCallbacksControll
   #   super
   # end
 
-  # GET|POST /users/auth/twitter/callback
+  # GET|POST /customers/auth/twitter/callback
   # def failure
   #   super
   # end
@@ -27,4 +27,28 @@ class Customers::OmniauthCallbacksController < Devise::OmniauthCallbacksControll
   # def after_omniauth_failure_path_for(scope)
   #   super(scope)
   # end
+
+  def twitter
+    callback_for(:twitter)
+  end
+
+  def google_oauth2
+    callback_for(:google)
+  end
+
+  def callback_for(provider)
+    @customer = Customer.from_omniauth(request.env["omniauth.auth"])
+    if @customer.persisted?
+      sign_in_and_redirect @customer, event: :authentication
+      set_flash_message(:notice, :success, kind: "#{provider}".capitalize) if is_navigational_format?
+    else
+      session["devise.#{provider}_data"] = request.env["omniauth.auth"].except("extra")
+      redirect_to new_customer_registration_url
+    end
+  end
+
+  def failure
+    redirect_to root_path
+  end
+
 end
