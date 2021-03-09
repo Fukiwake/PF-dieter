@@ -2,7 +2,18 @@ class Customer < ApplicationRecord
   # Include default devise modules. Others available are:
   # :confirmable, :lockable, :timeoutable, :trackable and :omniauthable
   devise :database_authenticatable, :registerable,
-         :recoverable, :rememberable, :validatable
+         :recoverable, :rememberable, :validatable,
+         :omniauthable, omniauth_providers: %i[google_oauth2]
+
+  def self.from_omniauth(auth)
+    where(provider: auth.provider, uid: auth.uid).first_or_create! do |customer|
+      customer.name = auth.info.name
+      customer.email = auth.info.email
+      customer.password = Devise.friendly_token[0,20]
+    end
+  end
+  
+  
 
   attachment :profile_image
 
@@ -27,13 +38,8 @@ class Customer < ApplicationRecord
   has_many :rooms, through: :entries
   has_many :active_notifications, class_name: 'Notification', foreign_key: 'visitor_id', dependent: :destroy
   has_many :passive_notifications, class_name: 'Notification', foreign_key: 'visited_id', dependent: :destroy
-  
-  validates :name, length: { maximum: 10, minimum: 2 }
-  validates :gender, presence: true
-  validates :birthyear, numericality: true, presence: true
-  validates :height, numericality: true, presence: true
-  validates :target_weight, numericality: true, presence: true
-  validates :target_body_fat_percentage, numericality: true, presence: true
+
+  validates :name, length: { maximum: 20, minimum: 2 }
   validates :introduce, length: { maximum: 200 }
 
   def update_without_current_password(params, *options)
@@ -48,7 +54,7 @@ class Customer < ApplicationRecord
     clean_up_passwords
     result
   end
-  
+
   def following?(customer)
     followings.include?(customer)
   end
@@ -60,7 +66,7 @@ class Customer < ApplicationRecord
   def unfollow(customer_id)
     active_relationships.find_by(followed_id: customer_id).destroy
   end
-  
+
   def blocking?(customer)
     blockings.include?(customer)
   end
@@ -72,10 +78,10 @@ class Customer < ApplicationRecord
   def unblock(customer_id)
     active_blocks.find_by(blocked_id: customer_id).destroy
   end
-  
+
   def create_notification_follow(current_customer)
     temp = Notification.where(["visitor_id = ? and visited_id = ? and action = ? ",current_customer.id, id, 'follow'])
-    if temp.blank?
+    if temp.blank? && follow_notification == true && all_notification == true
       notification = current_customer.active_notifications.new(
         visited_id: id,
         action: 'follow'
@@ -84,4 +90,11 @@ class Customer < ApplicationRecord
     end
   end
   
+  def self.guest
+    find_or_create_by!(email: 'guest@example.com') do |customer|
+      customer.password = SecureRandom.urlsafe_base64
+      customer.name = "ゲスト"
+    end
+  end
+
 end

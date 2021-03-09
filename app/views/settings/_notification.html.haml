@@ -1,0 +1,19 @@
+%h1 通知設定
+= form_with model: current_customer, url: customers_notification_setting_path, local: true do |f|
+  .field.mt-4
+    = f.check_box :all_notification, {}, "true", "false"
+    すべての通知
+  .field
+    = f.check_box :comment_notification, {}, "true", "false"
+    自分の投稿へのコメント
+  .field
+    = f.check_box :favorite_notification, {}, "true", "false"
+    自分の投稿へのいいね
+  .field
+    = f.check_box :chat_notification, {}, "true", "false"
+    チャット
+  .field
+    = f.check_box :follow_notification, {}, "true", "false"
+    フォロー
+  .action
+    = f.submit "保存", class: "btn btn-success"

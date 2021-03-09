@@ -49,11 +49,15 @@ class Customers::RegistrationsController < Devise::RegistrationsController
   def configure_account_update_params
     devise_parameter_sanitizer.permit(:account_update, keys: [:name, :profile_image, :introduce, :gender, :birthyear, :birthdate, :height, :target_weight, :target_body_fat_percentage])
   end
-  
+
   def update_resource(resource, params)
+    if resource.email == 'guest@example.com'
+      params[:email] = 'guest@example.com'
+      flash[:alert] = "ゲストユーザーのメールアドレスは変更できません"
+    end
     resource.update_without_password(params)
   end
-  
+
   def after_update_path_for(_resource)
     setting_path
   end

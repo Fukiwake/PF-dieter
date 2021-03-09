@@ -26,7 +26,7 @@ class DietMethod < ApplicationRecord
     # すでに「いいね」されているか検索
     temp = Notification.where(["visitor_id = ? and visited_id = ? and diet_method_id = ? and action = ? ", current_customer.id, customer_id, id, 'diet_method_favorite'])
     # いいねされていない場合のみ、通知レコードを作成
-    if temp.blank?
+    if temp.blank? && customer.favorite_notification == true && customer.all_notification == true
       notification = current_customer.active_notifications.new(
         diet_method_id: id,
         visited_id: customer_id,
@@ -41,18 +41,20 @@ class DietMethod < ApplicationRecord
   end
   
   def create_notification_comment(current_customer, diet_method_comment_id)
-    # コメントは複数回することが考えられるため、１つの投稿に複数回通知する
-    notification = current_customer.active_notifications.new(
-      diet_method_id: id,
-      diet_method_comment_id: diet_method_comment_id,
-      visited_id: customer_id,
-      action: 'diet_method_comment'
-    )
-    # 自分の投稿に対するコメントの場合は、通知済みとする
-    if notification.visitor_id == notification.visited_id
-      notification.checked = true
+    if customer.comment_notification == true && customer.all_notification == true
+      # コメントは複数回することが考えられるため、１つの投稿に複数回通知する
+      notification = current_customer.active_notifications.new(
+        diet_method_id: id,
+        diet_method_comment_id: diet_method_comment_id,
+        visited_id: customer_id,
+        action: 'diet_method_comment'
+      )
+      # 自分の投稿に対するコメントの場合は、通知済みとする
+      if notification.visitor_id == notification.visited_id
+        notification.checked = true
+      end
+      notification.save if notification.valid?
     end
-    notification.save if notification.valid?
   end
   
 end
