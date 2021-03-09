@@ -1,12 +1,11 @@
 class DiariesController < ApplicationController
+  before_action :set_new_diary, except: [:show]
 
   def index
     following_ids = current_customer.followings.pluck(:id)
     blocking_ids = current_customer.blockings.pluck(:id)
     # @diaries = Diary.where(customer_id: following_ids).where.not(customer_id: blocking_ids).page(params[:page]).per(20)
     @diaries = Diary.page(params[:page]).per(20)
-    @diary = Diary.new
-    @check_list_diary = @diary.check_list_diaries.new
   end
 
   def show
@@ -17,8 +16,6 @@ class DiariesController < ApplicationController
   end
 
   def new
-    @diary = Diary.new
-    @check_list_diary = @diary.check_list_diaries.new
   end
 
   def create
@@ -34,15 +31,12 @@ class DiariesController < ApplicationController
       redirect_to diaries_path
     else
       @diary.check_list_diaries.destroy_all
-      @check_list_diary = @diary.check_list_diaries.new
       render :new
     end
   end
 
   def edit
     @diary = Diary.find(params[:id])
-    @diary = Diary.new
-    @check_list_diary = @diary.check_list_diaries.new
   end
 
   def update

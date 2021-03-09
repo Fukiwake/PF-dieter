@@ -2,14 +2,19 @@ Rails.application.routes.draw do
 
   devise_for :customers, controllers: {
     registrations: 'customers/registrations',
-    sessions: 'customers/sessions'
+    sessions: 'customers/sessions',
+    omniauth_callbacks: 'customers/omniauth_callbacks'
   }
+  devise_scope :customer do
+    post 'customers/guest_sign_in', to: 'customers/sessions#new_guest'
+  end
   root "homes#top"
   get 'homes/about'
   get 'setting' => "settings#setting", as: "setting"
   resources :notifications, only: [:index]
   patch "notifications/checked" => "notifications#checked"
   patch "customers/withdraw" => "customers#withdraw"
+  patch "customers/notification_setting" => "customers#notification_setting"
   resources :customers, only: [:show, :update, :index] do
     resource :relationships, only: [:create, :destroy]
     member do
