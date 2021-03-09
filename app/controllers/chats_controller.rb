@@ -22,15 +22,4 @@ class ChatsController < ApplicationController
     end
   end
 
-  def create
-    @chat = current_customer.chats.new(chat_params)
-    @chat.save
-  end
-
-  private
-
-  def chat_params
-    params.require(:chat).permit(:message, :room_id)
-  end
-
 end

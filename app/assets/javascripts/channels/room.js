@@ -11,7 +11,7 @@ const roomChannel = App.cable.subscriptions.create("RoomChannel", {
     var min = ("0"+now.getMinutes()).slice(-2)
     var time = year + "年" + month + "月" + date + "日 " + hour + ":" + min
     var src = $("#chat-with").children('img').attr('src');
-    if (data['customer_id'] == $('#customer_room').data('customer_id')) {
+    if (data['customer_id'] == $('#customer_room').data('current_customer_id')) {
       $('#new-message').append(`<div class="text-right">
                                   <div class="chat-right text-left">
                                     <p>${data['message']}</p>
@@ -51,25 +51,28 @@ const roomChannel = App.cable.subscriptions.create("RoomChannel", {
 }
 });
 
-$(document).on('keypress', '#message-form', function(e) {
-  if (e.keyCode === 13 && e.target.value !== "") {
-    roomChannel.create(e.target.value);
-    e.target.value = '';
-  }
-})
+$(document).on('turbolinks:load', function() {
 
-$(function(){
-  let chats = document.getElementById('chats-scroll-inner');
-  if (chats !== null) {
-    chats.scrollIntoView(false);
-  }
-  
-  $(".fa-angle-double-right").on('click', function(e) {
-    message = document.getElementById("message-form").value;
-    if (message !== "") {
-      roomChannel.create(message);
-      document.getElementById("message-form").value = '';
+  $(document).on('keypress', '#message-form', function(e) {
+    if (e.keyCode === 13 && e.target.value !== "") {
+      roomChannel.create(e.target.value);
+      e.target.value = '';
     }
-})
+  })
+
+  $(function(){
+    let chats = document.getElementById('chats-scroll-inner');
+    if (chats !== null) {
+      chats.scrollIntoView(false);
+    }
+
+    $(".fa-angle-double-right").on('click', function(e) {
+      message = document.getElementById("message-form").value;
+      if (message !== "") {
+        roomChannel.create(message);
+        document.getElementById("message-form").value = '';
+      }
+  })
+  });
 });
 

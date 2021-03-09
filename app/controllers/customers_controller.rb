@@ -18,6 +18,9 @@ class CustomersController < ApplicationController
   end
   
   def withdraw
+    if current_customer.email == 'guest@example.com'
+      redirect_to root_path, alert: 'ゲストユーザーは退会できません'
+    end
     current_customer.is_deleted = true
     current_customer.save
     reset_session
@@ -40,9 +43,19 @@ class CustomersController < ApplicationController
     @range = params[:range]
   end
   
+  def notification_setting
+    current_customer.update(customer_params)
+    flash[:notice] = "通知設定を保存しました"
+    redirect_to setting_path(anchor: 'notification')
+  end
+  
   private
   
   def set_customer
     @customer = Customer.find(params[:id])
+  end
+  
+  def customer_params
+    params.require(:customer).permit(:all_notification, :comment_notification, :favorite_notification, :chat_notification, :follow_notification)
   end
 end
