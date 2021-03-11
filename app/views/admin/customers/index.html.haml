@@ -1,0 +1,48 @@
+.container
+  %h1 会員一覧
+  = form_with url: withdraw_all_admin_customers_path, method: :patch, local: true do |f|
+    %button.btn.btn-primary{"data-target" => "#withdraw_confirm", "data-toggle" => "modal", type: "button"}
+      選択した会員をまとめて退会
+    #withdraw_confirm.modal.fade{"aria-hidden" => "true", "aria-labelledby" => "label1", role: "dialog", tabindex: "-1"}
+      .modal-dialog{role: "document"}
+        .modal-content
+          .modal-header
+            %h5#label1.modal-title 退会確認
+            %button.close{"aria-label" => "Close", "data-dismiss" => "modal", type: "button"}
+              %span{"aria-hidden" => "true"} ×
+          .modal-body
+            選択された会員を退会させますか？
+          .modal-footer
+            %button.btn.btn-secondary{"data-dismiss" => "modal", type: "button"} Close
+            = f.submit "OK", class: "btn btn-primary"
+    %table.table.table-bordered
+      %thead
+        %tr
+          %th
+          %th 会員id
+          %th 氏名
+          %th メールアドレス
+          %th ステータス
+          %th
+      %tbody
+        - @customers.each do |customer|
+          %tr
+            %td
+              = f.check_box :customer_ids, {}, customer.id, nil
+            %td
+              = customer.id
+            %td
+              = link_to admin_customer_path(customer) do
+                = customer.name
+            %td
+              = customer.email
+            %td
+              - if customer.is_deleted == true
+                %span.text-secondary 退会
+              - else
+                %span.text-success 有効
+            %td
+              削除｜
+              = link_to "編集", edit_admin_customer_path(customer)
+  .d-flex.justify-content-center
+    = paginate @customers

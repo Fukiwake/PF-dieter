@@ -10,7 +10,16 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_03_09_073354) do
+ActiveRecord::Schema.define(version: 2021_03_11_000928) do
+
+  create_table "admins", force: :cascade do |t|
+    t.string "email", default: "", null: false
+    t.string "encrypted_password", default: "", null: false
+    t.datetime "remember_created_at"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["email"], name: "index_admins_on_email", unique: true
+  end
 
   create_table "blocks", force: :cascade do |t|
     t.integer "blocker_id"
@@ -43,6 +52,17 @@ ActiveRecord::Schema.define(version: 2021_03_09_073354) do
     t.string "body", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+  end
+
+  create_table "contacts", force: :cascade do |t|
+    t.string "name"
+    t.string "email"
+    t.integer "status", default: 0
+    t.integer "genre", default: 0
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.integer "customer_id"
+    t.text "body"
   end
 
   create_table "customers", force: :cascade do |t|
@@ -98,6 +118,7 @@ ActiveRecord::Schema.define(version: 2021_03_09_073354) do
     t.string "image_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.boolean "is_deleted", default: false
     t.index ["body"], name: "index_diaries_on_body"
     t.index ["body_fat_percentage"], name: "index_diaries_on_body_fat_percentage"
     t.index ["title"], name: "index_diaries_on_title"
@@ -110,6 +131,7 @@ ActiveRecord::Schema.define(version: 2021_03_09_073354) do
     t.text "body", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.boolean "is_deleted", default: false
   end
 
   create_table "diary_favorites", force: :cascade do |t|
@@ -125,6 +147,7 @@ ActiveRecord::Schema.define(version: 2021_03_09_073354) do
     t.text "body", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.boolean "is_deleted", default: false
   end
 
   create_table "diet_method_favorites", force: :cascade do |t|
@@ -142,6 +165,7 @@ ActiveRecord::Schema.define(version: 2021_03_09_073354) do
     t.string "image_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.boolean "is_deleted", default: false
     t.index ["title"], name: "index_diet_methods_on_title"
     t.index ["way"], name: "index_diet_methods_on_way"
   end
@@ -183,6 +207,17 @@ ActiveRecord::Schema.define(version: 2021_03_09_073354) do
     t.index ["followed_id"], name: "index_relationships_on_followed_id"
     t.index ["follower_id", "followed_id"], name: "index_relationships_on_follower_id_and_followed_id", unique: true
     t.index ["follower_id"], name: "index_relationships_on_follower_id"
+  end
+
+  create_table "reports", force: :cascade do |t|
+    t.integer "visitor_id", null: false
+    t.integer "visited_id"
+    t.integer "diary_id"
+    t.integer "diet_method_id"
+    t.integer "diary_comment_id"
+    t.integer "diet_method_comment_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   create_table "rooms", force: :cascade do |t|

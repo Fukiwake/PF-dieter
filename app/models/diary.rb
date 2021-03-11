@@ -9,6 +9,7 @@ class Diary < ApplicationRecord
   has_many :checked_lists, through: :check_list_diaries, source: :check_list
   accepts_nested_attributes_for :check_list_diaries, allow_destroy: true
   has_many :notifications, dependent: :destroy
+  has_many :reports, dependent: :destroy
 
   validates :weight, numericality: true, presence: true
   validates :body_fat_percentage, numericality: true

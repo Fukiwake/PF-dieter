@@ -31,6 +31,6 @@
                       = render "relationships/follow_form", customer: customer
               - if customer.introduce.present?
                 %tr{colspan: "3"}
-                  %td= customer.introduce
+                  %td= customer.introduce.truncate(200)
       .d-flex.justify-content-center.mt-4
         = paginate @customers
