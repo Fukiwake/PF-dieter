@@ -43,7 +43,7 @@ end
     attention: "test",
     customer_id: "50"
   )
-  
+
 end
 
 999.times do |n|
@@ -52,4 +52,6 @@ end
     threshold: 10 + n * 10
   )
 end
+
+Admin.create!(email: "admin@test.com", password: "password")
 

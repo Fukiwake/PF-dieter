@@ -11,6 +11,7 @@ class DietMethod < ApplicationRecord
   has_many :diet_method_comments, dependent: :destroy
   has_many :tries, dependent: :destroy
   has_many :notifications, dependent: :destroy
+  has_many :reports, dependent: :destroy
   
   validates :title, presence: true
   

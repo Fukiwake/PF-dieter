@@ -1,0 +1,48 @@
+.container
+  %h1 日記一覧
+  = form_with url: destroy_all_admin_diaries_path, method: :patch, local: true do |f|
+    %button.btn.btn-primary{"data-target" => "#destroy_confirm", "data-toggle" => "modal", type: "button"}
+      選択した日記をまとめてゴミ箱に入れる
+    #destroy_confirm.modal.fade{"aria-hidden" => "true", "aria-labelledby" => "label1", role: "dialog", tabindex: "-1"}
+      .modal-dialog{role: "document"}
+        .modal-content
+          .modal-header
+            %h5#label1.modal-title 非表示確認
+            %button.close{"aria-label" => "Close", "data-dismiss" => "modal", type: "button"}
+              %span{"aria-hidden" => "true"} ×
+          .modal-body
+            選択された日記をゴミ箱に入れますか？
+            %br
+            (ゴミ箱の日記は24時間以内に削除されます）
+          .modal-footer
+            %button.btn.btn-secondary{"data-dismiss" => "modal", type: "button"} Close
+            = f.submit "OK", class: "btn btn-primary"
+    %table.table.table-bordered
+      %thead
+        %tr
+          %th
+          %th 日記id
+          %th 会員名
+          %th タイトル
+          %th 作成日時
+          %th
+      %tbody
+        - @diaries.each do |diary|
+          %tr
+            %td
+              = f.check_box :diary_ids, {}, diary.id, nil
+            %td
+              = diary.id
+            %td
+              = link_to admin_customer_path(diary.customer) do
+                = diary.customer.name
+            %td
+              = link_to admin_diary_path(diary) do
+                = diary.title
+            %td
+              = diary.created_at.strftime("%m月%d日 %H:%M")
+            %td
+              削除｜
+              = link_to "編集", edit_admin_diary_path(diary)
+  .d-flex.justify-content-center
+    = paginate @diaries

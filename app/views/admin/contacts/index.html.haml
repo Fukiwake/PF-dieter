@@ -1,0 +1,26 @@
+.container
+  .row
+    .col-md-3
+      .sidebar
+        hoge
+    .col-md-9
+      %h1 お問い合わせ
+      - @contacts.each do |contact|
+        = link_to admin_contact_path(contact), class: "text-decoration-none" do
+          .table_link.border-bottom
+            %table.table.table-borderless
+              %tr
+                %td.profile_image.text-center{rowspan: "4"}
+                  = contact.name
+                %td.w-25
+                  = contact.email
+                %td.w-25
+                  = contact.created_at.strftime("%m月%d日 %H:%M")
+                %td.w-25
+                  = contact.status
+                  = contact.genre
+              - if contact.body.present?
+                %tr
+                  %td{colspan: "3"}= contact.body.truncate(200)
+      .d-flex.justify-content-center.mt-4
+        = paginate @contacts
