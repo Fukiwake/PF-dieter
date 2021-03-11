@@ -1,5 +1,8 @@
 Rails.application.routes.draw do
 
+  devise_for :admin, controllers: {
+    sessions: 'admins/sessions',
+  }
   devise_for :customers, controllers: {
     registrations: 'customers/registrations',
     sessions: 'customers/sessions',
@@ -36,4 +39,22 @@ Rails.application.routes.draw do
   end
   resources :chats, only: [:create]
   get "chat/:id" => "chats#show", as: "chat"
+  resources :contacts, only: [:new, :create]
+  resources :reports, only: [:create]
+
+  namespace :admin do
+    resources :customers, only: [:index, :show, :edit, :update] do
+      collection do
+        patch "withdraw_all"
+      end
+    end
+    resources :diaries, only: [:index, :show, :edit, :update] do
+      collection do
+        patch "destroy_all"
+      end
+    end
+
+    resources :contacts, only: [:index, :show, :update]
+
+  end
 end

@@ -43,7 +43,7 @@
                     = render "diary_favorites/favorite", diary: diary
                   コメント
                   = diary.diary_comments.count
-                  - if diary.customer = current_customer
+                  - if diary.customer == current_customer
                     = link_to "編集", edit_diary_path(diary)
                     |
                     = link_to "削除", diary_path(diary), method: :delete, data: { confirm: "日記を削除してもよろしいですか？" }

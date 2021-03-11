@@ -2,14 +2,10 @@ class ApplicationController < ActionController::Base
   before_action :configure_permitted_parameters, if: :devise_controller?
   before_action :set_header_notification
 
-  def after_sign_up_path_for(resource)
-    root_path
-  end
-
   def after_sign_in_path_for(resource)
       case resource
-      # when Admin
-      #   admin_orders_path
+      when Admin
+        admin_customers_path
       when Customer
         root_path
       end

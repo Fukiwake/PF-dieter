@@ -4,5 +4,10 @@
   = diet_method_comment.customer.name
   = diet_method_comment.created_at.strftime('%Y/%m/%d')
   = diet_method_comment.body
-  - if diet_method_comment.customer = current_customer
+  - if diet_method_comment.customer == current_customer
     = link_to "削除", diet_method_diet_method_comment_path(diet_method_comment.diet_method, diet_method_comment), method: :delete, remote: true
+  - else
+    - if Report.where(visitor_id: current_customer.id, diet_method_comment_id: diet_method_comment.id).present?
+      報告済みです
+    - else
+      = link_to "報告", reports_path(diet_method_comment_id: diet_method_comment.id), method: :post

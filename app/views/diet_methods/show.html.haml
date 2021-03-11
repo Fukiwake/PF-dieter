@@ -44,10 +44,15 @@
       %br
       %div{:id => "favorites_buttons_#{@diet_method.id}"}
         = render "diet_method_favorites/favorite", diet_method: @diet_method
-      - if @diet_method.customer = current_customer
+      - if @diet_method.customer == current_customer
         = link_to "編集", edit_diet_method_path(@diet_method.id), data: {"turbolinks" => false}
         |
         = link_to "削除", diet_method_path(@diet_method.id), method: :delete, data: { confirm: "ダイエット方法を削除してもよろしいですか？" }
+      - else
+        - if Report.where(visitor_id: current_customer.id, diet_method_id: @diet_method.id).present?
+          報告済みです
+        - else
+          = link_to "報告", reports_path(diet_method_id: @diet_method.id), method: :post
       %div{:id => "tries_buttons_#{@diet_method.id}"}
         = render "tries/try", diet_method: @diet_method
       #comments
