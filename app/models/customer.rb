@@ -12,8 +12,8 @@ class Customer < ApplicationRecord
       customer.password = Devise.friendly_token[0,20]
     end
   end
-  
-  
+
+
 
   attachment :profile_image
 
@@ -38,6 +38,9 @@ class Customer < ApplicationRecord
   has_many :rooms, through: :entries
   has_many :active_notifications, class_name: 'Notification', foreign_key: 'visitor_id', dependent: :destroy
   has_many :passive_notifications, class_name: 'Notification', foreign_key: 'visited_id', dependent: :destroy
+  has_many :contacts
+  has_many :active_reports, class_name: "Report", foreign_key: 'visitor_id', dependent: :destroy
+  has_many :passive_reports, class_name: "Report", foreign_key: 'visited_id', dependent: :destroy
 
   validates :name, length: { maximum: 20, minimum: 2 }
   validates :introduce, length: { maximum: 200 }
@@ -89,7 +92,7 @@ class Customer < ApplicationRecord
       notification.save if notification.valid?
     end
   end
-  
+
   def self.guest
     find_or_create_by!(email: 'guest@example.com') do |customer|
       customer.password = SecureRandom.urlsafe_base64

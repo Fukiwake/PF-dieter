@@ -1,0 +1,76 @@
+.container
+  %table.table.table-borderless
+    %tr
+      %td.text-center.w-25{rowspan: "2"}
+        = attachment_image_tag(@customer, :profile_image, size: "70x70", fallback: "no_image.png")
+        %br
+        Lv
+        = @customer.level
+      %td.w-25
+        %h3
+          = @customer.name
+      %td.w-25
+        = link_to followings_customer_path(@customer), class: "text-dark" do
+          %span{:id => "followings_count_#{@customer.id}"}
+            = @customer.followings.count
+          フォロー中 
+        = link_to followers_customer_path(@customer), class: "text-dark" do
+          %span{:id => "followers_count_#{@customer.id}"}
+            = @customer.followers.count
+          フォロワー
+      %td
+        = link_to "編集", edit_admin_customer_path(@customer), class: "btn btn-success"
+    - if @customer.introduce.present?
+      %tr
+        %td{colspan: "4"}
+          = @customer.introduce
+  %table.table.table-bordered
+    %tr.bg-secondary.text-light.text-center
+      %th.w-25
+        性別
+      %th.w-25
+        身長
+      %th.w-25
+        目標体重
+      %th.w-25
+        目標体脂肪率
+    %tr.text-center
+      %td
+        = @customer.gender
+      %td
+        = @customer.height
+        cm
+      %td
+        = @customer.target_weight
+        kg
+      %td
+        = @customer.target_body_fat_percentage
+        ％
+    %tr.bg-secondary.text-light.text-center
+      %th{colspan: "4"}
+        ダイエットスタイル
+    %tr.text-center
+      %td{colspan: "4"}
+        - if @customer.diet_style1
+          運動メイン
+          %br
+        - if @customer.diet_style2
+          食事制限メイン
+          %br
+        - if @customer.diet_style3
+          長期継続
+          %br
+        - if @customer.diet_style1
+          短期集中
+  #admin_customer-tab-menu.d-flex.justify-content-between
+    .mt-4.text-center.w-50.active
+      = link_to "日記", "#diary", class: "btn btn-danger w-100 rounded-pill"
+    .mt-4.text-center.w-50
+      = link_to "ダイエット方法", "#diet_method", class: "btn btn-outline-secondary w-100 rounded-pill"
+  #admin_customer-tab-contents
+    #diary.tab
+      = render "diary"
+    #diet_method.tab
+      = render "diet_method"
+    
+        

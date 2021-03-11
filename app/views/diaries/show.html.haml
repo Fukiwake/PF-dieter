@@ -30,7 +30,7 @@
       - @diary.checked_lists.each do |checked_list|
         %i.far.fa-check-square
         = checked_list.body
-      - current_customer.trying_diet_methods.each do |trying_method|
+      - @diary.customer.trying_diet_methods.each do |trying_method|
         - checked_list_ids = @diary.checked_lists.pluck(:id)
         - trying_method.check_lists.where.not(id: checked_list_ids).each do |unchecked_list|
           %i.far.fa-square
@@ -41,10 +41,15 @@
         = attachment_image_tag(@diary, :image, size: "700x400", fallback: "no_image.png")
       %div{:id => "favorites_buttons_#{@diary.id}"}
         = render "diary_favorites/favorite", diary: @diary
-      - if @diary.customer = current_customer
+      - if @diary.customer == current_customer
         = link_to "編集", edit_diary_path(@diary.id)
         |
         = link_to "削除", diary_path(@diary.id), method: :delete, data: { confirm: "日記を削除してもよろしいですか？" }
+      - else
+        - if Report.where(visitor_id: current_customer.id, diary_id: @diary.id).present?
+          報告済みです
+        -else
+          = link_to "報告", reports_path(diary_id: @diary.id), method: :post
       #comments
         = render "diary_comments/index", diary: @diary
       #new-comments

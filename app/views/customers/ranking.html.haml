@@ -10,7 +10,6 @@
         = link_to "day", "#day", class: "text-dark  d-block"
         = link_to "week", "#week", class: "text-dark d-block"
         = link_to "month", "#month", class: "text-dark d-block"
-        = @range
       #ranking-tab-contents
         #day.tab
           = render "ranking", customers: @day_ranking, range: "day"
