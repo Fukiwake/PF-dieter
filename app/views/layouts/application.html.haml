@@ -7,29 +7,35 @@
     %meta{name: "viewport", content: "width=device-width, initial-scale=1, maximum-scale=1"}
     = stylesheet_link_tag    "application", media: "all", "data-turbolinks-track": "reload"
     = javascript_include_tag 'application', 'data-turbolinks-track': 'reload'
+    %link{href: "https://fonts.gstatic.com", rel: "preconnect"}/
+    %link{href: "https://fonts.googleapis.com/css2?family=Courgette&display=swap", rel: "stylesheet"}/
     %link{href: "https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css", rel: "stylesheet"}
+    %link{href: "//cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.css", rel: "stylesheet", type: "text/css"}/
+    %script{src: "//cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.min.js", type: "text/javascript"}
   %body
-    %header.border-bottom.sticky-top
-      %nav.navbar.navbar-expand-lg.navbar-light.bg-light
-        %a.navbar-brand.text-center{href: "/"}
-          = image_tag "ダンベルアイコン9.png", size: "70x40"
-          %br
-          Dieter
-        - if admin_signed_in? && request.fullpath.include?("admin")
-          = render "layouts/admin_signed_in_nav"
-        - elsif customer_signed_in?
-          = render "layouts/signed_in_nav"
-        - else
-          = render "layouts/before_signed_in_nav"
+    %header.sticky-top.border-bottom
+      %nav.navbar.navbar-expand-lg.navbar-light.bg-white.pt-0
+        .container
+          .row.w-100
+            .col-md-3.text-center
+              %a.navbar-brand{href: "/"}
+                = image_tag "logo.jpg", size: "110x110"
+            .col-md-9
+              - if admin_signed_in? && request.fullpath.include?("admin")
+                = render "layouts/admin_signed_in_nav"
+              - elsif customer_signed_in?
+                = render "layouts/signed_in_nav"
+              - else
+                = render "layouts/before_signed_in_nav"
 
     %main
       - flash.each do |key, value|
         - if key == 'notice'
-          %p.alert.alert-success
+          %p.alert.alert-success.mb-0
             = value
             %button.close{"type" => "button", "data-dismiss" => "alert"} &times;
         - else
-          %p.alert.alert-danger
+          %p.alert.alert-danger.mb-0
             = value
             %button.close{"type" => "button", "data-dismiss" => "alert"} &times;
       = yield

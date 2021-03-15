@@ -83,3 +83,5 @@ gem 'whenever', require: false
 gem 'omniauth-twitter'
 gem 'omniauth-google-oauth2'
 gem 'omniauth', '1.9.1'
+gem 'ransack'
+gem 'simple_calendar', '~> 2.0'

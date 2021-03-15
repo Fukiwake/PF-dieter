@@ -1,4 +1,5 @@
 class DiaryFavoritesController < ApplicationController
+  before_action :authenticate_customer!
 
   def create
     @diary = Diary.find(params[:diary_id])

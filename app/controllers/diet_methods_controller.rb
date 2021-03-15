@@ -1,4 +1,5 @@
 class DietMethodsController < ApplicationController
+  before_action :authenticate_customer!, except: [:index, :show]
 
   def new
     @diet_method = DietMethod.new
@@ -15,6 +16,10 @@ class DietMethodsController < ApplicationController
         if check_list.body.blank?
           check_list.destroy
         end
+      end
+      customer_ids = Relationship.where(followed_id: current_customer.id, notification: true).pluck(:follower_id)
+      Customer.where(id: customer_ids).each do |customer|
+        customer.create_notification_diet_method(current_customer, @diet_method)
       end
       flash[:notice] = "ダイエット方法を投稿しました"
       redirect_to diet_methods_path

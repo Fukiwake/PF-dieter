@@ -1,4 +1,5 @@
 class ReportsController < ApplicationController
+  before_action :authenticate_customer!
   
   def create
     report = Report.new(

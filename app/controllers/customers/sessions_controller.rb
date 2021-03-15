@@ -43,4 +43,10 @@ class Customers::SessionsController < Devise::SessionsController
     redirect_to root_path, notice: 'ゲストユーザーとしてログインしました。'
   end
   
+  def new_guest2
+    customer = Customer.guest2
+    sign_in customer
+    redirect_to root_path, notice: 'ゲストユーザー2としてログインしました。'
+  end
+  
 end
