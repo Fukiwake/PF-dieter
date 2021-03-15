@@ -1,21 +1,32 @@
 .container
   .row
-    .col-md-3
+    .col-md-3.mt-4
       .sidebar
         = render "layouts/sidebar", diary: @diary
-    .col-md-9
-      = render "graph"
+    .col-md-9.mt-4
+      #info-tab-menu.font-weight-bold
+        %input.mr-1{type: "radio", value: "#graph", name: "info", checked: "checked"} グラフ
+        %input.ml-3.mr-1{type: "radio", value: "#calendar", name: "info"} カレンダー
+      #info-tab-contents
+        #graph.tab
+          = render "graph"
+        #calendar.tab
+          = month_calendar events: @diaries do |date, diaries|
+            = date.day
+            - diaries.each do |diary|
+              %div
+                = link_to diary.title, diary_path(diary)
       %table.table.table-borderless
         %tr
-          %td.text-center{rowspan: "2"}
+          %td.text-center{rowspan: "2", style: "width:8%"}
             = attachment_image_tag(@customer, :profile_image, size: "70x70", fallback: "no_image.png")
             %br
-            Lv
+            Lv.
             = @customer.level
-          %td.w-25
+          %td{style: "width:23%"}
             %h3
               = @customer.name
-          %td.w-25
+          %td{style: "width:23%"}
             = link_to followings_customer_path(@customer), class: "text-dark" do
               %span{:id => "followings_count_#{@customer.id}"}
                 = @customer.followings.count
@@ -25,13 +36,31 @@
               %span{:id => "followers_count_#{@customer.id}"}
                 = @customer.followers.count
               フォロワー
-          %td.w-25
-            - if current_customer != @customer
+          - if current_customer != @customer
+            %td{style: "width:23%"}
               %span{:id => "follow_bottons_#{@customer.id}"}
                 = render "relationships/follow_form", customer: @customer
-          %td.w-25
-            %i.fas.fa-ellipsis-h.icon
-            %i.far.fa-bell.icon
+            %td.d-flex.align-items-center.text-center.position-relative{style: "width:180px"}
+              .dropdown
+                #dropdownCustomerMenuButton{"data-toggle": "dropdown", "aria-haspopup": "true", "aria-expanded": "false"}
+                  %i.fas.fa-ellipsis-h.icon.border.border-danger.rounded-circle.p-2.mr-3.text-danger{title: "もっと見る"}
+                .dropdown-menu.dropdown-menu-right.text-center{"aria-labelledby": "dropdownCustomerMenuButton"}
+                  - if current_customer.blocking?(@customer)
+                    = link_to "ブロック解除", "#", class: "text-dark d-block", "data-target": "#block-confirm", "data-toggle": "modal", type: "button"
+                  - else
+                    = link_to "ブロック", "#", class: "text-dark d-block", "data-target": "#block-confirm", "data-toggle": "modal", type: "button"
+                  - if Report.where(visitor_id: current_customer.id, visited_id: @customer.id).present?
+                    報告済みです
+                  -else
+                    = link_to "報告", reports_path(visited_id: @customer.id), method: :post, class: "text-dark"
+                = render "blocks/block_form", customer: @customer
+              #notification-button
+                = render "relationships/notification_button"
+              = link_to chat_path(@customer), data: {"turbolinks" => false} do
+                %i.far.fa-comments.icon.border.border-danger.rounded-circle.p-2.ml-3.text-danger{title: "チャット"}
+          - else
+            %td
+              = link_to "プロフィールを編集", setting_path(anchor: 'profile'), class: "btn btn-outline-danger rounded-pill"
         - if @customer.introduce.present?
           %tr
             %td{colspan: "4"}
@@ -39,9 +68,9 @@
       - if current_customer != @customer
         %span{:id => "block_bottons_#{@customer.id}"}
           = render "blocks/block_form", customer: @customer
-        = link_to "チャット", chat_path(@customer.id), data: {"turbolinks" => false}
+
       %table.table.table-bordered
-        %tr.bg-secondary.text-light.text-center
+        %tr.bg-success.text-light.text-center
           %th.w-25
             性別
           %th.w-25
@@ -52,7 +81,7 @@
             目標体脂肪率
         %tr.text-center
           %td
-            = @customer.gender
+            = @customer.gender_i18n
           %td
             = @customer.height
             cm
@@ -79,3 +108,13 @@
                 %br
               - if @customer.diet_style1
                 短期集中
+      #customer-tab-menu.d-flex.justify-content-between
+        .mt-4.text-center.w-50.active
+          = link_to "日記", "#diary", class: "btn btn-danger btn-block"
+        .mt-4.text-center.w-50
+          = link_to "ダイエット方法", "#diet_method", class: "btn btn-outline-secondary btn-block"
+      #customer-tab-contents
+        #diary.tab
+          ああ
+        #diet_method.tab
+          ｗｗ

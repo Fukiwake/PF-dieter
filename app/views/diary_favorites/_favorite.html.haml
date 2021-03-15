@@ -1,6 +1,10 @@
 - if diary.favorited_by?(current_customer)
-  = link_to diary_diary_favorites_path(diary.id), method: :delete, remote: true do
-    ♥#{diary.diary_favorites.count}
+  = link_to diary_diary_favorites_path(diary.id), method: :delete, remote: true, class: "text-danger text-decoration-none", title: "いいねを取り消す" do
+    %i.fas.fa-heart
+    - if diary.diary_favorites.present?
+      = diary.diary_favorites.count
 - else
-  = link_to diary_diary_favorites_path(diary.id), method: :post, remote: true do
-    ♡#{diary.diary_favorites.count}
+  = link_to diary_diary_favorites_path(diary.id), method: :post, remote: true, class: "text-dark text-decoration-none", title: "いいね" do
+    %i.far.fa-heart
+    - if diary.diary_favorites.present?
+      = diary.diary_favorites.count

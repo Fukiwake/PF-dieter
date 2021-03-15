@@ -1,80 +1,55 @@
 .container
   .row
     .col-md-3
-      = render "layouts/sidebar"
+      .sidebar
+        = render "layouts/sidebar"
     .col-md-9
-      %h1.mb-4 新規会員登録
-      %p
-        既に登録済みの方は
-        = link_to "こちら", new_session_path(resource_name)
-        からログインしてください。
-      = render "devise/shared/error_messages", resource: resource
-      .new-registration-form
-        = form_with model: resource, url: customer_registration_path, local: true do |f|
-          %table.table.table-borderless
-            %tr
-              %th.w-25 ユーザー名
-              %td.w-25= f.text_field :name, placeholder: "10文字以内"
-            %tr
-              %th メールアドレス
-              %td= f.text_field :email, placeholder: "dieter@sample.com"
-            %tr
-              %th パスワード
-              %td= f.password_field :password, placeholder: "パスワード(6文字以上)"
-            %tr
-              %th パスワード
-              %td= f.password_field :password_confirmation, placeholder: "パスワード(確認用)"
-            %tr
-              %th 性別
-              %td
-                = f.radio_button :gender, 1
-                男性
-                = f.radio_button :gender, 2
-                女性
-            %tr
-              %th 生年月日
-              %td
-                = f.text_field :birthyear, placeholder: "2000"
-                年
-              %td
-                = f.date_select :birthdate, {discard_year: true, use_month_numbers: true, date_separator: "月"}
-                日
-            %tr
-              %th 身長
-              %td
-                = f.text_field :height, placeholder: "170.9"
-              %td
-                cm
-            %tr
-              %th 目標体重
-              %td
-                = f.text_field :target_weight, placeholder: "67.6"
-              %td
-                kg
-            %tr
-              %th 目標体脂肪率
-              %td
-                = f.text_field :target_body_fat_percentage, placeholder: "15.3"
-              %td
-                ％
-            %tr
-              %th ダイエットスタイル
-              %td
-                = f.check_box :diet_style1 ,{}, "true", "false"
-                運動メイン
-                %br
-                = f.check_box :diet_style2 ,{}, "true", "false"
-                食事制限メイン
-                %br
-                = f.check_box :diet_style3 ,{}, "true", "false"
-                長期継続
-                %br
-                = f.check_box :diet_style4 ,{}, "true", "false"
-                短期集中
-            %tr
-              %th
-              %td= f.submit "新規登録", class: "btn btn-success px-5"
-      - if devise_mapping.omniauthable?
-        - resource_class.omniauth_providers.each do |provider|
-          = link_to "Sign in with #{OmniAuth::Utils.camelize(provider)}", omniauth_authorize_path(resource_name, provider)
-      = link_to 'ゲストログイン（閲覧用）', customers_guest_sign_in_path, method: :post
+      %h2.my-4 新規会員登録
+      .col-md-7.mx-auto
+        %ul.d-flex.list-unstyled.ml-4
+          %li.text-center.text-danger
+            登録情報入力
+            %br
+            %i.fas.fa-circle.position-relative
+              %hr.progress1
+          %li.text-center.text-muted.mx-5
+            プロフィール入力
+            %br
+            %i.fas.fa-circle.position-relative
+              %hr.progress2
+          %li.text-center.text-muted
+            完了
+            %br
+            %i.fas.fa-circle
+        .btn.btn-danger.btn-block.mb-4#meil-login-btn
+          %i.far.fa-envelope
+          メールアドレスで登録する
+        .new-registration-form.mt-3
+          = form_with model: @customer, url: customer_registration_path, local: true do |f|
+            .field
+              = f.label :email, "メールアドレス"
+              %br/
+              = f.email_field :email, autofocus: true, autocomplete: "email", placeholder: 'sample@example.com', class: 'form-control mb-2'
+            .field
+              = f.label :password, "パスワード"
+              %br/
+              = f.password_field :password, placeholder: "パスワード(6文字以上)", class: 'form-control mb-2'
+            .field
+              = f.password_field :password_confirmation, placeholder: "パスワード(確認用)", class: 'form-control mb-2'
+            .action
+              = f.submit "プロフィール作成に進む", class: "btn btn-success my-4 btn-block"
+        - if devise_mapping.omniauthable?
+          - resource_class.omniauth_providers.each do |provider|
+            = link_to omniauth_authorize_path(resource_name, provider), class: "btn btn-outline-secondary mb-4 btn-block" do
+              = image_tag 'google_icon.png', size: "20x20"
+              Googleで登録する
+        = link_to customers_guest_sign_in_path, method: :post, class: "btn btn-outline-secondary btn-block mb-4" do
+          %i.fas.fa-user-check
+          ゲストログイン（閲覧用）
+        = link_to customers_guest2_sign_in_path, method: :post, class: "btn btn-outline-secondary btn-block" do
+          %i.fas.fa-user-check
+          ゲストログイン2（チャット・通知など）
+        %p.mt-3
+          既に登録済みの方は
+          = link_to "こちら", new_session_path(resource_name)
+          からログインしてください。

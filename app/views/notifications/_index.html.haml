@@ -33,6 +33,12 @@
         を送信しました
         %p.text-muted.mb-0
           = notification.chat.message.truncate(100)
+      - when "diary"
+        = link_to "#{notification.diary.title}", diary_path(notification.diary), class: "font-weight-bold"
+        を投稿しました
+      - when "diet_method"
+        = link_to "#{notification.diet_method.title}", diet_method_path(notification.diet_method), class: "font-weight-bold"
+        を投稿しました
     .small.text-muted.text-right
       = time_ago_in_words(notification.created_at).upcase
     %hr

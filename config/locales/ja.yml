@@ -7,3 +7,8 @@ ja:
       previous: <i class="fas fa-angle-left"></i>
       next: <i class="fas fa-angle-right"></i>
       truncate: "..."
+  enums:
+    customer:
+      gender:
+        male: 男性
+        female: 女性

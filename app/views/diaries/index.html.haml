@@ -4,49 +4,6 @@
       .sidebar
         = render "layouts/sidebar", diary: @diary
     .col-md-9
-      %h1 日記一覧
-      - @diaries.each do |diary|
-        = link_to diary_path(diary.id), class: "text-decoration-none" do
-          .table_link.border-bottom
-            %table.table.table-borderless
-              %tr
-                %td.profile_image.text-center{rowspan: "4"}
-                  = link_to customer_path(diary.customer), class: "text-dark" do
-                    = attachment_image_tag(diary.customer, :profile_image, size: "70x70", fallback: "no_image.png")
-                    %br
-                    = diary.customer.name
-                %td.w-25
-                  %h3
-                    = diary.title
-                %td.small.text-secondary.w-25
-                  now：
-                  = diary.weight
-                  cm
-                  = diary.body_fat_percentage
-                  %br
-                  goal：
-                  = diary.customer.target_weight
-                  kg
-                  =diary.customer.target_body_fat_percentage
-                  ％
-                %td.w-25
-                  = diary.created_at.strftime("%m月%d日 %H:%M")
-              - if diary.body.present?
-                %tr
-                  %td{colspan: "3"}= diary.body.truncate(200)
-              - if diary.image_id.present?
-                %tr
-                  %td{colspan: "3"}= attachment_image_tag(diary, :image, size: "600x340", fallback: "no_image.png")
-              %tr
-                %td{colspan: "3"}
-                  %div{:id => "favorites_buttons_#{diary.id}"}
-                    = render "diary_favorites/favorite", diary: diary
-                  コメント
-                  = diary.diary_comments.count
-                  - if diary.customer == current_customer
-                    = link_to "編集", edit_diary_path(diary)
-                    |
-                    = link_to "削除", diary_path(diary), method: :delete, data: { confirm: "日記を削除してもよろしいですか？" }
-      
-      .d-flex.justify-content-center.mt-4
-        = paginate @diaries
+      %h1.text-center.en.mb-0.mt-3 Diaries
+      %p.text-center.border-bottom.mb-0.pb-3 日記
+      = render "index", diaries: @diaries

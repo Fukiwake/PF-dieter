@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_03_11_000928) do
+ActiveRecord::Schema.define(version: 2021_03_15_063151) do
 
   create_table "admins", force: :cascade do |t|
     t.string "email", default: "", null: false
@@ -42,7 +42,7 @@ ActiveRecord::Schema.define(version: 2021_03_11_000928) do
   create_table "check_list_diaries", force: :cascade do |t|
     t.integer "diary_id", null: false
     t.integer "check_list_id", null: false
-    t.boolean "status"
+    t.boolean "status", default: true
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
@@ -110,12 +110,11 @@ ActiveRecord::Schema.define(version: 2021_03_11_000928) do
 
   create_table "diaries", force: :cascade do |t|
     t.integer "customer_id", null: false
-    t.string "title", default: "無題"
+    t.string "title"
     t.text "body"
     t.float "weight", null: false
     t.float "body_fat_percentage"
     t.date "post_date", null: false
-    t.string "image_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.boolean "is_deleted", default: false
@@ -139,6 +138,14 @@ ActiveRecord::Schema.define(version: 2021_03_11_000928) do
     t.integer "diary_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+  end
+
+  create_table "diary_images", force: :cascade do |t|
+    t.integer "diary_id", null: false
+    t.string "image_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["diary_id"], name: "index_diary_images_on_diary_id"
   end
 
   create_table "diet_method_comments", force: :cascade do |t|

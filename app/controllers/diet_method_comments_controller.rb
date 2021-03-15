@@ -1,4 +1,5 @@
 class DietMethodCommentsController < ApplicationController
+  before_action :authenticate_customer!
 
   def create
     diet_method_comment = current_customer.diet_method_comments.new(diet_method_comment_params)
