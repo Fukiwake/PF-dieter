@@ -1,4 +1,5 @@
 class CustomersController < ApplicationController
+  before_action :authenticate_customer!, only: [:withdraw, :notification_setting]
   before_action :set_new_diary, except: [:withdraw]
   before_action :set_customer, only: [:show, :followings, :followers]
   
@@ -8,13 +9,14 @@ class CustomersController < ApplicationController
 
   def show
     @diaries = @customer.diaries.all.order(post_date: "ASC")
-    # 日記を過去1年分に限定する
+    # グラフに表示される日記を過去1年分に限定する
     if @diaries.present?
       @diaries = @diaries.get_one_year_diary
     end
     @weights = @diaries.pluck(:weight)
     @body_fat_percentages = @diaries.pluck(:body_fat_percentage)
     @dates = @diaries.pluck(:post_date)
+    @relationship = Relationship.find_by(followed_id: @customer.id, follower_id: current_customer.id)
   end
   
   def withdraw

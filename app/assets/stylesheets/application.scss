@@ -10,42 +10,49 @@
  * files in this directory. Styles in this file should be added after the last require_* statement.
  * It is generally better to create a new file per style scope.
  *
+ *= require simple_calendar
  *= require_tree .
  *= require_self
  */
 @import "bootstrap";
 @import 'font-awesome-sprockets';
 @import 'font-awesome';
+@import "slick-theme";
+@import "slick";
 
-h1 {
-  background-color: #6c757d;
-  color: white;
-  padding: 10px;
-  font-size: 2rem;
+
+.en {
+  font-family: 'Courgette', cursive;
 }
 
-h2 {
-  border-left: thick solid #6c757d;
-  border-bottom: thin solid #6c757d;
-  padding: 5px;
+h1 {
+  font-size: 60px;
 }
 
 .profile_image {
   border-radius: 50%;
 }
 
-.table_link:hover{
-  cursor:  pointer;
-  background-color: lightgray;
-}
-
 .sidebar {
   position: sticky;
-  top: 110px;
+  top: 170px;
 }
 
 .icon {
-  font-size: 30px;
+  font-size: 25px;
+  width: 43px;
+  height: 43px;
+  &:hover {
+    cursor: pointer;
+  }
+}
+
+.image {
+  border-radius: 5%;
+}
+
+.header-icon {
+  font-size: 25px;
   &:hover {
     cursor: pointer;
   }
@@ -70,24 +77,203 @@ h2 {
   width: 300px;
 }
 
-.n-circle {
-  position: absolute;
-  padding-left: 20px;
-  color: #efa04c;
-}
-
 #up-button {
   display: none;
+}
+
+.notifications-count {
+  position: absolute;
+  left: 10px;
+  top: -10px;
 }
 
 .header-notification {
   display: none;
   position: absolute;
   top: 40px;
+  right: 0;
   background-color: white;
   z-index: 1;
 }
 
 p.text-muted {
   overflow-wrap: break-word;
+}
+
+.nav-link {
+  color: #121416 !important;
+  width: 110px;
+  &:hover {
+    color: #f87a09 !important;
+  }
+}
+
+.level {
+  height: 40px;
+  line-height: 40px;
+}
+
+meter {
+  width: 114px;
+}
+
+#search-submit {
+  width: 30px;
+  border: none;
+  background-image: url(search.png);
+  background-position: center;
+  background-size: auto 90%;
+  background-repeat: no-repeat;
+  background-color: transparent;
+  position: absolute;
+  top: 7px;
+  right: 10px;
+}
+
+.dropdown-toggle:hover {
+  cursor: pointer;
+}
+
+object {
+  cursor: pointer;
+}
+
+#bell-button {
+  width: 21.88px;
+  height: 28px;
+}
+
+.level {
+  width: 150px;
+}
+
+.progress1 {
+  width: 145px;
+  position: absolute;
+  top: -8px;
+  left: 16px;
+}
+
+.progress2 {
+  width: 110px;
+  position: absolute;
+  top: -8px;
+  left: 16px;
+}
+
+.fa-heart:hover {
+  color: #f87a09;
+  opacity: 0.5;
+}
+
+.fa-comment:hover {
+  color: #5dbbb3;
+  opacity: 0.5;
+}
+
+.badge-danger {
+  background-color: #f87a09;
+}
+
+.text-danger {
+  color: #f87a09 !important;
+  &:hover {
+    color: #f87a09 !important;
+  }
+  &:focus {
+    color: #f87a09 !important;
+  }
+}
+
+a.text-danger:hover, a.text-danger:focus {
+  color: #f87a09 !important;
+}
+
+.border-danger {
+  border-color: #f87a09 !important;
+}
+
+.btn-outline-danger {
+  border-color: #f87a09;
+  color: #f87a09;
+  &:hover {
+    background-color: #f87a09;
+    border-color: #f87a09;
+  }
+  &:not(:disabled):not(.disabled):active {
+    background-color: #f87a09;
+    border-color: #f87a09;
+  }
+}
+
+.btn-danger {
+  background-color: #f87a09;
+  border-color: #f87a09;
+  &:hover {
+    background-color: #f87a09;
+    border-color: #f87a09;
+    opacity: 0.7;
+  }
+  &:focus {
+    background-color: #f87a09;
+    border-color: #f87a09;
+  }
+  &:not(:disabled):not(.disabled):active {
+    background-color: #f87a09;
+    border-color: #f87a09;
+  }
+}
+
+.badge-success {
+  background-color: #5dbbb3;
+}
+
+.text-success {
+  color: #5dbbb3 !important;
+}
+
+.border-success {
+  border-color: #5dbbb3 !important;
+}
+
+.btn-outline-success {
+  border-color: #5dbbb3;
+  color: #5dbbb3;
+  &:hover {
+    background-color: #5dbbb3;
+    border-color: #5dbbb3;
+  }
+  &:not(:disabled):not(.disabled):active {
+    background-color: #5dbbb3;
+    border-color: #5dbbb3;
+  }
+}
+
+.btn-success {
+  background-color: #5dbbb3;
+  border-color: #5dbbb3;
+  &:hover {
+    background-color: #5dbbb3;
+    border-color: #5dbbb3;
+    opacity: 0.7;
+  }
+  &:focus {
+    background-color: #5dbbb3;
+    border-color: #5dbbb3;
+  }
+  &:not(:disabled):not(.disabled):active {
+    background-color: #5dbbb3;
+    border-color: #5dbbb3;
+  }
+}
+
+.bg-success {
+  background-color: #5dbbb3 !important;
+}
+
+.btn-outline-secondary {
+  &:hover {
+    background-color: #f87a09;
+    border-color: #f87a09;
+  }
 }

@@ -1,36 +1,12 @@
 .container
   .row
-    .col-md-3
+    .col-md-3.mt-4
       .sidebar
         = render "layouts/sidebar", diary: @diary
     .col-md-9
-      %h1 ユーザー一覧
-      - @customers.each do |customer|
-        = link_to customer_path(customer.id), class: "text-decoration-none", data: {"turbolinks" => false} do
-          .table_link.border-bottom
-            %table.table.table-borderless
-              %tr
-                %td.profile_image{rowspan: "2"}
-                  = attachment_image_tag(customer, :profile_image, size: "70x70", fallback: "no_image.png")
-                %td.w-25
-                  %h3
-                    = customer.name
-                %td.small.text-secondary
-                  now：
-                  = customer.height
-                  cm
-                  %br
-                  goal：
-                  = customer.target_weight
-                  kg
-                  =customer.target_body_fat_percentage
-                  ％
-                %td
-                  - if current_customer != customer
-                    %span{:id => "follow_bottons_#{customer.id}"}
-                      = render "relationships/follow_form", customer: customer
-              - if customer.introduce.present?
-                %tr{colspan: "3"}
-                  %td= customer.introduce
-      .d-flex.justify-content-center.mt-4
-        = paginate @customers
+      %h2.text-center.mb-0.py-4.border-bottom
+        = @customer.name
+        さんのフォロワー
+      = render "index", customers: @customers
+      - if @customers.blank?
+        %p.text-center フォローされているユーザーはいません

@@ -1,5 +1,5 @@
 class ChatsController < ApplicationController
-  before_action :set_new_diary, only: [:show]
+  before_action :authenticate_customer!
 
   def show
     @customer = Customer.find(params[:id])

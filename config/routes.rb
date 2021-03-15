@@ -10,16 +10,18 @@ Rails.application.routes.draw do
   }
   devise_scope :customer do
     post 'customers/guest_sign_in', to: 'customers/sessions#new_guest'
+    post 'customers/guest2_sign_in', to: 'customers/sessions#new_guest2'
+    get 'customers/new_profile', to: 'customers/registrations#new_profile'
+    post 'customers/create_profile', to: 'customers/registrations#create_profile'
   end
   root "homes#top"
-  get 'homes/about'
   get 'setting' => "settings#setting", as: "setting"
   resources :notifications, only: [:index]
   patch "notifications/checked" => "notifications#checked"
   patch "customers/withdraw" => "customers#withdraw"
   patch "customers/notification_setting" => "customers#notification_setting"
   resources :customers, only: [:show, :update, :index] do
-    resource :relationships, only: [:create, :destroy]
+    resource :relationships, only: [:create, :destroy, :update]
     member do
       get :followings, :followers
     end
@@ -55,6 +57,6 @@ Rails.application.routes.draw do
     end
 
     resources :contacts, only: [:index, :show, :update]
-
   end
+  get 'finder' => "finders#finder"
 end

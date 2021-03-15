@@ -6,14 +6,13 @@ class Customer < ApplicationRecord
          :omniauthable, omniauth_providers: %i[google_oauth2]
 
   def self.from_omniauth(auth)
-    where(provider: auth.provider, uid: auth.uid).first_or_create! do |customer|
-      customer.name = auth.info.name
+    where(provider: auth.provider, uid: auth.uid).first_or_initialize do |customer|
       customer.email = auth.info.email
       customer.password = Devise.friendly_token[0,20]
     end
   end
 
-
+  enum gender: { male: 1, female: 2 }
 
   attachment :profile_image
 
@@ -41,8 +40,13 @@ class Customer < ApplicationRecord
   has_many :contacts
   has_many :active_reports, class_name: "Report", foreign_key: 'visitor_id', dependent: :destroy
   has_many :passive_reports, class_name: "Report", foreign_key: 'visited_id', dependent: :destroy
-
-  validates :name, length: { maximum: 20, minimum: 2 }
+  
+  validates :name, length: { minimum: 1, maximum: 10 }
+  validates :gender, presence: true
+  validates :birthyear, numericality: {greater_than: 1000}
+  validates :height, presence: true, numericality: true
+  validates :target_weight, presence: true, numericality: true
+  validates :target_weight, numericality: true
   validates :introduce, length: { maximum: 200 }
 
   def update_without_current_password(params, *options)
@@ -56,6 +60,13 @@ class Customer < ApplicationRecord
     result = update_attributes(params, *options)
     clean_up_passwords
     result
+  end
+  
+  def valid_of_specified?(*columns)
+    columns.each do |column|
+      return false if self.errors.messages.include?(column)
+    end
+    true
   end
 
   def following?(customer)
@@ -93,10 +104,35 @@ class Customer < ApplicationRecord
     end
   end
 
+  def create_notification_diary(current_customer, diary)
+    notification = current_customer.active_notifications.new(
+      visited_id: id,
+      diary_id: diary.id,
+      action: 'diary'
+    )
+    notification.save if notification.valid?
+  end
+  
+  def create_notification_diet_method(current_customer, diet_method)
+    notification = current_customer.active_notifications.new(
+      visited_id: id,
+      diet_method_id: diet_method.id,
+      action: 'diet_method'
+    )
+    notification.save if notification.valid?
+  end
+
   def self.guest
     find_or_create_by!(email: 'guest@example.com') do |customer|
       customer.password = SecureRandom.urlsafe_base64
       customer.name = "ゲスト"
+    end
+  end
+
+  def self.guest2
+    find_or_create_by!(email: 'guest2@example.com') do |customer|
+      customer.password = SecureRandom.urlsafe_base64
+      customer.name = "ゲスト2"
     end
   end
 

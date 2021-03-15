@@ -1,4 +1,5 @@
 class DiaryCommentsController < ApplicationController
+  before_action :authenticate_customer!
   
   def create
     diary_comment = current_customer.diary_comments.new(diary_comment_params)

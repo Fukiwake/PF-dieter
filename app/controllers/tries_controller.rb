@@ -1,4 +1,5 @@
 class TriesController < ApplicationController
+  before_action :authenticate_customer!
 
   def create
     @diet_method = DietMethod.find(params[:diet_method_id])
