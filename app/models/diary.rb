@@ -1,12 +1,12 @@
 class Diary < ApplicationRecord
 
-  attachment :image
+  has_many :diary_images, dependent: :destroy
+  accepts_attachments_for :diary_images, attachment: :image
 
   belongs_to :customer
   has_many :diary_favorites, dependent: :destroy
   has_many :diary_comments, dependent: :destroy
   has_many :check_list_diaries
-  has_many :checked_lists, through: :check_list_diaries, source: :check_list
   accepts_nested_attributes_for :check_list_diaries, allow_destroy: true
   has_many :notifications, dependent: :destroy
   has_many :reports, dependent: :destroy
@@ -21,6 +21,10 @@ class Diary < ApplicationRecord
     else
       self.all
     end
+  end
+
+  def start_time
+    self.post_date
   end
 
   def favorited_by?(customer)

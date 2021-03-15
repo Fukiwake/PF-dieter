@@ -27,18 +27,13 @@
             ％
           %td
             = @diary.created_at.strftime("%m月%d日 %H:%M")
-      - @diary.checked_lists.each do |checked_list|
-        %i.far.fa-check-square
-        = checked_list.body
-      - @diary.customer.trying_diet_methods.each do |trying_method|
-        - checked_list_ids = @diary.checked_lists.pluck(:id)
-        - trying_method.check_lists.where.not(id: checked_list_ids).each do |unchecked_list|
-          %i.far.fa-square
-          = unchecked_list.body
+      = render "check_list", diary: @diary
       - if @diary.body.present?
         = @diary.body
-      - if @diary.image_id.present?
-        = attachment_image_tag(@diary, :image, size: "700x400", fallback: "no_image.png")
+      - if @diary.diary_images.present?
+        .images.text-center
+          - @diary.diary_images.each do |image|
+            = attachment_image_tag(image, :image, size: "700x400")
       %div{:id => "favorites_buttons_#{@diary.id}"}
         = render "diary_favorites/favorite", diary: @diary
       - if @diary.customer == current_customer

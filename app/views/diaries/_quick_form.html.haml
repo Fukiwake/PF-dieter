@@ -1,19 +1,20 @@
-= form_with model: diary, local: true do |f|
+= form_with model: @diary, local: true do |f|
   .field.mt-4
-    = f.label :post_date, "投稿日"
-    %br/
-    = f.date_select :post_date
+    = f.label :post_date, "投稿日", class: "font-weight-bold"
+    .form-inline
+      = f.date_select :post_date, {}, class: "form-control"
   .field
-    = f.label :weight, "体重"
-    %br/
-    = f.text_field :weight
-    kg
+    = f.label :weight, "体重", class: "font-weight-bold"
+    .form-inline
+      = f.text_field :weight, class: "form-control mr-1"
+      kg
   .field
-    = f.label :body_fat_percentage, "体脂肪率"
-    %br/
-    = f.text_field :body_fat_percentage
-    ％
-  .field
+    = f.label :body_fat_percentage, "体脂肪率", class: "font-weight-bold"
+    .form-inline
+      = f.text_field :body_fat_percentage, class: "form-control mr-1"
+      \%
+  .field.form-group
+    .font-weight-bold.mb-2.mt-3 チェックリスト
     = f.fields_for :check_list_diaries do |c|
       - i = 0
       - current_customer.trying_diet_methods.each do |method|
@@ -23,4 +24,4 @@
             = list.body
           - i += 1
   .actions
-    = f.submit "投稿", class: "btn btn-success"
+    = f.submit "投稿", class: "btn btn-success btn-block"
