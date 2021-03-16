@@ -2,6 +2,10 @@
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
 
-.js-file-group:first-child .delete-form-btn {
-  display: none;
+.add-form-btn, .delete-form-btn {
+  cursor: pointer;
+}
+
+ul.tagit {
+  min-width: 228px;
 }

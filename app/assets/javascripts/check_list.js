@@ -1,15 +1,17 @@
 $(function(){
   $(document).on('turbolinks:load', function() {
     function buildField(index) {  // 追加するフォームのｈｔｍｌを用意
-      const html = `<div class="js-file-group" data-index="${index}">
-                      <input type="text" name="diet_method[check_lists_attributes][${index}][body]" id="diet_method_check_lists_attributes_${index}_body">
-                      <span class="delete-form-btn">
-                        削除する
-                      </span>
+      const html = `<div class="js-file-group mb-2" data-index="${index}">
+                      <div class="form-inline">
+                        <input type="text" name="diet_method[check_lists_attributes][${index}][body]" id="diet_method_check_lists_attributes_${index}_body" class="form-control" size="24">
+                        <span class="delete-form-btn ml-3 text-danger font-weight-bold">
+                          削除
+                        </span>
+                      </div>
                     </div>`;
       return html;
     }
-  
+
     let fileIndex = [1, 2, 3, 4] // 追加するフォームのインデックス番号を用意
     var lastIndex = $(".js-file-group:last").data("index"); // 編集フォーム用（すでにデータがある分のインデックス番号が何か取得しておく）
     fileIndex.splice(0, lastIndex); // 編集フォーム用（データがある分のインデックスをfileIndexから除いておく）
@@ -17,16 +19,16 @@ $(function(){
     let displayCount = $(".js-file-group").length // 見えているフォームの数を取得する
     $(".hidden-destroy").hide(); // 編集フォーム用（削除用のチェックボックスを非表示にしておく）
     if (fileIndex.length == 0) $(".add-form-btn").css("display","none"); // 編集フォーム用（フォームが５つある場合は追加ボタンを非表示にしておく）
-  
+
     $(".add-form-btn").on("click", function() { // 追加ボタンクリックでイベント発火
       $(".check_list_field").append(buildField(fileIndex[0])); // fileIndexの一番小さい数字をインデックス番号に使ってフォームを作成
       fileIndex.shift(); // fileIndexの一番小さい数字を取り除く
       if (fileIndex.length == 0) $(".add-form-btn").css("display","none"); // フォームが５つになったら追加ボタンを非表示にする
       displayCount += 1; // 見えているフォームの数をカウントアップしておく
     })
-  
-  
-  
+
+
+
     $(".check_list_field").on("click", ".delete-form-btn", function() { // 削除ボタンクリックでイベント発火
       $(".add-form-btn").css("display","block"); // どの道フォームは一つ消えるので、追加ボタンを必ず表示させるようにしておく
       const targetIndex = $(this).parent().data("index") // クリックした箇所のインデックス番号を取得

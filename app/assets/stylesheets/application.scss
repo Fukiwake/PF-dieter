@@ -19,6 +19,8 @@
 @import 'font-awesome';
 @import "slick-theme";
 @import "slick";
+@import "jquery.tagit";
+@import "tagit.ui-zendesk";
 
 
 .en {
@@ -35,7 +37,7 @@ h1 {
 
 .sidebar {
   position: sticky;
-  top: 170px;
+  top: 180px;
 }
 
 .icon {
@@ -224,6 +226,11 @@ a.text-danger:hover, a.text-danger:focus {
   }
 }
 
+.show > .btn-outline-danger.dropdown-toggle {
+  color: #fff;
+  background-color: #f87a09;
+  border-color: #f87a09;
+}
 .badge-success {
   background-color: #5dbbb3;
 }

@@ -61,6 +61,7 @@ class DiariesController < ApplicationController
   def update
     diary = Diary.find(params[:id])
     if diary.update(diary_params)
+      diary.check_list_diaries.update(status: false)
       CheckListDiary.where(id: params[:diary][:check_list_diary][:id]).update(status: true)
       flash[:notice] = "日記を編集しました"
       redirect_to diary_path(diary)

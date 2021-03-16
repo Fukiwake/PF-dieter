@@ -3,7 +3,7 @@ class Customer < ApplicationRecord
   # :confirmable, :lockable, :timeoutable, :trackable and :omniauthable
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :validatable,
-         :omniauthable, omniauth_providers: %i[google_oauth2]
+         :omniauthable, omniauth_providers: %i[google_oauth2 twitter]
 
   def self.from_omniauth(auth)
     where(provider: auth.provider, uid: auth.uid).first_or_initialize do |customer|
@@ -16,7 +16,6 @@ class Customer < ApplicationRecord
 
   attachment :profile_image
 
-  default_scope -> { order(created_at: :desc) }
   has_many :diaries, dependent: :destroy
   has_many :diet_methods, dependent: :destroy
   has_many :diary_favorites, dependent: :destroy
@@ -40,7 +39,7 @@ class Customer < ApplicationRecord
   has_many :contacts
   has_many :active_reports, class_name: "Report", foreign_key: 'visitor_id', dependent: :destroy
   has_many :passive_reports, class_name: "Report", foreign_key: 'visited_id', dependent: :destroy
-  
+
   validates :name, length: { minimum: 1, maximum: 10 }
   validates :gender, presence: true
   validates :birthyear, numericality: {greater_than: 1000}
@@ -61,7 +60,7 @@ class Customer < ApplicationRecord
     clean_up_passwords
     result
   end
-  
+
   def valid_of_specified?(*columns)
     columns.each do |column|
       return false if self.errors.messages.include?(column)
@@ -112,7 +111,7 @@ class Customer < ApplicationRecord
     )
     notification.save if notification.valid?
   end
-  
+
   def create_notification_diet_method(current_customer, diet_method)
     notification = current_customer.active_notifications.new(
       visited_id: id,
