@@ -1,1 +1,2 @@
 $("#comments").html("#{ j(render "diary_comments/index", diary: @diary) }")
+$("#comment_count").html("#{ @diary.diary_comments.count }")

@@ -25,7 +25,7 @@ class Customers::SessionsController < Devise::SessionsController
   # def configure_sign_in_params
   #   devise_parameter_sanitizer.permit(:sign_in, keys: [:attribute])
   # end
-  
+
   # 退会済みユーザーのログインをブロック
   def reject_inactive_customer
     @customer = Customer.find_by(email: params[:customer][:email])
@@ -36,17 +36,17 @@ class Customers::SessionsController < Devise::SessionsController
       end
     end
   end
-  
+
   def new_guest
     customer = Customer.guest
     sign_in customer
-    redirect_to root_path, notice: 'ゲストユーザーとしてログインしました。'
+    redirect_to diaries_path, notice: 'ゲストユーザーとしてログインしました。'
   end
-  
+
   def new_guest2
     customer = Customer.guest2
     sign_in customer
-    redirect_to root_path, notice: 'ゲストユーザー2としてログインしました。'
+    redirect_to diaries_path, notice: 'ゲストユーザー2としてログインしました。'
   end
-  
+
 end

@@ -1,9 +1,11 @@
 .container
   .row
     .col-md-3
-      = render "layouts/sidebar", diary: @new_diary
+      .sidebar
+        = render "layouts/sidebar", diary: @new_diary
     .col-md-9
-      %h1.mb-4 日記の編集
+      %h1.text-center.en.mb-0.mt-3 EditDiary
+      %p.text-center.mb-4.pb-3 日記編集
       = render "layouts/errors", obj: @diary
       .new-diary-form
         = form_with model: @diary, local: true do |f|
