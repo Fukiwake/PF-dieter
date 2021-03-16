@@ -19,7 +19,7 @@
       %table.table.table-borderless
         %tr
           %td.text-center{rowspan: "2", style: "width:8%"}
-            = attachment_image_tag(@customer, :profile_image, size: "70x70", fallback: "no_image.png")
+            = attachment_image_tag(@customer, :profile_image, size: "100x100", fallback: "no_image.png")
             %br
             Lv.
             = @customer.level
@@ -115,6 +115,6 @@
           = link_to "ダイエット方法", "#diet_method", class: "btn btn-outline-secondary btn-block"
       #customer-tab-contents
         #diary.tab
-          ああ
+          = render "diaries/index", diaries: @customer.diaries.page(params[:page]).per(20)
         #diet_method.tab
-          ｗｗ
+          = render "diet_methods/index", diet_methods: @customer.diet_methods.page(params[:page]).per(20)

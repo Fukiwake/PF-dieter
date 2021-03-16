@@ -1,6 +1,7 @@
 class DietMethod < ApplicationRecord
   
-  attachment :image
+  has_many :diet_method_images, dependent: :destroy
+  accepts_attachments_for :diet_method_images, attachment: :image
   acts_as_taggable
   
   default_scope -> { order(created_at: :desc) }

@@ -91,6 +91,10 @@ class Customers::RegistrationsController < Devise::RegistrationsController
     setting_path
   end
 
+  def after_sign_up_path_for(resource)
+    diaries_path
+  end
+
   # The path used after sign up.
   # def after_sign_up_path_for(resource)
   #   super(resource)

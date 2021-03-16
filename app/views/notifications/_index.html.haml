@@ -40,7 +40,7 @@
         = link_to "#{notification.diet_method.title}", diet_method_path(notification.diet_method), class: "font-weight-bold"
         を投稿しました
     .small.text-muted.text-right
-      = time_ago_in_words(notification.created_at).upcase
+      #{time_ago_in_words(notification.created_at).upcase}前
     %hr
 - else
   %p

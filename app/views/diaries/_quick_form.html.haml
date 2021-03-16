@@ -1,16 +1,16 @@
-= form_with model: @diary, local: true do |f|
+= form_with model: diary, local: true do |f|
   .field.mt-4
     = f.label :post_date, "投稿日", class: "font-weight-bold"
     .form-inline
-      = f.date_select :post_date, {}, class: "form-control"
+      = f.date_select :post_date, {}
   .field
     = f.label :weight, "体重", class: "font-weight-bold"
-    .form-inline
+    .form-group
       = f.text_field :weight, class: "form-control mr-1"
       kg
   .field
     = f.label :body_fat_percentage, "体脂肪率", class: "font-weight-bold"
-    .form-inline
+    .form-group
       = f.text_field :body_fat_percentage, class: "form-control mr-1"
       \%
   .field.form-group
