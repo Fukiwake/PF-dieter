@@ -28,7 +28,7 @@
           =diary.customer.target_body_fat_percentage
           \%
         #dropdownDiaryMenuButton{"data-toggle": "dropdown", "aria-haspopup": "true", "aria-expanded": "false"}
-          %i.fas.fa-ellipsis-h.icon.border.border-danger.rounded-circle.p-2.mr-3.text-danger{title: "もっと見る"}
+          %i.fas.fa-ellipsis-h.icon.btn.btn-outline-danger.rounded-circle.p-2.mr-3{title: "もっと見る"}
         .dropdown-menu.dropdown-menu-right.text-center{"aria-labelledby": "dropdownDiaryMenuButton"}
           - if current_customer == diary.customer
             = link_to "編集", edit_diary_path(diary), class: "text-dark d-block"
@@ -40,10 +40,10 @@
               = link_to "#", class: "text-dark d-block", "data-target": "#block-confirm-#{diary.customer.id}", "data-toggle": "modal", type: "button" do
                 %i.fas.fa-ban
                 ブロック
-            - if Report.where(visitor_id: current_customer.id, visited_id: diary.customer.id).present?
+            - if Report.where(visitor_id: current_customer.id, diary_id: diary.id).present?
               報告済みです
             -else
-              = link_to reports_path(visited_id: diary.customer.id), method: :post, class: "text-dark" do
+              = link_to reports_path(visited_id: diary.customer.id, diary_id: diary.id), method: :post, class: "text-dark" do
                 %i.fas.fa-bullhorn
                 報告
         = render "blocks/block_form", customer: diary.customer
@@ -53,7 +53,7 @@
           = safe_join(diary.body.truncate(200).split("\n"),tag(:br))
     .row.py-2
       .col-md-12
-        = render "check_list", diary: diary
+        = render "diaries/check_list", diary: diary
   - if diary.diary_images.present?
     .images-wrapper
       - diary.diary_images.each do |image|
@@ -76,6 +76,6 @@
           = link_to "http://twitter.com/share?url=#{ENV['HOST']}diaries/#{diary.id}/&text=体重：#{diary.weight}kg・体脂肪率：#{diary.body_fat_percentage}％&hashtags=Dieter", target: :_blank, rel: "noopener noreferrer" do
             %i.fab.fa-twitter.text-primary{title: "twitter"}
     .col-md-9.text-right
-      = diary.created_at.strftime("%m月%d日 %H:%M")
+      #{time_ago_in_words(diary.created_at).upcase}前
 .d-flex.justify-content-center.mt-4
   = paginate diaries

@@ -38,11 +38,12 @@
               = f.password_field :password_confirmation, placeholder: "パスワード(確認用)", class: 'form-control mb-2'
             .action
               = f.submit "プロフィール作成に進む", class: "btn btn-success my-4 btn-block"
-        - if devise_mapping.omniauthable?
-          - resource_class.omniauth_providers.each do |provider|
-            = link_to omniauth_authorize_path(resource_name, provider), class: "btn btn-outline-secondary mb-4 btn-block" do
-              = image_tag 'google_icon.png', size: "20x20"
-              Googleで登録する
+        = link_to omniauth_authorize_path(resource_name, "google_oauth2"), class: "btn btn-outline-secondary mb-4 btn-block" do
+          = image_tag 'google_icon.png', size: "20x20"
+          Googleで登録する
+        = link_to omniauth_authorize_path(resource_name, "twitter"), class: "btn btn-outline-secondary mb-4 btn-block" do
+          %i.fab.fa-twitter.text-primary
+          Twitterで登録する
         = link_to customers_guest_sign_in_path, method: :post, class: "btn btn-outline-secondary btn-block mb-4" do
           %i.fas.fa-user-check
           ゲストログイン（閲覧用）
