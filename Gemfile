@@ -85,3 +85,6 @@ gem 'omniauth-google-oauth2'
 gem 'omniauth', '1.9.1'
 gem 'ransack'
 gem 'simple_calendar', '~> 2.0'
+group :production do
+  gem 'mysql2'
+end
