@@ -14,6 +14,7 @@ Rails.application.routes.draw do
     get 'customers/new_profile', to: 'customers/registrations#new_profile'
     post 'customers/create_profile', to: 'customers/registrations#create_profile'
   end
+  mount ActionCable.server => '/cable'
   root "homes#top"
   get 'setting' => "settings#setting", as: "setting"
   resources :notifications, only: [:index]

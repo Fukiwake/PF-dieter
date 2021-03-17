@@ -36,7 +36,7 @@
               %span{:id => "followers_count_#{@customer.id}"}
                 = @customer.followers.count
               フォロワー
-          - if current_customer != @customer
+          - if current_customer != @customer && customer_signed_in?
             %td{style: "width:23%"}
               %span{:id => "follow_bottons_#{@customer.id}"}
                 = render "relationships/follow_form", customer: @customer
@@ -58,17 +58,13 @@
                 = render "relationships/notification_button"
               = link_to chat_path(@customer), data: {"turbolinks" => false} do
                 %i.far.fa-comments.icon.border.border-danger.rounded-circle.p-2.ml-3.text-danger{title: "チャット"}
-          - else
+          - elsif customer_signed_in?
             %td
               = link_to "プロフィールを編集", setting_path(anchor: 'profile'), class: "btn btn-outline-danger rounded-pill"
         - if @customer.introduce.present?
           %tr
             %td{colspan: "4"}
               = @customer.introduce
-      - if current_customer != @customer
-        %span{:id => "block_bottons_#{@customer.id}"}
-          = render "blocks/block_form", customer: @customer
-
       %table.table.table-bordered
         %tr.bg-success.text-light.text-center
           %th.w-25

@@ -9,7 +9,7 @@
             %h3
               = customer.name
           %td
-            - if current_customer != customer
+            - if current_customer != customer && customer_signed_in?
               %span{:id => "follow_bottons_#{customer.id}"}
                 = render "relationships/follow_form", customer: customer
         %tr{colspan: "2"}
