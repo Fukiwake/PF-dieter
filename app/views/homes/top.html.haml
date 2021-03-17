@@ -1,1 +1,9 @@
-top
+.main-visual-wrapper.position-relative
+  // = image_tag "top-mv.jpg"
+  - unless customer_signed_in?
+    .costomer-button-wrapper
+      = link_to "新規登録", new_customer_registration_path, class: "btn btn-outline-primary mt-4 mr-3"
+      = link_to "ログイン", new_customer_session_path, class: "btn btn-outline-primary mt-4"
+.container
+  %h1.text-center.mt-5.en About
+  %p.text-center Dieterについて
