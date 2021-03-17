@@ -101,7 +101,7 @@ $slick-opacity-not-active: 0.25 !default;
 
 .slick-prev {
     left: 0px;
-    background-image: image-url(left.png);
+    background-image: image-url(left);
     z-index: 100;
     background-size: 30px;
     background-repeat: no-repeat;
@@ -122,7 +122,7 @@ $slick-opacity-not-active: 0.25 !default;
 
 .slick-next {
     right: 0px;
-    background-image: image-url(right.png);
+    background-image: image-url(right);
     z-index: 100;
     background-size: 30px;
     background-repeat: no-repeat;
