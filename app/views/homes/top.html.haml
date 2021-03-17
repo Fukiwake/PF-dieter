@@ -1,5 +1,4 @@
 .main-visual-wrapper.position-relative
-  = image_tag "top-mv.jpg"
   - unless customer_signed_in?
     .costomer-button-wrapper
       = link_to "新規登録", new_customer_registration_path, class: "btn btn-outline-primary mt-4 mr-3"
