@@ -1,0 +1,23 @@
+.d-flex
+  .flex-column.w-100.mt-3
+    = render "finders/search_form"
+    #navbarNavDropdown.collapse.navbar-collapse.mt-3
+      .navbar-nav.justify-content-between.d-flex.w-100
+        %div
+          = link_to customers_path , class: "nav-link text-center p-0" do
+            %i.far.fa-user.icon
+            .small ユーザー
+        %div
+          = link_to diaries_path , class: "nav-link text-center p-0" do
+            %i.far.fa-list-alt.icon
+            .small 日記
+        %div
+          = link_to diet_methods_path , class: "nav-link text-center p-0" do
+            %i.fas.fa-biking.icon
+            .small ダイエット方法
+        %div
+          = link_to ranking_customers_path , class: "nav-link text-center p-0" do
+            %i.fas.fa-medal.icon
+            .small ランキング
+%button{class: "navbar-toggler", type: "button", "data-toggle": "collapse", "data-target": "#navbarNavDropdown", "aria-controls": "navbarNavDropdown", "aria-expanded": "false", "aria-label": "Toggle navigation"}
+  %span.navbar-toggler-icon

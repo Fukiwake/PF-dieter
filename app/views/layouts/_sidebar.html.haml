@@ -1,0 +1,43 @@
+- if customer_signed_in? && request.fullpath.include?("setting")
+  %h2 設定
+  %ul#tab-menu
+    %li.mt-4
+      = link_to "プロフィール", "#profile", class: "text-dark"
+    %li.mt-4
+      = link_to "会員ブロック", "#block", class: "text-dark"
+    %li.mt-4
+      = link_to "通知", "#notification", class: "text-dark"
+    %li.mt-4
+      = link_to "退会", "#withdraw", class: "text-dark"
+- elsif customer_signed_in? && request.fullpath.include?("diaries/new")
+  %h3
+    実践中の
+    %br
+    ダイエット方法
+  - current_customer.trying_diet_methods.each do |trying_diet_method|
+    %table.table.table-borderless.border-bottom
+      %tr
+        %td.profile_image.text-center{rowspan: "2"}
+          = attachment_image_tag(trying_diet_method.customer, :profile_image, size: "50x50", fallback: "no_image.png")
+          %br
+          = trying_diet_method.customer.name
+        %td.font-weight-bold
+          = trying_diet_method.title
+      %tr
+        %td.pt-0
+          %div{:id => "tries_buttons_#{trying_diet_method.id}"}
+            = render "tries/try", diet_method: trying_diet_method
+- elsif customer_signed_in?
+  %h2 投稿
+  = link_to "日記を投稿", new_diary_path, class: "btn btn-outline-success btn-block mt-4"
+  = link_to "ダイエット方法を投稿", new_diet_method_path, class: "btn btn-outline-success btn-block mt-4"
+  %h2.mt-5 クイック投稿
+  #quick-diary-form
+    = render "diaries/quick_form", diary: diary
+- else
+  %h2 初めての方へ
+  = link_to "新規登録", new_customer_registration_path, class: "btn btn-outline-primary w-100 mt-4"
+  = link_to "ログイン", new_customer_session_path, class: "btn btn-outline-primary w-100 mt-4"
+  %ul.mt-4
+    %li
+      = link_to "お問い合わせ", new_contact_path, class: "text-dark"

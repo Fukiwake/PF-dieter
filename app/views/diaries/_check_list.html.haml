@@ -1,0 +1,8 @@
+- if diary.check_list_diaries.present?
+  - diary.check_list_diaries.each do |check_list_diary|
+    - if check_list_diary.status == true
+      %i.far.fa-check-square.text-success.mr-4
+        = check_list_diary.check_list.body
+    - else
+      %i.far.fa-square.mr-4
+        = check_list_diary.check_list.body

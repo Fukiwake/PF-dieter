@@ -1,0 +1,42 @@
+= form_with model: @diary, local: true do |f|
+  .field
+    = f.label :post_date, "投稿日", class: "font-weight-bold"
+    .form-inline
+      = f.date_select :post_date, {}, class: "form-control"
+  .row.d-flex
+    .col-md-5
+      .field
+        = f.label :weight, "体重", class: "font-weight-bold"
+        .form-inline
+          = f.text_field :weight, autofocus: true, size: 24, class: "form-control mr-1"
+          kg
+    .col-md-7
+      .field
+        = f.label :body_fat_percentage, "体脂肪率", class: "font-weight-bold"
+        .form-inline
+          = f.text_field :body_fat_percentage, size: 24, class: "form-control mr-1"
+          \%
+  .field
+    = f.label :title, "タイトル", class: "font-weight-bold"
+    .form-inline
+      = f.text_field :title, size: 24, class: "form-control"
+  .field.form-group
+    = f.label :body, "本文", class: "font-weight-bold"
+    %br/
+    = f.text_area :body, size: "autox10", class: "form-control"
+  .field
+    = f.label :image, "画像", class: "font-weight-bold"
+    %br/
+    = f.attachment_field :diary_images_images, multiple: true
+  .field
+    .font-weight-bold.mb-2.mt-3 チェックリスト
+    = f.fields_for :check_list_diaries do |c|
+      - i = 0
+      - current_customer.trying_diet_methods.each do |method|
+        - method.check_lists.each do |list|
+          %div{ data: {index: "#{i}"} }
+            = c.check_box :check_list_id, {name: "diary[check_list_diaries_attributes][#{i}][check_list_id]"}, list.id, nil
+            = list.body
+          - i += 1
+  .actions
+    = f.submit "投稿する", class: "btn btn-success btn-block"

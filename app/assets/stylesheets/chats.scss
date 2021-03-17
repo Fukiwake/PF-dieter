@@ -1,0 +1,57 @@
+// Place all the styles related to the Chats controller here.
+// They will automatically be included in application.css.
+// You can use Sass (SCSS) here: http://sass-lang.com/
+
+#chat-area {
+  overflow-y: scroll;
+  height: 70vh;
+}
+
+#rooms {
+  overflow-y: scroll;
+  height: 70vh;
+}
+
+#room-now {
+  background-color: silver;
+}
+
+.chat-right {
+  background-color: #5AE628;
+  color: #333333;
+  max-width: 300px;
+  padding:10px;
+  font-weight:bold;
+  font-size:14px;
+  border-radius:15px;
+  -webkit-border-radius:15px;
+  -moz-border-radius:15px;
+  display: inline-block;
+  margin-top: 10px;
+  p {
+    overflow-wrap: break-word;
+    margin-bottom: 0;
+  }
+}
+
+.chat-left {
+  background-color: #C0C0C0;
+  color: #333333;
+  max-width: 300px;
+  padding:10px;
+  font-weight:bold;
+  font-size:14px;
+  border-radius:15px;
+  -webkit-border-radius:15px;
+  -moz-border-radius:15px;
+  display: inline-block;
+  margin-top: 10px;
+  p {
+    overflow-wrap: break-word;
+    margin-bottom: 0;
+  }
+}
+
+#message-form {
+  width: 100%;
+}

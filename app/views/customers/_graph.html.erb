@@ -1,0 +1,163 @@
+<style>
+  #chartdiv {
+    width: 100%;
+    height: 456px;
+  }
+</style>
+
+
+<script src="https://www.amcharts.com/lib/4/core.js"></script>
+<script src="https://www.amcharts.com/lib/4/charts.js"></script>
+<script src="https://www.amcharts.com/lib/4/themes/animated.js"></script>
+<script src="//www.amcharts.com/lib/4/lang/ja_JP.js"></script>
+
+<script>
+am4core.ready(function() {
+
+am4core.useTheme(am4themes_animated);
+
+var chart = am4core.create("chartdiv", am4charts.XYChart);
+chart.dateFormatter.language = new am4core.Language();
+chart.dateFormatter.language.locale = am4lang_ja_JP;
+chart.language.locale["_date_day"] = "MMMdd日";
+chart.language.locale["_date_year"] = "yyyy年";
+
+const weights = <%== JSON.dump(@weights) %>;
+const body_fat_percentages = <%== JSON.dump(@body_fat_percentages) %>;
+const dates = <%== JSON.dump(@dates) %>;
+
+var firstDate = new Date(dates[0])
+var lastDate = new Date(dates.slice(-1)[0])
+var termDate = (lastDate - firstDate) / 1000 / 60 / 60 / 24 + 1
+
+function generateChartData() {
+  var chartData = [];
+  for (var j = 0; j < weights.length; j++ ) {
+    for (var i = 0; i < termDate; i++ ) {
+      var newDate = new Date(firstDate)
+      newDate.setDate(newDate.getDate() + i);
+      if ((new Date(dates[j])) - (newDate) == 0 ){
+        weight = weights[j]
+        body_fat_percentage = body_fat_percentages[j]
+        chartData.push({
+          date1: newDate,
+          weight: weight,
+          date2: newDate,
+          body_fat_percentage: body_fat_percentage
+        });
+      }
+    }
+  }
+  return chartData;
+}
+
+chart.data = generateChartData();
+
+//グラフタイトルの設定
+var title = chart.titles.create();
+title.fontSize = 15; //グラフタイトルのフォントサイズの設定
+
+//第１横軸の設定
+var dateAxis = chart.xAxes.push(new am4charts.DateAxis());
+dateAxis.renderer.grid.template.location = 0;
+dateAxis.renderer.labels.template.fill = am4core.color("#ffffff");
+
+//第２横軸の設定
+var dateAxis2 = chart.xAxes.push(new am4charts.DateAxis());
+dateAxis2.tooltip.disabled = true; //Tooltipの非表示設定
+dateAxis2.renderer.grid.template.location = 0;
+dateAxis2.renderer.labels.template.fill = am4core.color("#000000");
+
+//第１縦軸の設定
+var valueAxis = chart.yAxes.push(new am4charts.ValueAxis());
+valueAxis.tooltip.disabled = true;
+valueAxis.renderer.labels.template.fill = am4core.color("#e59165");
+valueAxis.renderer.minWidth = 60;
+valueAxis.renderer.labels.template.adapter.add("text", function(text) {
+  return text + "kg";
+});
+valueAxis.renderer.fontWeight = "bold"; //軸の値を太字に変更
+
+//第２縦軸の設定
+var valueAxis2 = chart.yAxes.push(new am4charts.ValueAxis());
+valueAxis2.tooltip.disabled = true;
+valueAxis2.renderer.grid.template.strokeDasharray = "2,3";
+valueAxis2.renderer.labels.template.fill = am4core.color("#dfcc64");
+valueAxis2.renderer.minWidth = 60;
+valueAxis2.renderer.labels.template.adapter.add("text", function(text) {
+  return text + "%";
+});
+valueAxis2.renderer.opposite = true; //第２縦軸を右側に設定
+valueAxis2.renderer.fontWeight = "bold"; //軸の値を太字に変更
+
+//第１縦軸用の値の設定
+var series = chart.series.push(new am4charts.LineSeries());
+series.name = "体重";
+series.dataFields.dateX = "date1";
+series.dataFields.valueY = "weight";
+series.tooltipText = "{valueY.value}kg";
+series.fill = am4core.color("#e59165");
+series.stroke = am4core.color("#e59165");
+series.smoothing = "monotoneX";
+series.strokeWidth = 2;
+series.minBulletDistance = 20;
+
+//系列のポイントの設定(第１縦軸)
+var bullet = series.bullets.push(new am4charts.Bullet());
+var circle = bullet.createChild(am4core.Circle);
+circle.width = 5;
+circle.height = 5;
+circle.horizontalCenter = "middle";
+circle.verticalCenter = "middle";
+
+//第１縦軸用の値の設定
+var series2 = chart.series.push(new am4charts.LineSeries());
+series2.name = "体脂肪率";
+series2.dataFields.dateX = "date2";
+series2.dataFields.valueY = "body_fat_percentage";
+series2.yAxis = valueAxis2;
+series2.xAxis = dateAxis2;
+series2.tooltipText = "{valueY.value}%"; //ツールチップの表示設定
+series2.fill = am4core.color("#dfcc64"); //ツールチップの色
+series2.stroke = am4core.color("#dfcc64"); //グラフの線の色
+series2.smoothing = "monotoneX";
+series2.strokeWidth = 2;
+series2.minBulletDistance = 20;
+
+//系列のポイントの設定(第2縦軸)
+var bullet2 = series2.bullets.push(new am4charts.Bullet());
+var circle2 = bullet2.createChild(am4core.Circle);
+circle2.width = 5;
+circle2.height = 5;
+circle2.horizontalCenter = "middle";
+circle2.verticalCenter = "middle";
+
+chart.scrollbarX = new am4core.Scrollbar(); //スクロールバーの設定
+
+//カーソルの設定
+chart.cursor = new am4charts.XYCursor();
+chart.cursor.xAxis = dateAxis2;
+
+//凡例の設定
+chart.legend = new am4charts.Legend();
+chart.legend.parent = chart.plotContainer;
+chart.legend.zIndex = 100;
+chart.legend.position = "top";
+chart.legend.contentAlign = "left";
+
+
+chart.events.on("ready", function () {
+  dateAxis.zoom({start:1-28/termDate, end:1});
+  dateAxis2.zoom({start:1-28/termDate, end:1});
+});
+
+//グリッド線の設定
+valueAxis2.renderer.grid.template.strokeOpacity = 0.07;
+dateAxis2.renderer.grid.template.strokeOpacity = 0;
+dateAxis.renderer.grid.template.strokeOpacity = 0;
+valueAxis.renderer.grid.template.strokeOpacity = 0.07;
+
+});
+</script>
+
+<div id="chartdiv"></div>

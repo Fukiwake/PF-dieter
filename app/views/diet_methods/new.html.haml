@@ -1,0 +1,45 @@
+.container
+  .row
+    .col-md-3
+      .sidebar
+        = render "layouts/sidebar", diary: @diary
+    .col-md-9
+      %h1.text-center.en.mb-0.mt-3 NewDietMethod
+      %p.text-center.mb-4.pb-3 ダイエット方法作成
+      = render "layouts/errors", obj: @diet_method
+      .new-diet-method-form
+        = form_with model: @diet_method, local: true do |f|
+          .field
+            = f.label :title, "タイトル", class: "font-weight-bold"
+            .form-inline
+              = f.text_field :title, size: 24, class: "form-control"
+          .field
+            = f.label :tag_list, "タグ", class: "font-weight-bold"
+            .form-inline
+              = f.text_field :tag_list, value: @diet_method.tag_list.join(','), id: "tags", class: "form-control tag_form d-none"
+          .field
+            = f.label :way, "やり方・効果", class: "font-weight-bold"
+            .form-group
+              = f.text_area :way, size: "autox10", class: "form-control"
+          .field
+            = f.label :attention, "注意点", class: "font-weight-bold"
+            .form-group
+              = f.text_area :attention, size: "autox10", class: "form-control"
+          .field
+            = f.label :image, "画像", class: "font-weight-bold"
+            .form-inline
+              = f.attachment_field :diet_method_images_images, multiple: true
+          .check_list_field
+            .font-weight-bold チェックリスト
+            = f.fields_for :check_lists do |list|
+              .js-file-group.mb-2{ data: {index: "#{list.index}"} }
+                .form-inline
+                  = list.text_field :body, size: 24, class: "form-control"
+                  %span.delete-form-btn.ml-3.text-danger.font-weight-bold
+                    削除
+                - if @diet_method.persisted?
+                  = list.check_box :_destroy, data:{ index: list.index }, class: "hidden-destroy"
+          .add-form-btn.text-success.font-weight-bold
+            追加する＋
+          .actions.mt-4
+            = f.submit "投稿する", class: "btn btn-success btn-block"

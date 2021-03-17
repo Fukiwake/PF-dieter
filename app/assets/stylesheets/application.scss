@@ -1,0 +1,286 @@
+/*
+ * This is a manifest file that'll be compiled into application.css, which will include all the files
+ * listed below.
+ *
+ * Any CSS and SCSS file within this directory, lib/assets/stylesheets, or any plugin's
+ * vendor/assets/stylesheets directory can be referenced here using a relative path.
+ *
+ * You're free to add application-wide styles to this file and they'll appear at the bottom of the
+ * compiled file so the styles you add here take precedence over styles defined in any other CSS/SCSS
+ * files in this directory. Styles in this file should be added after the last require_* statement.
+ * It is generally better to create a new file per style scope.
+ *
+ *= require simple_calendar
+ *= require_tree .
+ *= require_self
+ */
+@import "bootstrap";
+@import 'font-awesome-sprockets';
+@import 'font-awesome';
+@import "slick-theme";
+@import "slick";
+@import "jquery.tagit";
+@import "tagit.ui-zendesk";
+
+
+.en {
+  font-family: 'Courgette', cursive;
+}
+
+h1 {
+  font-size: 60px;
+}
+
+.profile_image {
+  border-radius: 50%;
+}
+
+.sidebar {
+  position: sticky;
+  top: 180px;
+}
+
+.icon {
+  font-size: 25px;
+  width: 43px;
+  height: 43px;
+  &:hover {
+    cursor: pointer;
+  }
+}
+
+.image {
+  border-radius: 5%;
+}
+
+.header-icon {
+  font-size: 25px;
+  &:hover {
+    cursor: pointer;
+  }
+}
+
+.fa-camera {
+  position: absolute;
+  top: 60px;
+  left: 60px;
+  text-shadow: 1px 2px 3px black;
+}
+
+#file {
+  display: none;
+}
+
+.field {
+  margin-bottom: 20px;
+}
+
+.header-notification {
+  width: 300px;
+}
+
+#up-button {
+  display: none;
+}
+
+.notifications-count {
+  position: absolute;
+  left: 10px;
+  top: -10px;
+}
+
+.header-notification {
+  display: none;
+  position: absolute;
+  top: 40px;
+  right: 0;
+  background-color: white;
+  z-index: 1;
+}
+
+p.text-muted {
+  overflow-wrap: break-word;
+}
+
+.nav-link {
+  color: #121416 !important;
+  width: 110px;
+  &:hover {
+    color: #f87a09 !important;
+  }
+}
+
+.level {
+  height: 40px;
+  line-height: 40px;
+}
+
+meter {
+  width: 114px;
+}
+
+#search-submit {
+  width: 30px;
+  border: none;
+  background-image: image-url(search.png);
+  background-position: center;
+  background-size: auto 90%;
+  background-repeat: no-repeat;
+  background-color: transparent;
+  position: absolute;
+  top: 7px;
+  right: 10px;
+}
+
+.dropdown-toggle:hover {
+  cursor: pointer;
+}
+
+object {
+  cursor: pointer;
+}
+
+#bell-button {
+  width: 21.88px;
+  height: 28px;
+}
+
+.level {
+  width: 150px;
+}
+
+.progress1 {
+  width: 145px;
+  position: absolute;
+  top: -8px;
+  left: 16px;
+}
+
+.progress2 {
+  width: 110px;
+  position: absolute;
+  top: -8px;
+  left: 16px;
+}
+
+.fa-heart:hover {
+  color: #f87a09;
+  opacity: 0.5;
+}
+
+.fa-comment:hover {
+  color: #5dbbb3;
+  opacity: 0.5;
+}
+
+.badge-danger {
+  background-color: #f87a09;
+}
+
+.text-danger {
+  color: #f87a09 !important;
+  &:hover {
+    color: #f87a09 !important;
+  }
+  &:focus {
+    color: #f87a09 !important;
+  }
+}
+
+a.text-danger:hover, a.text-danger:focus {
+  color: #f87a09 !important;
+}
+
+.border-danger {
+  border-color: #f87a09 !important;
+}
+
+.btn-outline-danger {
+  border-color: #f87a09;
+  color: #f87a09;
+  &:hover {
+    background-color: #f87a09;
+    border-color: #f87a09;
+  }
+  &:not(:disabled):not(.disabled):active {
+    background-color: #f87a09;
+    border-color: #f87a09;
+  }
+}
+
+.btn-danger {
+  background-color: #f87a09;
+  border-color: #f87a09;
+  &:hover {
+    background-color: #f87a09;
+    border-color: #f87a09;
+    opacity: 0.7;
+  }
+  &:focus {
+    background-color: #f87a09;
+    border-color: #f87a09;
+  }
+  &:not(:disabled):not(.disabled):active {
+    background-color: #f87a09;
+    border-color: #f87a09;
+  }
+}
+
+.show > .btn-outline-danger.dropdown-toggle {
+  color: #fff;
+  background-color: #f87a09;
+  border-color: #f87a09;
+}
+.badge-success {
+  background-color: #5dbbb3;
+}
+
+.text-success {
+  color: #5dbbb3 !important;
+}
+
+.border-success {
+  border-color: #5dbbb3 !important;
+}
+
+.btn-outline-success {
+  border-color: #5dbbb3;
+  color: #5dbbb3;
+  &:hover {
+    background-color: #5dbbb3;
+    border-color: #5dbbb3;
+  }
+  &:not(:disabled):not(.disabled):active {
+    background-color: #5dbbb3;
+    border-color: #5dbbb3;
+  }
+}
+
+.btn-success {
+  background-color: #5dbbb3;
+  border-color: #5dbbb3;
+  &:hover {
+    background-color: #5dbbb3;
+    border-color: #5dbbb3;
+    opacity: 0.7;
+  }
+  &:focus {
+    background-color: #5dbbb3;
+    border-color: #5dbbb3;
+  }
+  &:not(:disabled):not(.disabled):active {
+    background-color: #5dbbb3;
+    border-color: #5dbbb3;
+  }
+}
+
+.bg-success {
+  background-color: #5dbbb3 !important;
+}
+
+.btn-outline-secondary {
+  &:hover {
+    background-color: #f87a09;
+    border-color: #f87a09;
+  }
+}

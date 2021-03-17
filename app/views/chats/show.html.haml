@@ -1,0 +1,63 @@
+.container
+  .row
+    .col-md-3
+      .sidebar
+        = render "layouts/sidebar", diary: @diary
+    .col-md-3
+      .sidebar
+        %h2 メッセージ
+        #rooms.d-flex.flex-column.mb-3
+          #room-now
+            %table
+              %tr
+                %td#chat-with.profile_image{rowspan: "2"}
+                  = attachment_image_tag(@customer, :profile_image, size: "70x70", fallback: "no_image.png")
+                %td.font-weight-bold
+                  = @customer.name
+              -if @chats.present?
+                %tr
+                  %td
+                    = @chats.last.message.truncate(13)
+          - if @other_rooms.present?
+            - @other_rooms.each do |room|
+              - customer = room.customers.where.not(id: current_customer.id)
+              - if customer.present?
+                = link_to chat_path(customer[0].id), class: "text-dark", data: {"turbolinks" => false} do
+                  %table.mb-3
+                    %tr
+                      %td.profile_image{rowspan: "2"}
+                        = attachment_image_tag(customer[0], :profile_image, size: "70x70", fallback: "no_image.png")
+                      %td.font-weight-bold
+                        = customer[0].name
+                    - if room.chats.present?
+                      %tr
+                        %td
+                          = room.chats.last.message.truncate(13)
+
+    .col-md-6
+      %h1{id: "customer_room", "data-room_id": "#{@room.id}", "data-current_customer_id": "#{current_customer.id}", "data-customer_id": "#{@customer.id}"}
+        = @customer.name
+        さんとのチャット
+      #chat-area
+        #chats-scroll-inner
+          - @chats.each do |chat|
+            - if chat.customer == current_customer
+              .text-right
+                .chat-right.text-left
+                  %p
+                    = chat.message
+                %div
+                  = chat.created_at.strftime("%Y年%-m月%-d日 %-H:%M")
+            - else
+              %div
+                = attachment_image_tag(@customer, :profile_image, size: "70x70", fallback: "no_image.png")
+                .chat-left
+                  %p
+                    = chat.message
+                %div
+                  = chat.created_at.strftime("%Y年%-m月%-d日 %-H:%M")
+          #new-message
+      #chat_form
+        .input-group-append
+          %input{type: "text", id: "message-form", placeholder: "新しいメッセージを作成"}
+          %i.fas.fa-angle-double-right.btn.btn-outline-primary

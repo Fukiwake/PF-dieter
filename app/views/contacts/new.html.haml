@@ -1,0 +1,23 @@
+.container
+  .row
+    .col-md-10.mx-auto
+      %h1 お問い合わせ
+      = form_with model: @contact, local: true do |f|
+        .field
+          = f.label :name, "お名前"
+          %br
+          = f.text_field :name
+        .field
+          = f.label :email, "メールアドレス"
+          %br
+          = f.text_field :email
+        .field
+          = f.label :genre, "お問い合わせ内容"
+          %br
+          = f.select :genre, [ ["ご要望",1], ["良い点", 2], ["悪い点", 3 ] ,["その他", 4] ], {include_blank: "選択してください", selected: "選択してください"}
+        .field
+          = f.label :body, "お問い合わせ詳細"
+          %br
+          = f.text_area :body
+        .action
+          = f.submit "送信する"

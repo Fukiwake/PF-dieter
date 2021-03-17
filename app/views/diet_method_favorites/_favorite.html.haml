@@ -1,0 +1,10 @@
+- if diet_method.favorited_by?(current_customer)
+  = link_to diet_method_diet_method_favorites_path(diet_method.id), method: :delete, remote: true, class: "text-danger text-decoration-none", title: "いいねを取り消す" do
+    %i.fas.fa-heart
+    - if diet_method.diet_method_favorites.present?
+      = diet_method.diet_method_favorites.count
+- else
+  = link_to diet_method_diet_method_favorites_path(diet_method.id), method: :post, remote: true, class: "text-dark text-decoration-none", title: "いいね" do
+    %i.far.fa-heart
+    - if diet_method.diet_method_favorites.present?
+      = diet_method.diet_method_favorites.count

@@ -1,0 +1,7 @@
+- notifications = current_customer.passive_notifications.where(checked: false)
+- if notifications.present?
+  %i.far.fa-bell.icon
+  %span.notifications-count.badge.badge-danger
+    = notifications.count
+- else
+  %i.far.fa-bell.icon
