@@ -12,7 +12,7 @@
   email: "test#{n}@test.com",
   password: "testpass",
   name: name,
-  gender: rand(0..1),
+  gender: "male",
   birthyear: rand(1960..2015),
   birthdate: "2021-02-03",
   height: rand(120..190),

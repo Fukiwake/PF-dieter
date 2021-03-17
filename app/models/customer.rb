@@ -125,6 +125,11 @@ class Customer < ApplicationRecord
     find_or_create_by!(email: 'guest@example.com') do |customer|
       customer.password = SecureRandom.urlsafe_base64
       customer.name = "ゲスト"
+      customer.gender = "male"
+      customer.birthyear = 1999
+      customer.birthdate = 23
+      customer.height = 180
+      customer.target_weight = 80
     end
   end
 
@@ -132,6 +137,11 @@ class Customer < ApplicationRecord
     find_or_create_by!(email: 'guest2@example.com') do |customer|
       customer.password = SecureRandom.urlsafe_base64
       customer.name = "ゲスト2"
+      customer.gender = "female"
+      customer.birthyear = 1999
+      customer.birthdate = 23
+      customer.height = 180
+      customer.target_weight = 80
     end
   end
 
