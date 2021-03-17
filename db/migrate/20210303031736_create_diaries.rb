@@ -13,7 +13,6 @@ class CreateDiaries < ActiveRecord::Migration[5.2]
     end
     
     add_index :diaries, :title
-    add_index :diaries, :body
     add_index :diaries, :weight
     add_index :diaries, :body_fat_percentage
   end
