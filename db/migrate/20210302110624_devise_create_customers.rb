@@ -36,7 +36,7 @@ class DeviseCreateCustomers < ActiveRecord::Migration[5.2]
       t.timestamps null: false
       t.string :name, null: false
       t.integer :gender, null: false
-      t.integer :birthyear, null: false
+      t.integer :birthyear
       t.date :birthdate, null: false
       t.float :height, null: false
       t.float :target_weight, null: false
