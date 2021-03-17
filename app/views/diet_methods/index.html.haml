@@ -7,8 +7,6 @@
       -if @tag.present?
         %h2 「#{@tag}」のダイエット方法一覧
       -else
-        %h1.text-center.en.mb-0.mt-3 DietMethods
-        %p.text-center.mb-0.pb-3 ダイエット方法
       .border-bottom
         - if @tags.present?
           - @tags.each do |tag|
