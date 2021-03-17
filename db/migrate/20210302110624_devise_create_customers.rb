@@ -57,7 +57,6 @@ class DeviseCreateCustomers < ActiveRecord::Migration[5.2]
     add_index :customers, :email,                unique: true
     add_index :customers, :reset_password_token, unique: true
     add_index :customers, :name
-    add_index :customers, :birthyear
     add_index :customers, :target_weight
     add_index :customers, :target_body_fat_percentage
     
