@@ -28,28 +28,29 @@
           = diet_method.customer.target_body_fat_percentage
           \%
       .col-md-3.d-flex.justify-content-between.align-items-start.mt-3
-        %div{:id => "tries_buttons_#{diet_method.id}"}
-          = render "tries/try", diet_method: diet_method
-        #dropdowndiet_methodMenuButton{"data-toggle": "dropdown", "aria-haspopup": "true", "aria-expanded": "false"}
-          %i.fas.fa-ellipsis-h.icon.btn.btn-outline-danger.rounded-circle.p-2.mr-3{title: "もっと見る"}
-        .dropdown-menu.dropdown-menu-right.text-center{"aria-labelledby": "dropdowndiet_methodMenuButton"}
-          - if current_customer == diet_method.customer
-            = link_to "編集", edit_diet_method_path(diet_method), class: "text-dark d-block"
-            = link_to "削除", diet_method_path(diet_method), method: :delete, class: "text-dark d-block", data: { confirm: "ダイエット方法を削除してもよろしいですか？" }
-          - else
-            - if current_customer.blocking?(diet_method.customer)
-              = link_to "ブロック解除", "#", class: "text-dark d-block", "data-target": "#block-confirm-#{diet_method.customer.id}", "data-toggle": "modal", type: "button"
+        - if customer_signed_in?
+          %div{:id => "tries_buttons_#{diet_method.id}"}
+            = render "tries/try", diet_method: diet_method
+          #dropdowndiet_methodMenuButton{"data-toggle": "dropdown", "aria-haspopup": "true", "aria-expanded": "false"}
+            %i.fas.fa-ellipsis-h.icon.btn.btn-outline-danger.rounded-circle.p-2.mr-3{title: "もっと見る"}
+          .dropdown-menu.dropdown-menu-right.text-center{"aria-labelledby": "dropdowndiet_methodMenuButton"}
+            - if current_customer == diet_method.customer
+              = link_to "編集", edit_diet_method_path(diet_method), class: "text-dark d-block"
+              = link_to "削除", diet_method_path(diet_method), method: :delete, class: "text-dark d-block", data: { confirm: "ダイエット方法を削除してもよろしいですか？" }
             - else
-              = link_to "#", class: "text-dark d-block", "data-target": "#block-confirm-#{diet_method.customer.id}", "data-toggle": "modal", type: "button" do
-                %i.fas.fa-ban
-                ブロック
-            - if Report.where(visitor_id: current_customer.id, diet_method_id: diet_method.id).present?
-              報告済みです
-            -else
-              = link_to reports_path(visited_id: diet_method.customer.id, diet_method_id: diet_method.id), method: :post, class: "text-dark" do
-                %i.fas.fa-bullhorn
-                報告
-        = render "blocks/block_form", customer: diet_method.customer
+              - if current_customer.blocking?(diet_method.customer)
+                = link_to "ブロック解除", "#", class: "text-dark d-block", "data-target": "#block-confirm-#{diet_method.customer.id}", "data-toggle": "modal", type: "button"
+              - else
+                = link_to "#", class: "text-dark d-block", "data-target": "#block-confirm-#{diet_method.customer.id}", "data-toggle": "modal", type: "button" do
+                  %i.fas.fa-ban
+                  ブロック
+              - if Report.where(visitor_id: current_customer.id, diet_method_id: diet_method.id).present?
+                報告済みです
+              -else
+                = link_to reports_path(visited_id: diet_method.customer.id, diet_method_id: diet_method.id), method: :post, class: "text-dark" do
+                  %i.fas.fa-bullhorn
+                  報告
+          = render "blocks/block_form", customer: diet_method.customer
     .row.py-2
       .col-md-12
         - if diet_method.way.present?
@@ -67,8 +68,13 @@
           = attachment_image_tag(image, :image, size: "825x400")
   %object.row.border-bottom
     .col-md-1
-      %div{:id => "favorites_buttons_#{diet_method.id}"}
-        = render "diet_method_favorites/favorite", diet_method: diet_method
+      - if customer_signed_in?
+        %div{:id => "favorites_buttons_#{diet_method.id}"}
+          = render "diet_method_favorites/favorite", diet_method: diet_method
+      - else
+        %i.far.fa-heart
+          - if diet_method.diet_method_favorites.present?
+            = diet_method.diet_method_favorites.count
     .col-md-1
       %i.far.fa-comment{title: "コメント"}
       - if diet_method.diet_method_comments.present?

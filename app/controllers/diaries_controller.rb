@@ -3,10 +3,14 @@ class DiariesController < ApplicationController
   before_action :set_new_diary, except: [:show, :edit]
 
   def index
-    following_ids = current_customer.followings.pluck(:id)
-    blocking_ids = current_customer.blockings.pluck(:id)
-    # @diaries = Diary.where(customer_id: following_ids).where.not(customer_id: blocking_ids).page(params[:page]).per(20)
-    @diaries = Diary.order("created_at DESC").page(params[:page]).per(20)
+    if customer_signed_in?
+      following_ids = current_customer.followings.pluck(:id)
+      blocking_ids = current_customer.blockings.pluck(:id)
+      # @diaries = Diary.where(customer_id: following_ids).where.not(customer_id: blocking_ids).page(params[:page]).per(20)
+      @diaries = Diary.order("created_at DESC").page(params[:page]).per(20)
+    else
+      @diaries = Diary.order("created_at DESC").page(params[:page]).per(20)
+    end
   end
 
   def show

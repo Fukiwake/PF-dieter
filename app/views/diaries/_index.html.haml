@@ -27,26 +27,27 @@
           kg&nbsp;
           =diary.customer.target_body_fat_percentage
           \%
-        #dropdownDiaryMenuButton{"data-toggle": "dropdown", "aria-haspopup": "true", "aria-expanded": "false"}
-          %i.fas.fa-ellipsis-h.icon.btn.btn-outline-danger.rounded-circle.p-2.mr-3{title: "もっと見る"}
-        .dropdown-menu.dropdown-menu-right.text-center{"aria-labelledby": "dropdownDiaryMenuButton"}
-          - if current_customer == diary.customer
-            = link_to "編集", edit_diary_path(diary), class: "text-dark d-block"
-            = link_to "削除", diary_path(diary), method: :delete, class: "text-dark d-block", data: { confirm: "日記を削除してもよろしいですか？" }
-          - else
-            - if current_customer.blocking?(diary.customer)
-              = link_to "ブロック解除", "#", class: "text-dark d-block", "data-target": "#block-confirm-#{diary.customer.id}", "data-toggle": "modal", type: "button"
+        - if customer_signed_in?
+          #dropdownDiaryMenuButton{"data-toggle": "dropdown", "aria-haspopup": "true", "aria-expanded": "false"}
+            %i.fas.fa-ellipsis-h.icon.btn.btn-outline-danger.rounded-circle.p-2.mr-3{title: "もっと見る"}
+          .dropdown-menu.dropdown-menu-right.text-center{"aria-labelledby": "dropdownDiaryMenuButton"}
+            - if current_customer == diary.customer
+              = link_to "編集", edit_diary_path(diary), class: "text-dark d-block"
+              = link_to "削除", diary_path(diary), method: :delete, class: "text-dark d-block", data: { confirm: "日記を削除してもよろしいですか？" }
             - else
-              = link_to "#", class: "text-dark d-block", "data-target": "#block-confirm-#{diary.customer.id}", "data-toggle": "modal", type: "button" do
-                %i.fas.fa-ban
-                ブロック
-            - if Report.where(visitor_id: current_customer.id, diary_id: diary.id).present?
-              報告済みです
-            -else
-              = link_to reports_path(visited_id: diary.customer.id, diary_id: diary.id), method: :post, class: "text-dark" do
-                %i.fas.fa-bullhorn
-                報告
-        = render "blocks/block_form", customer: diary.customer
+              - if current_customer.blocking?(diary.customer)
+                = link_to "ブロック解除", "#", class: "text-dark d-block", "data-target": "#block-confirm-#{diary.customer.id}", "data-toggle": "modal", type: "button"
+              - else
+                = link_to "#", class: "text-dark d-block", "data-target": "#block-confirm-#{diary.customer.id}", "data-toggle": "modal", type: "button" do
+                  %i.fas.fa-ban
+                  ブロック
+              - if Report.where(visitor_id: current_customer.id, diary_id: diary.id).present?
+                報告済みです
+              -else
+                = link_to reports_path(visited_id: diary.customer.id, diary_id: diary.id), method: :post, class: "text-dark" do
+                  %i.fas.fa-bullhorn
+                  報告
+              = render "blocks/block_form", customer: diary.customer
     .row.py-2
       .col-md-12
         - if diary.body.present?
@@ -61,8 +62,13 @@
           = attachment_image_tag(image, :image, size: "825x400")
   %object.row.border-bottom
     .col-md-1
-      %div{:id => "favorites_buttons_#{diary.id}"}
-        = render "diary_favorites/favorite", diary: diary
+      - if customer_signed_in?
+        %div{:id => "favorites_buttons_#{diary.id}"}
+          = render "diary_favorites/favorite", diary: diary
+      - else
+        %i.far.fa-heart
+          - if diary.diary_favorites.present?
+            = diary.diary_favorites.count
     .col-md-1
       %i.far.fa-comment{title: "コメント"}
       - if diary.diary_comments.present?

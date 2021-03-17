@@ -127,9 +127,11 @@ class Customer < ApplicationRecord
       customer.name = "ゲスト"
       customer.gender = "male"
       customer.birthyear = 1999
-      customer.birthdate = 23
+      customer.birthdate = "02-03"
       customer.height = 180
       customer.target_weight = 80
+      customer.target_body_fat_percentage = 15
+      customer.introduce = "ゲストアカウントです。閲覧する際にご利用ください。"
     end
   end
 
@@ -139,9 +141,11 @@ class Customer < ApplicationRecord
       customer.name = "ゲスト2"
       customer.gender = "female"
       customer.birthyear = 1999
-      customer.birthdate = 23
-      customer.height = 180
-      customer.target_weight = 80
+      customer.birthdate = "02-03"
+      customer.height = 160
+      customer.target_weight = 49
+      customer.target_body_fat_percentage = 15
+      customer.introduce = "ゲストアカウント2です。チャット機能や通知機能を試す際にご利用ください。"
     end
   end
 
