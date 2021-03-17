@@ -1,0 +1,15 @@
+.container
+  .row
+    .col-md-3
+      = render "layouts/sidebar"
+    .col-md-9
+      #tab-contents
+        #profile.tab
+          = render "profile", customer: current_customer
+        #block.tab
+          = render "block", customers: @customers
+        #notification.tab
+          = render "notification"
+        #withdraw.tab
+          = render "withdraw", customer: current_customer
+

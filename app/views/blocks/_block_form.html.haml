@@ -1,0 +1,35 @@
+- if current_customer.blocking?(customer)
+  .modal.fade{"aria-hidden" => "true", "aria-labelledby" => "label#{customer.id}", role: "dialog", tabindex: "-1", id: "block-confirm-#{customer.id}"}
+    .modal-dialog.modal-dialog-centered{role: "document"}
+      .modal-content
+        .modal-header
+          %h5.modal-title{id: "label#{customer.id}"}
+            = customer.name
+            さんをブロック解除しますか？
+          %button.close{"aria-label" => "Close", "data-dismiss" => "modal", type: "button"}
+            %span{"aria-hidden" => "true"} ×
+        .modal-body.text-left
+          = customer.name
+          さんはあなたをフォローして投稿を表示できるようになります。
+        .modal-footer
+          %button.btn.btn-secondary{"data-dismiss" => "modal", type: "button"} Close
+          = link_to "ブロック解除", customer_blocks_path(customer.id), method: :delete, class: "btn btn-danger"
+
+- else
+  .modal.fade{"aria-hidden" => "true", "aria-labelledby" => "label#{customer.id}", role: "dialog", tabindex: "-1", id: "block-confirm-#{customer.id}"}
+    .modal-dialog.modal-dialog-centered{role: "document"}
+      .modal-content
+        .modal-header
+          %h5.modal-title{id: "label#{customer.id}"}
+            = customer.name
+            さんをブロックしますか？
+          %button.close{"aria-label" => "Close", "data-dismiss" => "modal", type: "button"}
+            %span{"aria-hidden" => "true"} ×
+        .modal-body.text-left
+          = customer.name
+          さんはあなたをフォローできなくなり、投稿も表示されなくなります。
+          %br
+          また、このアカウントからの投稿や通知は今後表示されません。
+        .modal-footer
+          %button.btn.btn-secondary{"data-dismiss" => "modal", type: "button"} Close
+          = link_to "ブロック", customer_blocks_path(customer.id), method: :post, class: "btn btn-danger"

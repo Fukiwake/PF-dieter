@@ -1,0 +1,91 @@
+.container.mt-4
+  .row
+    .col-md-3
+      .sidebar
+        = render "layouts/sidebar", diary: @new_diary
+    .col-md-9
+      .row.pt-2
+        .col-md-6
+          .d-flex
+            .text-center
+              = link_to customer_path(@diary.customer), class: "text-dark font-weight-bold" do
+                = attachment_image_tag(@diary.customer, :profile_image, size: "70x70", fallback: "no_image.png")
+                %br
+                = @diary.customer.name
+            %h3.ml-3.mt-3
+              = @diary.title.truncate(10)
+        .col-md-6.d-flex.justify-content-between.align-items-start.mt-3
+          .info
+            %span.badge.badge-danger
+              now
+            = @diary.customer.height
+            cm&nbsp;
+            = @diary.weight
+            kg&nbsp;
+            = @diary.body_fat_percentage
+            \%
+            %br
+            %span.badge.badge-success
+              goal
+            = @diary.customer.target_weight
+            kg&nbsp;
+            = @diary.customer.target_body_fat_percentage
+            \%
+          #dropdownDiaryMenuButton{"data-toggle": "dropdown", "aria-haspopup": "true", "aria-expanded": "false"}
+            %i.fas.fa-ellipsis-h.icon.btn.btn-outline-danger.rounded-circle.p-2.mr-3{title: "もっと見る"}
+          .dropdown-menu.dropdown-menu-right.text-center{"aria-labelledby": "dropdownDiaryMenuButton"}
+            - if current_customer == @diary.customer
+              = link_to "編集", edit_diary_path(@diary), class: "text-dark d-block"
+              = link_to "削除", diary_path(@diary), method: :delete, class: "text-dark d-block", data: { confirm: "日記を削除してもよろしいですか？" }
+            - else
+              - if current_customer.blocking?(@diary.customer)
+                = link_to "ブロック解除", "#", class: "text-dark d-block", "data-target": "#block-confirm-#{@diary.customer.id}", "data-toggle": "modal", type: "button"
+              - else
+                = link_to "#", class: "text-dark d-block", "data-target": "#block-confirm-#{@diary.customer.id}", "data-toggle": "modal", type: "button" do
+                  %i.fas.fa-ban
+                  ブロック
+              - if Report.where(visitor_id: current_customer.id, visited_id: @diary.customer.id).present?
+                報告済みです
+              -else
+                = link_to reports_path(visited_id: @diary.customer.id), method: :post, class: "text-dark" do
+                  %i.fas.fa-bullhorn
+                  報告
+          = render "blocks/block_form", customer: @diary.customer
+      .row.py-2
+        .col-md-12
+          - if @diary.body.present?
+            = safe_join(@diary.body.truncate(200).split("\n"),tag(:br))
+      .row.py-2
+        .col-md-12
+          = render "check_list", diary: @diary
+      - if @diary.diary_images.present?
+        .images-wrapper
+          - @diary.diary_images.each do |image|
+            .image.text-center.border
+              = attachment_image_tag(image, :image, size: "825x400")
+      .row.border-bottom
+        .col-md-1
+          %div{:id => "favorites_buttons_#{@diary.id}"}
+            = render "diary_favorites/favorite", diary: @diary
+        .col-md-1
+          %i.far.fa-comment{title: "コメント"}
+          %span#comment_count
+            - if @diary.diary_comments.present?
+              = @diary.diary_comments.count
+        .col-md-1
+          - if current_customer == @diary.customer
+            - if @diary.body.present?
+              = link_to "http://twitter.com/share?url=#{ENV['HOST']}diaries/#{@diary.id}/&text=#{@diary.body.truncate(100)}体重：#{@diary.weight}kg・体脂肪率：#{@diary.body_fat_percentage}％&hashtags=Dieter", target: :_blank, rel: "noopener noreferrer" do
+                %i.fab.fa-twitter.text-primary{title: "twitter"}
+            - else
+              = link_to "http://twitter.com/share?url=#{ENV['HOST']}diaries/#{@diary.id}/&text=体重：#{@diary.weight}kg・体脂肪率：#{@diary.body_fat_percentage}％&hashtags=Dieter", target: :_blank, rel: "noopener noreferrer" do
+                %i.fab.fa-twitter.text-primary{title: "twitter"}
+        .col-md-9.text-right
+          #{time_ago_in_words(@diary.created_at).upcase}前
+      #new-comments.mt-3
+        = form_with(model: [@diary, @diary_comment]) do |f|
+          .input-group
+            = f.text_area :body, size: "105x1", placeholder: "コメントする"
+            = f.submit "送信", class: "btn btn-success"
+      #comments.mt-4
+        = render "diary_comments/index", diary: @diary

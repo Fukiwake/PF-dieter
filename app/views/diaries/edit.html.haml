@@ -1,0 +1,54 @@
+.container
+  .row
+    .col-md-3
+      .sidebar
+        = render "layouts/sidebar", diary: @new_diary
+    .col-md-9
+      %h1.text-center.en.mb-0.mt-3 EditDiary
+      %p.text-center.mb-4.pb-3 日記編集
+      = render "layouts/errors", obj: @diary
+      .new-diary-form
+        = form_with model: @diary, local: true do |f|
+          .field
+            = f.label :post_date, "投稿日", class: "font-weight-bold"
+            .form-inline
+              = f.date_select :post_date, {}, class: "form-control"
+          .row.d-flex
+            .col-md-5
+              .field
+                = f.label :weight, "体重", class: "font-weight-bold"
+                .form-inline
+                  = f.text_field :weight, size: 24, class: "form-control mr-1"
+                  kg
+            .col-md-7
+              .field
+                = f.label :body_fat_percentage, "体脂肪率", class: "font-weight-bold"
+                .form-inline
+                  = f.text_field :body_fat_percentage, size: 24, class: "form-control mr-1"
+                  \%
+          .field
+            = f.label :title, "タイトル", class: "font-weight-bold"
+            .form-inline
+              = f.text_field :title, size: 24, class: "form-control"
+          .field.form-group
+            = f.label :body, "本文", class: "font-weight-bold"
+            %br/
+            = f.text_area :body, size: "autox10", class: "form-control"
+          .field
+            = f.label :image, "画像", class: "font-weight-bold"
+            %br/
+            = f.attachment_field :diary_images_images, multiple: true
+          .field
+            .font-weight-bold.mb-2.mt-3 チェックリスト
+            - @diary.check_list_diaries.each do |check_list_diary|
+              = f.fields_for :check_list_diary do |c|
+                - if check_list_diary.status == true
+                  = c.check_box :id, {checked: true, multiple: true}, check_list_diary.id, nil
+                  = check_list_diary.check_list.body
+                  %br
+                - else
+                  = c.check_box :id, {multiple: true}, check_list_diary.id, nil
+                  = check_list_diary.check_list.body
+                  %br
+          .actions
+            = f.submit "投稿する", class: "btn btn-success btn-block"

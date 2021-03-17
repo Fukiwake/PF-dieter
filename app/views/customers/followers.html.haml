@@ -1,0 +1,12 @@
+.container
+  .row
+    .col-md-3.mt-4
+      .sidebar
+        = render "layouts/sidebar", diary: @diary
+    .col-md-9
+      %h2.text-center.mb-0.py-4.border-bottom
+        = @customer.name
+        さんのフォロワー
+      = render "index", customers: @customers
+      - if @customers.blank?
+        %p.text-center フォローされているユーザーはいません

@@ -1,0 +1,22 @@
+- diet_method.diet_method_comments.order("created_at DESC").each do |diet_method_comment|
+  .row
+    .col-md-12
+      = attachment_image_tag diet_method.customer, :profile_image, fallback: "no_image.png", size: "50x50"
+      %span.ml-2.font-weight-bold
+        = diet_method_comment.customer.name
+      #{time_ago_in_words(diet_method_comment.created_at).upcase}前
+      %span#dropdownCommentMenuButton{"data-toggle": "dropdown", "aria-haspopup": "true", "aria-expanded": "false"}
+        %i.fas.fa-ellipsis-h.icon.p-2.mr-3.text-danger{title: "もっと見る"}
+      .dropdown-menu.dropdown-menu-right.text-center{"aria-labelledby": "dropdownCommentMenuButton"}
+        - if diet_method_comment.customer == current_customer
+          = link_to "削除", diet_method_diet_method_comment_path(diet_method_comment.diet_method, diet_method_comment), method: :delete, remote: true, class: "text-dark"
+        - else
+          - if Report.where(visitor_id: current_customer.id, diet_method_comment_id: diet_method_comment.id).present?
+            報告済みです
+          -else
+            = link_to reports_path(diet_method_comment_id: diet_method_comment.id), method: :post, class: "text-dark" do
+              %i.fas.fa-bullhorn
+              報告
+  .row
+    .col-md-12.border-bottom
+      = diet_method_comment.body

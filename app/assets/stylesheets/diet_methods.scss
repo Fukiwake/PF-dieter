@@ -1,0 +1,11 @@
+// Place all the styles related to the DietMethods controller here.
+// They will automatically be included in application.css.
+// You can use Sass (SCSS) here: http://sass-lang.com/
+
+.add-form-btn, .delete-form-btn {
+  cursor: pointer;
+}
+
+ul.tagit {
+  min-width: 228px;
+}

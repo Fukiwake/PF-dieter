@@ -1,0 +1,49 @@
+.d-flex
+  .flex-column.w-100.mt-3
+    = render "finders/search_form"
+    #navbarNavDropdown.collapse.navbar-collapse.mt-3
+      .navbar-nav.justify-content-between.d-flex.w-100
+        = link_to diaries_path , class: "nav-link text-center p-0", title: "日記" do
+          %i.fas.fa-list-alt.header-icon
+          .small.en diaries
+        = link_to diet_methods_path , class: "nav-link text-center p-0", title: "ダイエット方法" do
+          %i.fas.fa-biking.header-icon
+          .small.en methods
+        = link_to customer_path(current_customer) , class: "nav-link text-center p-0", data: {"turbolinks" => false}, title: "マイページ" do
+          %i.fas.fa-user.header-icon
+          .small.en mypage
+        = link_to customers_path , class: "nav-link text-center p-0", title: "ユーザー" do
+          %i.fas.fa-users.header-icon
+          .small.en users
+        = link_to ranking_customers_path , class: "nav-link text-center p-0", title: "ランキング" do
+          %i.fas.fa-medal.header-icon
+          .small.en ranking
+  .flex-column.mt-3
+    .level
+      Lv.
+      = current_customer.level
+      - threshold = LevelSetting.find_by(level: current_customer.level + 1).threshold
+      %meter{min: 0, max: threshold, value: current_customer.total_exp, "data-toggle": "tooltip", title: "あと#{threshold - current_customer.total_exp}exp"}
+    .d-flex.mt-3.align-items-center
+      .dropdown
+        #dropdownMenuButton.dropdown-toggle{"data-toggle": "dropdown", "aria-haspopup": "true", "aria-expanded": "false"}
+          = attachment_image_tag(current_customer, :profile_image, size: "40x40", fallback: "no_image.png")
+          = current_customer.name.truncate(10)
+        .dropdown-menu.text-center{"aria-labelledby": "dropdownMenuButton"}
+          = link_to "設定", setting_path, class: "text-dark d-block", data: {"turbolinks" => false}
+          = link_to "ログアウト", destroy_customer_session_path, method: :delete, class: "text-dark d-block"
+          = link_to "お問い合わせ", new_contact_path, class: "text-dark d-block"
+      .notification-wrapper.position-relative.ml-4
+        #bell-button
+          = link_to notifications_checked_path, {method: :patch, remote: true, class: "text-dark position-relative"}  do
+            = render "notifications/bell_button"
+        %i#up-button.far.fa-bell.icon
+        .header-notification.p-3.border
+          .d-flex.justify-content-between.mb-3
+            %i.far.fa-bell 通知一覧
+            = link_to "通知設定", setting_path(anchor: 'notification'), data: {"turbolinks" => false}, class: "ml-auto"
+          = render "notifications/index", notifications: @header_notifications
+          .text-center
+            = link_to "通知一覧", notifications_path
+%button{class: "navbar-toggler", type: "button", "data-toggle": "collapse", "data-target": "#navbarNavDropdown", "aria-controls": "navbarNavDropdown", "aria-expanded": "false", "aria-label": "Toggle navigation"}
+  %span.navbar-toggler-icon

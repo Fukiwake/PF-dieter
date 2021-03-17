@@ -1,0 +1,4 @@
+$("#follow_bottons_#{@customer.id}").html("#{ j(render "relationships/follow_form", customer: @customer) }")
+$("#notification-button").html("#{ j(render "relationships/notification_button") }")
+$("#followings_count_#{@customer.id}").html("#{@customer.followings.count}")
+$("#followers_count_#{@customer.id}").html("#{@customer.followers.count}")

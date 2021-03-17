@@ -1,0 +1,19 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  customer_id: 1
+  title: MyString
+  body: MyText
+  weight: 1.5
+  body_fat_percentage: 1.5
+  post_date: 2021-03-03
+  image_id: MyString
+
+two:
+  customer_id: 1
+  title: MyString
+  body: MyText
+  weight: 1.5
+  body_fat_percentage: 1.5
+  post_date: 2021-03-03
+  image_id: MyString
