@@ -46,9 +46,9 @@
                   %i.fas.fa-ellipsis-h.icon.border.border-danger.rounded-circle.p-2.mr-3.text-danger{title: "もっと見る"}
                 .dropdown-menu.dropdown-menu-right.text-center{"aria-labelledby": "dropdownCustomerMenuButton"}
                   - if current_customer.blocking?(@customer)
-                    = link_to "ブロック解除", "#", class: "text-dark d-block", "data-target": "#block-confirm", "data-toggle": "modal", type: "button"
+                    = link_to "ブロック解除", "#", class: "text-dark d-block", "data-target": "#block-confirm-#{@customer.id}", "data-toggle": "modal", type: "button"
                   - else
-                    = link_to "ブロック", "#", class: "text-dark d-block", "data-target": "#block-confirm", "data-toggle": "modal", type: "button"
+                    = link_to "ブロック", "#", class: "text-dark d-block", "data-target": "#block-confirm-#{@customer.id}", "data-toggle": "modal", type: "button"
                   - if Report.where(visitor_id: current_customer.id, visited_id: @customer.id).present?
                     報告済みです
                   -else
@@ -111,6 +111,6 @@
           = link_to "ダイエット方法", "#diet_method", class: "btn btn-outline-secondary btn-block"
       #customer-tab-contents
         #diary.tab
-          = render "diaries/index", diaries: @customer.diaries.page(params[:page]).per(20)
+          = render "diaries/index", diaries: @customer.diaries.includes(:check_list_diaries, :diary_images, :diary_favorites, :diary_comments).page(params[:page]).per(20)
         #diet_method.tab
-          = render "diet_methods/index", diet_methods: @customer.diet_methods.page(params[:page]).per(20)
+          = render "diet_methods/index", diet_methods: @customer.diet_methods.includes(:diet_method_images, :diet_method_favorites, :diet_method_comments, :check_lists, :tag_taggings, :tags).page(params[:page]).per(20)

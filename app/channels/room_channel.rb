@@ -13,7 +13,7 @@ class RoomChannel < ApplicationCable::Channel
       customer_id: data['customer_room']["current_customer_id"],
       room_id: data["customer_room"]["room_id"]
     )
-    if chat.save
+    if chat.save!
       customer = Customer.find(data['customer_room']["customer_id"])
       current_customer = Customer.find(data['customer_room']["current_customer_id"])
       if customer.chat_notification == true && customer.all_notification == true
