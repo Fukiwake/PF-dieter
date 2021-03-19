@@ -4,12 +4,36 @@
 
 #chat-area {
   overflow-y: scroll;
-  height: 70vh;
+  height: 69vh;
+  &::-webkit-scrollbar {
+    width: 6px;
+    height: 10px;
+  }
+  &::-webkit-scrollbar-track {
+    border-radius: 5px;
+    box-shadow: 0 0 4px #aaa inset;
+  }
+  &::-webkit-scrollbar-thumb {
+    border-radius: 5px;
+    background: #f87a09;
+  }
 }
 
 #rooms {
   overflow-y: scroll;
-  height: 70vh;
+  height: 69vh;
+  &::-webkit-scrollbar {
+    width: 6px;
+    height: 10px;
+  }
+  &::-webkit-scrollbar-track {
+    border-radius: 5px;
+    box-shadow: 0 0 4px #aaa inset;
+  }
+  &::-webkit-scrollbar-thumb {
+    border-radius: 5px;
+    background: #f87a09;
+  }
 }
 
 #room-now {

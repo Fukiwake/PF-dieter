@@ -1,5 +1,5 @@
 .container
-  .row
+  .row.mt-4
     .col-md-3
       .sidebar
         = render "layouts/sidebar", diary: @diary
@@ -35,7 +35,7 @@
                           = room.chats.last.message.truncate(13)
 
     .col-md-6
-      %h1{id: "customer_room", "data-room_id": "#{@room.id}", "data-current_customer_id": "#{current_customer.id}", "data-customer_id": "#{@customer.id}"}
+      %h2{id: "customer_room", "data-room_id": "#{@room.id}", "data-current_customer_id": "#{current_customer.id}", "data-customer_id": "#{@customer.id}"}
         = @customer.name
         さんとのチャット
       #chat-area
