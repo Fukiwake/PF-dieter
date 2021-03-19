@@ -7,9 +7,9 @@ class DiariesController < ApplicationController
       following_ids = current_customer.followings.pluck(:id)
       blocking_ids = current_customer.blockings.pluck(:id)
       # @diaries = Diary.where(customer_id: following_ids).where.not(customer_id: blocking_ids).page(params[:page]).per(20)
-      @diaries = Diary.order("created_at DESC").page(params[:page]).per(20)
+      @diaries = Diary.includes(:customer, :check_list_diaries, :diary_images, :diary_favorites, :diary_comments).order("created_at DESC").page(params[:page]).per(20)
     else
-      @diaries = Diary.order("created_at DESC").page(params[:page]).per(20)
+      @diaries = Diary.includes(:customer, :check_list_diaries, :diary_images, :diary_favorites, :diary_comments).order("created_at DESC").page(params[:page]).per(20)
     end
   end
 

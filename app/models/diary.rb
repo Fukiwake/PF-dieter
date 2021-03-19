@@ -2,7 +2,6 @@ class Diary < ApplicationRecord
 
   has_many :diary_images, dependent: :destroy
   accepts_attachments_for :diary_images, attachment: :image
-
   belongs_to :customer
   has_many :diary_favorites, dependent: :destroy
   has_many :diary_comments, dependent: :destroy
@@ -14,6 +13,15 @@ class Diary < ApplicationRecord
   validates :weight, numericality: true, presence: true
   validates :body_fat_percentage, numericality: true
 
+  ransacker :diary_favorites_count do
+    query = '(SELECT COUNT(diary_favorites.diary_id) FROM diary_favorites where diary_favorites.diary_id = diaries.id GROUP BY diary_favorites.diary_id)'
+    Arel.sql(query)
+  end
+
+  ransacker :diary_comments_count do
+    query = '(SELECT COUNT(diary_comments.diary_id) FROM diary_comments where diary_comments.diary_id = diaries.id GROUP BY diary_comments.diary_id)'
+    Arel.sql(query)
+  end
 
   def self.get_one_year_diary
     if self.first.post_date < self.last.post_date.prev_year

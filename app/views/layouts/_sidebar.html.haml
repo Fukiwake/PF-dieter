@@ -29,8 +29,8 @@
             = render "tries/try", diet_method: trying_diet_method
 - elsif customer_signed_in?
   %h2 投稿
-  = link_to "日記を投稿", new_diary_path, class: "btn btn-outline-success btn-block mt-4"
-  = link_to "ダイエット方法を投稿", new_diet_method_path, class: "btn btn-outline-success btn-block mt-4"
+  = link_to "日記を投稿", new_diary_path, class: "btn btn-success btn-block mt-4"
+  = link_to "ダイエット方法を投稿", new_diet_method_path, class: "btn btn-success btn-block mt-4"
   %h2.mt-5 クイック投稿
   #quick-diary-form
     = render "diaries/quick_form", diary: diary
