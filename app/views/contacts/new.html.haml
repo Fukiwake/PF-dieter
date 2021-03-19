@@ -1,23 +1,23 @@
 .container
-  .row
+  .row.mt-4
     .col-md-10.mx-auto
-      %h1 お問い合わせ
+      %h2 お問い合わせ
       = form_with model: @contact, local: true do |f|
         .field
-          = f.label :name, "お名前"
-          %br
-          = f.text_field :name
+          = f.label :name, "お名前", class: "font-weight-bold"
+          .form-inline
+            = f.text_field :name, class: "form-control"
         .field
-          = f.label :email, "メールアドレス"
-          %br
-          = f.text_field :email
+          = f.label :email, "メールアドレス", class: "font-weight-bold"
+          .form-inline
+            = f.text_field :email, class: "form-control"
         .field
-          = f.label :genre, "お問い合わせ内容"
-          %br
-          = f.select :genre, [ ["ご要望",1], ["良い点", 2], ["悪い点", 3 ] ,["その他", 4] ], {include_blank: "選択してください", selected: "選択してください"}
+          = f.label :genre, "お問い合わせ内容", class: "font-weight-bold"
+          .form-inline
+            = f.select :genre, [ ["ご要望",1], ["良い点", 2], ["悪い点", 3 ] ,["その他", 4] ], {include_blank: "選択してください", selected: "選択してください"}, class: "form-control"
         .field
-          = f.label :body, "お問い合わせ詳細"
+          = f.label :body, "お問い合わせ詳細", class: "font-weight-bold"
           %br
-          = f.text_area :body
+          = f.text_area :body, size: "autox10", class: "form-control"
         .action
-          = f.submit "送信する"
+          = f.submit "送信する", class: "btn btn-success"

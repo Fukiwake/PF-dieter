@@ -14,11 +14,9 @@ class ChatsController < ApplicationController
     end
     @chats = @room.chats
     @chat = Chat.new(room_id: @room.id)
-    @other_rooms = current_customer.rooms.where.not(id: @room.id)
-    @other_rooms = @other_rooms.each do |other_room|
-      if other_room.chats.blank?
-        other_room.destroy
-      end
+    @other_rooms = current_customer.rooms.includes(:chats).where.not(id: @room.id).order("chats.created_at DESC")
+    if Room.includes(:chats).last(2)[0].chats.blank?
+      Room.last.destroy
     end
   end
 

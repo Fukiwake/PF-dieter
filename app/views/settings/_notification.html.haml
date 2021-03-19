@@ -1,4 +1,4 @@
-%h1 通知設定
+%h2 通知設定
 = form_with model: current_customer, url: customers_notification_setting_path, local: true do |f|
   .field.mt-4
     = f.check_box :all_notification, {}, "true", "false"
