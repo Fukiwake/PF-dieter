@@ -1,0 +1,58 @@
+= search_form_for @customer_search, url: finder_path do |f|
+  .row.mt-3
+    .col-md-2
+      = f.select( :sorts, { '並び替え': 'id desc', '古い順': 'updated_at asc', '新しい順': 'updated_at desc' } , { selected: params[:q][:sorts] }, { onchange: 'this.form.submit()', class: "btn btn-secondary"} )
+    .col-md-10
+      .dropdown.dropright
+        #dropdownCustomerButton.dropdown-toggle.btn.btn-outline-danger{"data-toggle": "dropdown", "aria-haspopup": "true", "aria-expanded": "false"}
+          詳細検索
+        .dropdown-menu.dropdown-menu-right.p-3{"aria-labelledby": "dropdownMenuButton"}
+          .d-flex.my-4
+            %input.formreset.btn.btn-danger.w-50.mr-1{type: "button", value: "クリア"}
+            = f.submit "適用する", class: 'btn btn-success w-50 .ml-1'
+          = f.label :gender_eq, "性別", class: "font-weight-bold"
+          .form-inline.mb-4
+            = f.radio_button :gender_eq, "male"
+            %span.mx-1 男性
+            = f.radio_button :gender_eq, "female"
+            %span.ml-1 女性
+          = f.label :target_weight_gteq, "身長", class: "font-weight-bold"
+          .form-inline.mb-4
+            = f.text_field :height_gteq, placeholder: "Min", class: "form-control", size: "3"
+            ～
+            = f.text_field :height_lteq, placeholder: "Max", class: "form-control mr-1", size: "3"
+            cm
+          = f.label :target_weight_gteq, "目標体重", class: "font-weight-bold"
+          .form-inline.mb-4
+            = f.text_field :target_weight_gteq, placeholder: "Min", class: "form-control", size: "3"
+            ～
+            = f.text_field :target_weight_lteq, placeholder: "Max", class: "form-control mr-1", size: "3"
+            kg
+          = f.label :target_body_fat_percentage_gteq, "目標体脂肪率", class: "font-weight-bold"
+          .form-inline.mb-4
+            = f.text_field :target_body_fat_percentage_gteq, placeholder: "Min", class: "form-control", size: "3"
+            ～
+            = f.text_field :target_body_fat_percentage_lteq, placeholder: "Max", class: "form-control mr-1", size: "3"
+            \%
+          = f.label :level_gteq, "レベル", class: "font-weight-bold"
+          .form-inline.mb-4
+            = f.text_field :level_gteq, placeholder: "Min", class: "form-control", size: "3"
+            ～
+            = f.text_field :level_lteq, placeholder: "Max", class: "form-control mr-1", size: "3"
+            Lv
+          = f.label :diet_style1_eq, "ダイエットスタイル", class: "font-weight-bold"
+          .form-inline
+            = f.check_box :diet_style1_eq ,{class: "form-check-input"}, "true", "false"
+            運動メイン
+          .form-inline
+            = f.check_box :diet_style2_eq ,{class: "form-check-input"}, "true", "false"
+            食事制限メイン
+          .form-inline
+            = f.check_box :diet_style3_eq ,{class: "form-check-input"}, "true", "false"
+            長期継続
+          .form-inline
+            = f.check_box :diet_style4_eq ,{class: "form-check-input"}, "true", "false"
+            短期集中
+          = f.hidden_field :name_or_introduce_cont_any, value: params[:q][:name_or_introduce_cont_any]
+          = f.hidden_field :model, value: "customer"
+

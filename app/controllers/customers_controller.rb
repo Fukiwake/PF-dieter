@@ -4,7 +4,7 @@ class CustomersController < ApplicationController
   before_action :set_customer, only: [:show, :followings, :followers]
 
   def index
-    @customers = Customer.page(params[:page]).per(20)
+    @customers = Customer.includes(:diaries).page(params[:page]).per(20)
   end
 
   def show
@@ -41,10 +41,9 @@ class CustomersController < ApplicationController
   end
 
   def ranking
-    @day_ranking = Customer.order(day_exp: "DESC").order(level: "DESC").limit(20)
-    @week_ranking = Customer.order(week_exp: "DESC").order(level: "DESC").limit(20)
-    @month_ranking = Customer.order(month_exp: "DESC").order(level: "DESC").limit(20)
-    @range = params[:range]
+    @day_ranking = Customer.includes(:diaries).order(day_exp: "DESC").order(level: "DESC").limit(20)
+    @week_ranking = Customer.includes(:diaries).order(week_exp: "DESC").order(level: "DESC").limit(20)
+    @month_ranking = Customer.includes(:diaries).order(month_exp: "DESC").order(level: "DESC").limit(20)
   end
 
   def notification_setting
