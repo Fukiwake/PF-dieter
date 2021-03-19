@@ -1,6 +1,5 @@
 $(function() {
   $(document).on('turbolinks:load', function() {
-
     var url = location.href;
     id = url.split("#")[1]
     if(id){

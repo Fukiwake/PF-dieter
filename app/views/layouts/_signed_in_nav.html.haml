@@ -5,19 +5,19 @@
       .navbar-nav.justify-content-between.d-flex.w-100
         = link_to diaries_path , class: "nav-link text-center p-0", title: "日記" do
           %i.fas.fa-list-alt.header-icon
-          .small.en diaries
+          .small 日記
         = link_to diet_methods_path , class: "nav-link text-center p-0", title: "ダイエット方法" do
           %i.fas.fa-biking.header-icon
-          .small.en methods
+          .small ダイエット方法
         = link_to customer_path(current_customer) , class: "nav-link text-center p-0", data: {"turbolinks" => false}, title: "マイページ" do
           %i.fas.fa-user.header-icon
-          .small.en mypage
+          .small マイページ
         = link_to customers_path , class: "nav-link text-center p-0", title: "ユーザー" do
           %i.fas.fa-users.header-icon
-          .small.en users
+          .small ユーザー
         = link_to ranking_customers_path , class: "nav-link text-center p-0", title: "ランキング" do
           %i.fas.fa-medal.header-icon
-          .small.en ranking
+          .small ランキング
   .flex-column.mt-3
     .level
       Lv.

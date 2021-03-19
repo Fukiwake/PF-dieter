@@ -1,25 +1,60 @@
-- customers.each do |customer|
-  = link_to customer_path(customer.id), class: "text-decoration-none", data: {"turbolinks" => false} do
-    .table_link.border-bottom
-      %table.table.table-borderless
-        %tr
-          %td.profile_image{rowspan: "2"}
-            = attachment_image_tag(customer, :profile_image, size: "70x70", fallback: "no_image.png")
-          %td.w-25
-            %h3
-              = customer.name
-          %td
-            - if current_customer != customer && customer_signed_in?
-              %span{:id => "follow_bottons_#{customer.id}"}
-                = render "relationships/follow_form", customer: customer
-        %tr{colspan: "2"}
-          %td
-            Lv.
-            = customer.level
-            Exp.
-            - if range == "day"
-              = customer.day_exp
-            - if range == "week"
-              = customer.week_exp
-            - if range == "month"
-              = customer.month_exp
+- customers.each_with_index do |customer, i|
+  = link_to customer_path(customer.id), class: "text-decoration-none text-dark", data: {"turbolinks" => false} do
+    %object.row.pt-2
+      .col-md-6.d-flex.align-items-center
+        .text-center
+          - case i
+          - when 0
+            = image_tag "one.png", size: "100x100"
+          - when 1
+            = image_tag "two.png", size: "100x100"
+          - when 2
+            = image_tag "three.png", size: "100x100"
+          - else
+            .rank.text-center.mt-3
+              = i + 1
+          %br
+          Lv.
+          = customer.level
+          Exp.
+          - if range == "day"
+            = customer.day_exp
+          - if range == "week"
+            = customer.week_exp
+          - if range == "month"
+            = customer.month_exp
+        .ml-2
+          = attachment_image_tag(customer, :profile_image, size: "70x70", fallback: "no_image.png")
+        .name
+          %h3.ml-3
+            = customer.name
+      .col-md-6.d-flex.justify-content-between.align-items-center
+        .info
+          %span.badge.badge-danger
+            now
+          = customer.height
+          cm&nbsp;
+          - if customer.diaries.present?
+            = customer.diaries.last.weight
+            kg&nbsp;
+            = customer.diaries.last.body_fat_percentage
+            \%
+          %br
+          %span.badge.badge-success
+            goal
+          = customer.target_weight
+          kg&nbsp;
+          =customer.target_body_fat_percentage
+          \%
+        .follow{:id => "follow_bottons_#{customer.id}"}
+          - if customer_signed_in?
+            - if current_customer != customer
+              = render "relationships/follow_form", customer: customer
+    .row.py-2
+      .col-md-12
+
+    .row.border-bottom.py-2
+      .col-md-12
+        - if customer.introduce.present?
+          = customer.introduce.truncate(200)
+

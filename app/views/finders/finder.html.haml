@@ -4,33 +4,31 @@
       .sidebar
         = render "layouts/sidebar", diary: @diary
     .col-md-9
-      %h1 ユーザー一覧
-      - @customers.each do |customer|
-        = link_to customer_path(customer.id), class: "text-decoration-none", data: {"turbolinks" => false} do
-          .table_link.border-bottom
-            %table.table.table-borderless
-              %tr
-                %td.profile_image{rowspan: "2"}
-                  = attachment_image_tag(customer, :profile_image, size: "70x70", fallback: "no_image.png")
-                %td.w-25
-                  %h3
-                    = customer.name
-                %td.small.text-secondary
-                  now：
-                  = customer.height
-                  cm
-                  %br
-                  goal：
-                  = customer.target_weight
-                  kg
-                  =customer.target_body_fat_percentage
-                  ％
-                %td
-                  - if current_customer != customer
-                    %span{:id => "follow_bottons_#{customer.id}"}
-                      = render "relationships/follow_form", customer: customer
-              - if customer.introduce.present?
-                %tr{colspan: "3"}
-                  %td= customer.introduce.truncate(200)
-      .d-flex.justify-content-center.mt-4
-        = paginate @customers
+      %h1.text-center.en.mb-0.mt-3 Search
+      %p.text-center.mb-0.pb-3 検索結果
+      #finder-tab-menu.d-flex.justify-content-between
+        .mt-4.w-100.active
+          = link_to "日記", "#diary", class: "btn btn-danger btn-block btn-lg"
+        .mt-4.w-100
+          = link_to "ダイエット方法", "#method", class: "btn btn-outline-secondary btn-block btn-lg"
+        .mt-4.w-100
+          = link_to "ユーザー", "#customer", class: "btn btn-outline-secondary btn-block btn-lg"
+      #finder-tab-contents
+        #diary.tab
+          = render "diary_search"
+          - if @diaries.present?
+            = render "diaries/index", diaries: @diaries
+          - else
+            条件に合致する日記はありません。
+        #method.tab
+          = render "diet_method_search"
+          - if @diet_methods.present?
+            = render "diet_methods/index", diet_methods: @diet_methods
+          - else
+            条件に合致するダイエット方法はありません。
+        #customer.tab
+          = render "customer_search"
+          - if @customers.present?
+            = render "customers/index", customers: @customers
+          - else
+            条件に合致するユーザーはいません。
