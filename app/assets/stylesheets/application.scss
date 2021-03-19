@@ -37,7 +37,8 @@ h1 {
 
 .sidebar {
   position: sticky;
-  top: 180px;
+  top: 150px;
+  margin-bottom: 100px;
 }
 
 .icon {
@@ -173,6 +174,19 @@ object {
   opacity: 0.5;
 }
 
+.form-inline {
+  flex-flow: row nowrap;
+}
+
+footer {
+  max-height: 5vh;
+}
+
+ul {
+  margin-bottom: 0px;
+}
+
+
 .badge-danger {
   background-color: #f87a09;
 }
@@ -280,6 +294,10 @@ a.text-danger:hover, a.text-danger:focus {
 
 .btn-outline-secondary {
   &:hover {
+    background-color: #f87a09;
+    border-color: #f87a09;
+  }
+  &:not(:disabled):not(.disabled):active {
     background-color: #f87a09;
     border-color: #f87a09;
   }

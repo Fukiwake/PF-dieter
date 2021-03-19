@@ -1,6 +1,6 @@
 class ApplicationController < ActionController::Base
   before_action :set_header_notification
-  before_action :set_q
+  before_action :set_customer_search
 
   def after_sign_in_path_for(resource)
       case resource
@@ -36,12 +36,12 @@ class ApplicationController < ActionController::Base
 
   def set_header_notification
     if customer_signed_in?
-      @header_notifications = current_customer.passive_notifications.where.not(visitor_id: current_customer.id, checked: true).first(10)
+      @header_notifications = current_customer.passive_notifications.where.not(visitor_id: current_customer.id, checked: true)
     end
   end
 
-  def set_q
-    @q = Customer.ransack(params[:q])
+  def set_customer_search
+    @customer_search = Customer.includes(:diaries).ransack(params[:q])
   end
 
 end

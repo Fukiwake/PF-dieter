@@ -31,7 +31,7 @@ class DietMethodsController < ApplicationController
   def index
     @diary = Diary.new
     @check_list_diary = @diary.check_list_diaries.new
-    @diet_methods = DietMethod.page(params[:page]).per(20)
+    @diet_methods = DietMethod.includes(:customer, :diet_method_images, :diet_method_favorites, :diet_method_comments, :check_lists, :tag_taggings, :tags).page(params[:page]).per(20)
     @tags = DietMethod.tag_counts_on(:tags).most_used(20)
     if @tag = params[:tag]
       @diet_methods = DietMethod.tagged_with(params[:tag]).page(params[:page]).per(20)

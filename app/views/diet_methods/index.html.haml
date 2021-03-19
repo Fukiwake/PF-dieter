@@ -1,5 +1,5 @@
 .container
-  .row
+  .row.mt-4
     .col-md-3
       .sidebar
         = render "layouts/sidebar", diary: @diary
@@ -11,6 +11,8 @@
         %p.text-center.mb-0.pb-3 ダイエット方法
       .border-bottom
         - if @tags.present?
+          %i.font-weight-bold.fas.fa-tags
+            人気のタグ
           - @tags.each do |tag|
             = link_to "#{tag.name}(#{tag.taggings_count})", diet_methods_path(tag: tag.name)
         - else

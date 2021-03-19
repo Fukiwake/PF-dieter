@@ -53,6 +53,11 @@
           = render "blocks/block_form", customer: diet_method.customer
     .row.py-2
       .col-md-12
+        - diet_method.tags.each do |tag|
+          %span.badge.badge-success
+            = tag.name
+    .row.py-2
+      .col-md-12
         - if diet_method.way.present?
           = safe_join(diet_method.way.truncate(200).split("\n"),tag(:br))
     .row.py-2
