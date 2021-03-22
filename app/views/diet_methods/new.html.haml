@@ -20,7 +20,8 @@
           .field
             = f.label :way, "やり方・効果", class: "font-weight-bold"
             .form-group
-              = f.text_area :way, size: "autox10", class: "form-control"
+              = f.text_area :way, id: :diet_method_way
+              %trix-editor{input: "diet_method_way"}
           .field
             = f.label :attention, "注意点", class: "font-weight-bold"
             .form-group
