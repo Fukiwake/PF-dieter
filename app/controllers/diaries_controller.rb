@@ -29,7 +29,7 @@ class DiariesController < ApplicationController
       @diary.title = "日記"
     end
     if @diary.save
-      #チェックされていないリストのcheck_list_diary(中間テーブル)を作成
+      #チェックされていないチェックリストのcheck_list_diary(中間テーブル)を作成
       current_customer.trying_diet_methods.each do |method|
         check_list_ids = method.check_lists.pluck(:id)
         check_list_ids.each do |check_list_id|
@@ -65,8 +65,10 @@ class DiariesController < ApplicationController
   def update
     diary = Diary.find(params[:id])
     if diary.update(diary_params)
-      diary.check_list_diaries.update(status: false)
-      CheckListDiary.where(id: params[:diary][:check_list_diary][:id]).update(status: true)
+      if diary.check_list_diaries.present?
+        diary.check_list_diaries.update(status: false)
+        CheckListDiary.where(id: params[:diary][:check_list_diary][:id]).update(status: true)
+      end
       flash[:notice] = "日記を編集しました"
       redirect_to diary_path(diary)
     else

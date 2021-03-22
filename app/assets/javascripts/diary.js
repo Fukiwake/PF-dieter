@@ -16,5 +16,17 @@ $(function(){
       $(this).css({"background-color": "", "color": ""})
       $(this).text("実践中")
     });
+
+    $(window).on('scroll', function() {
+      scrollHeight = $(document).height();
+      scrollPosition = $(window).height() + $(window).scrollTop();
+      if ( (scrollHeight - scrollPosition) / scrollHeight <= 0.05) {
+        $('.jscroll').jscroll({
+          loadingHtml: '読み込み中',
+          contentSelector: '.scroll-list',
+          nextSelector: 'li.next:last a'
+        });
+      }
+    });
   });
 });

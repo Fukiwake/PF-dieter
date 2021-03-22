@@ -12,11 +12,11 @@ class ChatsController < ApplicationController
     else
       @room = entries.room
     end
-    @chats = @room.chats
+    @chats = @room.chats.includes(:customer)
     @chat = Chat.new(room_id: @room.id)
     @other_rooms = current_customer.rooms.includes(:chats).where.not(id: @room.id).order("chats.created_at DESC")
     if Room.includes(:chats).last(2)[0].chats.blank?
-      Room.last.destroy
+      Room.includes(:chats, :entries).last(2)[0].destroy
     end
   end
 
