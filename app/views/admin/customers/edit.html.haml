@@ -1,8 +1,8 @@
 .container
   %h1.mb-4 会員情報編集
   .customer-setting-form
-    = form_with model: @customer, url: customer_registration_path, local: true do |f|
-      = render "devise/shared/error_messages", resource: @customer
+    = form_with model: @customer, url: admin_customer_path, local: true do |f|
+      = render 'layouts/errors', obj: @customer
       %table.table.table-borderless
         %tr
           %td.w-25.position-relative
@@ -18,9 +18,9 @@
         %tr
           %th 性別
           %td
-            = f.radio_button :gender, 1
+            = f.radio_button :gender, "male"
             男性
-            = f.radio_button :gender, 2
+            = f.radio_button :gender, "female"
             女性
         %tr
           %th 生年月日
@@ -48,6 +48,20 @@
             = f.text_field :target_body_fat_percentage, placeholder: "15.3"
           %td
             ％
+        %tr
+        %th ダイエットスタイル
+        %td.form-group
+          = f.check_box :diet_style1 ,{}, "true", "false"
+          運動メイン
+          %br
+          = f.check_box :diet_style2 ,{}, "true", "false"
+          食事制限メイン
+          %br
+          = f.check_box :diet_style3 ,{}, "true", "false"
+          長期継続
+          %br
+          = f.check_box :diet_style4 ,{}, "true", "false"
+          短期集中
         %tr
           %th
           %td= f.submit "編集内容を保存", class: "btn btn-success px-5"

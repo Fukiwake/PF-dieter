@@ -20,10 +20,11 @@
               now
             = @diet_method.customer.height
             cm&nbsp;
-            = @diet_method.customer.diaries.last.weight
-            kg&nbsp;
-            = @diet_method.customer.diaries.last.body_fat_percentage
-            \%
+            - if @diet_method.customer.diaries.last.present?
+              = @diet_method.customer.diaries.last.weight
+              kg&nbsp;
+              = @diet_method.customer.diaries.last.body_fat_percentage
+              \%
             %br
             %span.badge.badge-success
               goal

@@ -1,6 +1,6 @@
 $(function(){
   $(document).on('turbolinks:load', function() {
-    function buildField(index) {  // 追加するフォームのｈｔｍｌを用意
+    function buildField(index) {
       const html = `<div class="js-file-group mb-2" data-index="${index}">
                       <div class="form-inline">
                         <input type="text" name="diet_method[check_lists_attributes][${index}][body]" id="diet_method_check_lists_attributes_${index}_body" class="form-control" size="24">
@@ -31,7 +31,7 @@ $(function(){
 
     $(".check_list_field").on("click", ".delete-form-btn", function() { // 削除ボタンクリックでイベント発火
       $(".add-form-btn").css("display","block"); // どの道フォームは一つ消えるので、追加ボタンを必ず表示させるようにしておく
-      const targetIndex = $(this).parent().data("index") // クリックした箇所のインデックス番号を取得
+      const targetIndex = $(this).parent().parent().data("index") // クリックした箇所のインデックス番号を取得
       const hiddenCheck = $(`input[data-index="${targetIndex}"].hidden-destroy`); // 編集用（クリックした箇所のチェックボックスを取得）
       var lastIndex = $(".js-file-group:last").data("index"); // フォームの最後に使われているインデックス番号を取得
       displayCount -= 1; // 表示されているフォーム数を一つカウントダウン
@@ -47,12 +47,6 @@ $(function(){
       } else {
         fileIndex.push(lastIndex + 1); // フォームの最後の数字に1を足した数字を追加
       }
-      // ↓はフォームがなくならないための処理
-      // if (displayCount == 0) { // 見えてるフォームの数が0になったとき
-      //   $(".check_list_field").append(buildField(fileIndex[0] - 1)); // fileIndexの一番左側にある数字から１引いた数字でフォームを作成
-      //   fileIndex.shift(); // fileIndexの一番小さい数字を取り除く
-      //   displayCount += 1; // 見えているフォームの数をカウントアップしておく
-      // }
     });
   });
 });

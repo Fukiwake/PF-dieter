@@ -1,14 +1,10 @@
 .container
-  .row
-    .col-md-3
-      .sidebar
-        = render "layouts/sidebar", diary: @diary
-    .col-md-9
-      %h1.text-center.en.mb-0.mt-3 EditDietMethod
-      %p.text-center.mb-4.pb-3 ダイエット方法編集
+  .row.mt-4
+    .col-md-12
+      %h1.mb-4.pb-3 ダイエット方法編集
       = render "layouts/errors", obj: @diet_method
       .new-diet-method-form
-        = form_with model: @diet_method, local: true do |f|
+        = form_with model: @diet_method, url: admin_diet_method_path, local: true do |f|
           .field
             = f.label :title, "タイトル", class: "font-weight-bold"
             .form-inline

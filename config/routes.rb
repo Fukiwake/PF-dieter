@@ -44,20 +44,29 @@ Rails.application.routes.draw do
   get "chat/:id" => "chats#show", as: "chat"
   resources :contacts, only: [:new, :create]
   resources :reports, only: [:create]
-
+  get 'finder' => "finders#finder"
+  
   namespace :admin do
     resources :customers, only: [:index, :show, :edit, :update] do
       collection do
         patch "withdraw_all"
       end
     end
-    resources :diaries, only: [:index, :show, :edit, :update] do
+    resources :diaries, only: [:index, :show, :edit, :update, :destroy] do
       collection do
         patch "destroy_all"
       end
     end
-
-    resources :contacts, only: [:index, :show, :update]
+    resources :diet_methods, only: [:index, :show, :edit, :update, :destroy] do
+      collection do
+        patch "destroy_all"
+      end
+    end
+    resources :contacts, only: [:index, :show] do
+      collection do
+        patch "destroy_all"
+      end
+    end
   end
-  get 'finder' => "finders#finder"
+  
 end

@@ -1,0 +1,46 @@
+= form_with url: destroy_all_admin_diet_methods_path, method: :patch, local: true do |f|
+  %button.btn.btn-danger.mb-3{"data-target" => "#destroy_confirm", "data-toggle" => "modal", type: "button"}
+    選択したダイエット方法をまとめて削除
+  #destroy_confirm.modal.fade{"aria-hidden" => "true", "aria-labelledby" => "label1", role: "dialog", tabindex: "-1"}
+    .modal-dialog{role: "document"}
+      .modal-content
+        .modal-header
+          %h5#label1.modal-title 削除確認
+          %button.close{"aria-label" => "Close", "data-dismiss" => "modal", type: "button"}
+            %span{"aria-hidden" => "true"} ×
+        .modal-body
+          選択されたダイエット方法を削除しますか？
+        .modal-footer
+          %button.btn.btn-secondary{"data-dismiss" => "modal", type: "button"} Close
+          = f.submit "OK", class: "btn btn-danger"
+  %table.table.table-bordered.text-center
+    %thead
+      %tr
+        %th{style: "width: 5%"}
+          %input#check-all{type: "checkbox"}
+        %th{style: "width: 10%"} 方法id
+        %th{style: "width: 25%"} 会員名
+        %th{style: "width: 25%"} タイトル
+        %th{style: "width: 25%"} 作成日時
+        %th{style: "width: 10%"}
+    %tbody
+      - diet_methods.each do |diet_method|
+        %tr
+          %td
+            = f.check_box :diet_method_ids, {}, diet_method.id, nil
+          %td
+            = diet_method.id
+          %td
+            = link_to admin_customer_path(diet_method.customer) do
+              = diet_method.customer.name
+          %td
+            = link_to admin_diet_method_path(diet_method) do
+              = diet_method.title
+          %td
+            = diet_method.created_at.strftime("%m月%d日 %H:%M")
+          %td
+            = link_to "編集", edit_admin_diet_method_path(diet_method)
+  %button.btn.btn-danger{"data-target" => "#destroy_confirm", "data-toggle" => "modal", type: "button"}
+    選択したダイエット方法をまとめ削除
+  .d-flex.justify-content-center
+    = paginate diet_methods
