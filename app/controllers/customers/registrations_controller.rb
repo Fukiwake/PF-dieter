@@ -76,7 +76,7 @@ class Customers::RegistrationsController < Devise::RegistrationsController
   end
 
   def configure_account_update_params
-    devise_parameter_sanitizer.permit(:account_update, keys: [:name, :profile_image, :introduce, :gender, :birthyear, :birthdate, :height, :target_weight, :target_body_fat_percentage, :diet_style1, :diet_style2, :diet_style3, :diet_style4])
+    devise_parameter_sanitizer.permit(:account_update, keys: [:email, :name, :profile_image, :introduce, :gender, :birthyear, :birthdate, :height, :target_weight, :target_body_fat_percentage, :diet_style1, :diet_style2, :diet_style3, :diet_style4])
   end
 
   def update_resource(resource, params)

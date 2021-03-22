@@ -5,7 +5,7 @@
         .d-flex
           .text-center
             = link_to customer_path(diet_method.customer), class: "text-dark font-weight-bold" do
-              = attachment_image_tag(diet_method.customer, :profile_image, size: "70x70", fallback: "no_image.png")
+              = attachment_image_tag(diet_method.customer, :profile_image, :fill, 70, 70, fallback: "no_image.png")
               %br
               = diet_method.customer.name
           %h3.ml-3.mt-3
@@ -16,10 +16,11 @@
             now
           = diet_method.customer.height
           cm&nbsp;
-          = diet_method.customer.diaries.last.weight
-          kg&nbsp;
-          = diet_method.customer.diaries.last.body_fat_percentage
-          \%
+          - if diet_method.customer.diaries.last.present?
+            = diet_method.customer.diaries.last.weight
+            kg&nbsp;
+            = diet_method.customer.diaries.last.body_fat_percentage
+            \%
           %br
           %span.badge.badge-success
             goal
@@ -70,7 +71,7 @@
     .images-wrapper
       - diet_method.diet_method_images.each do |image|
         .image.text-center.border
-          = attachment_image_tag(image, :image, size: "825x400")
+          = attachment_image_tag(image, :image, :fill, 825, 400)
   %object.row.border-bottom
     .col-md-1
       - if customer_signed_in?

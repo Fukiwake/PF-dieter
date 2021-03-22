@@ -1,24 +1,41 @@
 .container
   .row
-    .col-md-3
-      .sidebar
-        hoge
-    .col-md-9
+    .col-md-12
       %h1 お問い合わせ
-      - @contacts.each do |contact|
-        = link_to admin_contact_path(contact), class: "text-decoration-none" do
+      = form_with url: destroy_all_admin_contacts_path, method: :patch, local: true do |f|
+        %button.btn.btn-danger.mb-3{"data-target" => "#destroy_confirm", "data-toggle" => "modal", type: "button"}
+          選択したお問い合わせをまとめて削除
+        #destroy_confirm.modal.fade{"aria-hidden" => "true", "aria-labelledby" => "label1", role: "dialog", tabindex: "-1"}
+          .modal-dialog{role: "document"}
+            .modal-content
+              .modal-header
+                %h5#label1.modal-title 削除確認
+                %button.close{"aria-label" => "Close", "data-dismiss" => "modal", type: "button"}
+                  %span{"aria-hidden" => "true"} ×
+              .modal-body
+                選択されたお問い合わせを削除しますか？
+              .modal-footer
+                %button.btn.btn-secondary{"data-dismiss" => "modal", type: "button"} Close
+                = f.submit "OK", class: "btn btn-danger"
+        - @contacts.each do |contact|
           .table_link.border-bottom
             %table.table.table-borderless
               %tr
-                %td.profile_image.text-center{rowspan: "4"}
-                  = contact.name
+                %td.text-center.align-middle{rowspan: 2}
+                  = f.check_box :contact_ids, {}, contact.id, nil
+                %td.text-center{rowspan: "4"}
+                  = link_to admin_contact_path(contact), class: "text-decoration-none" do
+                    = contact.name
                 %td.w-25
-                  = contact.email
+                  = link_to admin_contact_path(contact), class: "text-decoration-none" do
+                    = contact.email
                 %td.w-25
-                  = contact.created_at.strftime("%m月%d日 %H:%M")
+                  = link_to admin_contact_path(contact), class: "text-decoration-none" do
+                    = contact.created_at.strftime("%m月%d日 %H:%M")
                 %td.w-25
-                  = contact.status
-                  = contact.genre
+                  = link_to admin_contact_path(contact), class: "text-decoration-none" do
+                    = contact.status
+                    = contact.genre
               - if contact.body.present?
                 %tr
                   %td{colspan: "3"}= contact.body.truncate(200)

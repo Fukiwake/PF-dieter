@@ -40,7 +40,7 @@
             = f.attachment_field :diary_images_images, multiple: true
           .field
             .font-weight-bold.mb-2.mt-3 チェックリスト
-            - @diary.check_list_diaries.each do |check_list_diary|
+            - @diary.check_list_diaries.includes(:check_list).each do |check_list_diary|
               = f.fields_for :check_list_diary do |c|
                 - if check_list_diary.status == true
                   = c.check_box :id, {checked: true, multiple: true}, check_list_diary.id, nil
@@ -51,4 +51,4 @@
                   = check_list_diary.check_list.body
                   %br
           .actions
-            = f.submit "投稿する", class: "btn btn-success btn-block"
+            = f.submit "編集する", class: "btn btn-success btn-block"

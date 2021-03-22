@@ -21,7 +21,11 @@
 @import "slick";
 @import "jquery.tagit";
 @import "tagit.ui-zendesk";
+@import "trix";
 
+header {
+  background-color: rgba(248,122,9,1);
+}
 
 .en {
   font-family: 'Courgette', cursive;
@@ -50,15 +54,19 @@ h1 {
   }
 }
 
-.image {
-  border-radius: 5%;
-}
-
 .header-icon {
   font-size: 25px;
   &:hover {
     cursor: pointer;
   }
+}
+
+.scroll-list {
+  padding: 0;
+}
+
+html {
+  overflow-y: scroll;
 }
 
 .fa-camera {
