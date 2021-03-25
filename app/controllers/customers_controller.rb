@@ -4,7 +4,7 @@ class CustomersController < ApplicationController
   before_action :set_customer, only: [:show, :followings, :followers]
 
   def index
-    @customers = Customer.includes(:diaries).page(params[:page]).per(20)
+    @customers = Customer.includes(:diaries).order("created_at DESC").page(params[:page]).per(20)
   end
 
   def show

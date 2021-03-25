@@ -4,53 +4,56 @@
       .sidebar
         = render "layouts/sidebar"
     .col-md-9
-      %h2.my-4 新規会員登録
-      .col-md-7.mx-auto
-        %ul.d-flex.list-unstyled.ml-4
-          %li.text-center.text-danger
-            登録情報入力
-            %br
-            %i.fas.fa-circle.position-relative
-              %hr.progress1
-          %li.text-center.text-muted.mx-5
-            プロフィール入力
-            %br
-            %i.fas.fa-circle.position-relative
-              %hr.progress2
-          %li.text-center.text-muted
-            完了
-            %br
-            %i.fas.fa-circle
-        .btn.btn-danger.btn-block.mb-4#meil-login-btn
-          %i.far.fa-envelope
-          メールアドレスで登録する
-        .new-registration-form.mt-3
-          = form_with model: @customer, url: customer_registration_path, local: true do |f|
-            .field
-              = f.label :email, "メールアドレス"
-              %br/
-              = f.email_field :email, autofocus: true, autocomplete: "email", placeholder: 'sample@example.com', class: 'form-control mb-2'
-            .field
-              = f.label :password, "パスワード"
-              %br/
-              = f.password_field :password, placeholder: "パスワード(6文字以上)", class: 'form-control mb-2'
-            .field
-              = f.password_field :password_confirmation, placeholder: "パスワード(確認用)", class: 'form-control mb-2'
-            .action
-              = f.submit "プロフィール作成に進む", class: "btn btn-success my-4 btn-block"
-        = link_to omniauth_authorize_path(resource_name, "google_oauth2"), class: "btn btn-outline-secondary mb-4 btn-block" do
-          = image_tag 'google_icon.png', size: "20x20"
-          Googleで登録する
-        = link_to omniauth_authorize_path(resource_name, "twitter"), class: "btn btn-outline-secondary mb-4 btn-block" do
-          %i.fab.fa-twitter.text-primary
-          Twitterで登録する
-        = link_to customers_guest_sign_in_path, method: :post, class: "btn btn-outline-secondary btn-block mb-4" do
-          %i.fas.fa-user-check
-          ゲストログイン（閲覧用）
-        = link_to customers_guest2_sign_in_path, method: :post, class: "btn btn-outline-secondary btn-block" do
-          %i.fas.fa-user-check
-          ゲストログイン2（チャット・通知など）
-        %p.mt-3
-          既に登録済みの方は
-          = link_to "こちら", new_session_path(resource_name)
-          からログインしてください。
+      .card.shadow-sm.new-registration-wrapper
+        .card-header
+          %h2.text-center 新規会員登録
+        .card-body
+          .col-md-7.mx-auto
+            %ul.d-flex.list-unstyled.ml-4
+              %li.text-center.text-danger
+                登録情報入力
+                %br
+                %i.fas.fa-circle.position-relative
+                  %hr.progress1
+              %li.text-center.text-muted.mx-5
+                プロフィール入力
+                %br
+                %i.fas.fa-circle.position-relative
+                  %hr.progress2
+              %li.text-center.text-muted
+                完了
+                %br
+                %i.fas.fa-circle
+            .btn.btn-danger.btn-block.my-4#meil-login-btn
+              %i.far.fa-envelope
+              メールアドレスで登録する
+            .new-registration-form.mt-3
+              = form_with model: @customer, url: customer_registration_path, local: true do |f|
+                .field
+                  = f.label :email, "メールアドレス", class: "font-weight-bold"
+                  %br/
+                  = f.email_field :email, autofocus: true, autocomplete: "email", placeholder: 'sample@example.com', class: 'form-control mb-2'
+                .field
+                  = f.label :password, "パスワード", class: "font-weight-bold"
+                  %br/
+                  = f.password_field :password, placeholder: "パスワード(6文字以上)", class: 'form-control mb-2'
+                .field
+                  = f.password_field :password_confirmation, placeholder: "パスワード(確認用)", class: 'form-control mb-2'
+                .action
+                  = f.submit "プロフィール入力に進む", class: "btn btn-success my-4 btn-block"
+            = link_to omniauth_authorize_path(resource_name, "google_oauth2"), class: "btn btn-outline-secondary mb-4 btn-block" do
+              = image_tag 'google_icon.png', size: "20x20"
+              Googleで登録する
+            = link_to omniauth_authorize_path(resource_name, "twitter"), class: "btn btn-outline-secondary mb-4 btn-block" do
+              %i.fab.fa-twitter.text-primary
+              Twitterで登録する
+            = link_to customers_guest_sign_in_path, method: :post, class: "btn btn-outline-secondary btn-block mb-4" do
+              %i.fas.fa-user-check
+              ゲストログイン（閲覧用）
+            = link_to customers_guest2_sign_in_path, method: :post, class: "btn btn-outline-secondary btn-block" do
+              %i.fas.fa-user-check
+              ゲストログイン2（チャット・通知など）
+            %p.mt-3
+              既に登録済みの方は
+              = link_to "こちら", new_session_path(resource_name)
+              からログインしてください。

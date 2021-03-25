@@ -39,11 +39,27 @@ h1 {
   border-radius: 50%;
 }
 
-.sidebar {
-  position: sticky;
-  top: 150px;
-  margin-bottom: 100px;
+.images-wrapper {
+  display: none;
 }
+
+.images-wrapper.slick-initialized{
+  display: block;
+}
+
+.sidebar {
+  margin-top: 128px;
+}
+
+.body-wrapper {
+  overflow: hidden;
+  p {
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 3;
+  }
+}
+
 
 .icon {
   font-size: 25px;
@@ -187,7 +203,8 @@ object {
 }
 
 footer {
-  max-height: 5vh;
+  height: 100px;
+  margin-top: 100px;
 }
 
 ul {

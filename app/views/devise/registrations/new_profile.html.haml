@@ -4,72 +4,86 @@
       .sidebar
         = render "layouts/sidebar"
     .col-md-9
-      %h2.page-title.my-4.mb-4 会員情報入力
-      = render "devise/shared/error_messages", resource: @customer
-      .new-profile-form
-        = form_with model: @customer, url: customers_create_profile_path, local: true do |f|
-          %table.table.table-borderless
-            %tr
-              %td.w-25
-                ユーザー名
-                %span.badge.badge-danger.ml-2 必須
-              %td.w-25= f.text_field :name, placeholder: "10文字以内", class: "form-control"
-            %tr
-              %td
-                性別
-                %span.badge.badge-danger.ml-2 必須
-              %td.form-inline
-                = f.radio_button :gender, "male", class: "form-check-input"
-                男性
-                = f.radio_button :gender, "female", class: "form-check-input ml-2"
-                女性
-            %tr
-              %td
-                生年月日
-                %span.badge.badge-danger.ml-2 必須
-              %td.form-group
-                = f.text_field :birthyear, placeholder: "2000", class: "form-control"
-              %td.form-inline
-                年
-                = f.date_select :birthdate, {discard_year: true}, class: "form-control ml-2"
-                日
-            %tr
-              %td
-                身長
-                %span.badge.badge-danger.ml-2 必須
-              %td.form-group
-                = f.text_field :height, placeholder: "170.9", class: "form-control"
-              %td
-                cm
-            %tr
-              %td
-                目標体重
-                %span.badge.badge-danger.ml-2 必須
-              %td.form-group
-                = f.text_field :target_weight, placeholder: "67.6", class: "form-control"
-              %td
-                kg
-            %tr
-              %td 目標体脂肪率
-              %td.form-group
-                = f.text_field :target_body_fat_percentage, placeholder: "15.3", class: "form-control"
-              %td
-                ％
-            %tr
-              %td ダイエットスタイル
-              %td.form-group
-                = f.check_box :diet_style1 ,{class: "form-check-input"}, "true", "false"
-                運動メイン
+      .card.shadow-sm.new-registration-wrapper
+        .card-header
+          %h2.text-center プロフィール入力
+        .card-body
+          .col-md-7.mx-auto
+            = render "devise/shared/error_messages", resource: @customer
+            %ul.d-flex.list-unstyled.ml-4
+              %li.text-center.text-muted
+                登録情報入力
                 %br
-                = f.check_box :diet_style2 ,{class: "form-check-input"}, "true", "false"
-                食事制限メイン
+                %i.fas.fa-circle.position-relative
+                  %hr.progress1
+              %li.text-center.text-danger.mx-5
+                プロフィール入力
                 %br
-                = f.check_box :diet_style3 ,{class: "form-check-input"}, "true", "false"
-                長期継続
+                %i.fas.fa-circle.position-relative
+                  %hr.progress2
+              %li.text-center.text-muted
+                完了
                 %br
-                = f.check_box :diet_style4 ,{class: "form-check-input"}, "true", "false"
-                短期集中
-            %tr
-              %td
-              %td= f.submit "新規登録", class: "btn btn-success px-5"
+                %i.fas.fa-circle
+            .new-profile-form.mt-4
+              = form_with model: @customer, url: customers_create_profile_path, local: true do |f|
+                .row.mb-3
+                  .col-md-6.d-flex.align-items-center
+                    = f.label :name, "ユーザー名", class: "font-weight-bold mb-0"
+                    %span.badge.badge-danger.ml-2 必須
+                  .col-md-6
+                    = f.text_field :name, placeholder: "10文字以内", class: "form-control"
+                .row.mb-3
+                  .col-md-6.d-flex.align-items-center
+                    = f.label :gender, "性別", class: "font-weight-bold mb-0"
+                    %span.badge.badge-danger.ml-2 必須
+                  .col-md-6.form-inline
+                    = f.radio_button :gender, "male", class: "form-check-input"
+                    男性
+                    = f.radio_button :gender, "female", class: "form-check-input ml-2"
+                    女性
+                .row.mb-3
+                  .col-md-6.d-flex.align-items-center
+                    = f.label :age, "年齢", class: "font-weight-bold mb-0"
+                  .col-md-6.form-inline
+                    = f.text_field :age, placeholder: "20", class: "form-control"
+                    .ml-1 歳
+                .row.mb-3
+                  .col-md-6.d-flex.align-items-center
+                    = f.label :height, "身長", class: "font-weight-bold mb-0"
+                    %span.badge.badge-danger.ml-2 必須
+                  .col-md-6.form-inline
+                    = f.text_field :height, placeholder: "170.9", class: "form-control"
+                    .ml-1 cm
+                .row.mb-3
+                  .col-md-6.d-flex.align-items-center
+                    = f.label :target_weight, "目標体重", class: "font-weight-bold mb-0"
+                    %span.badge.badge-danger.ml-2 必須
+                  .col-md-6.form-inline
+                    = f.text_field :target_weight, placeholder: "67.6", class: "form-control"
+                    .ml-1 kg
+                .row.mb-3
+                  .col-md-6.d-flex.align-items-center
+                    = f.label :target_body_fat_percentage, "目標体脂肪率", class: "font-weight-bold mb-0"
+                  .col-md-6.form-inline
+                    = f.text_field :target_body_fat_percentage, placeholder: "15.3", class: "form-control"
+                    .ml-1 %
+                .row.mb-3
+                  .col-md-6.d-flex.align-items-center
+                    = f.label :diet_style1, "ダイエットスタイル", class: "font-weight-bold mb-0"
+                  .col-md-6.form-group
+                    = f.check_box :diet_style1 ,{}, "true", "false"
+                    運動メイン
+                    %br
+                    = f.check_box :diet_style2 ,{}, "true", "false"
+                    食事制限メイン
+                    %br
+                    = f.check_box :diet_style3 ,{}, "true", "false"
+                    長期継続
+                    %br
+                    = f.check_box :diet_style4 ,{}, "true", "false"
+                    短期集中
+                .row.mb-3
+                  .col-md-12
+                    = f.submit "新規登録", class: "btn btn-success btn-block px-5"
 

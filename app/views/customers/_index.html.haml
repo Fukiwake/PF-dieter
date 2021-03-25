@@ -4,7 +4,7 @@
       .col-md-6
         .d-flex
           .text-center
-            = attachment_image_tag(customer, :profile_image, size: "70x70", fallback: "no_image.png")
+            = attachment_image_tag(customer, :profile_image, :fill, 70, 70, fallback: "no_image.png", size: "70x70")
             %br
             Lv.
             = customer.level

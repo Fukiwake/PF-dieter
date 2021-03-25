@@ -18,8 +18,8 @@
 //= require popper
 //= require jquery-ui
 //= require tag-it
-//= require bootstrap-sprockets
 //= require jquery.jscroll.min.js
+//= require bootstrap-sprockets
 //= require trix
 //= require_tree .
 

@@ -3,14 +3,17 @@
     .col-md-3
       .sidebar
         = render "layouts/sidebar"
-    .col-md-9.my-4
-      %h1 パスワードリセット
-      .col-md-6.mx-auto
-        = form_for(resource, as: resource_name, url: password_path(resource_name), html: { method: :post }) do |f|
-          = render "devise/shared/error_messages", resource: resource
-          .field
-            = f.label :email, "メールアドレス"
-            %br/
-            = f.email_field :email, autofocus: true, autocomplete: "email", placeholder: 'sample@example.com', class: 'form-control mb-2'
-          .actions
-            = f.submit "パスワード再設定メールを送信", class: 'btn btn-primary px-5 btn-block'
+    .col-md-9
+      .card.shadow-sm.new-registration-wrapper
+        .card-header
+          %h2.text-center パスワードリセット
+        .card-body
+          .col-md-7.mx-auto
+            = form_for(resource, as: resource_name, url: password_path(resource_name), html: { method: :post }) do |f|
+              = render "devise/shared/error_messages", resource: resource
+              .field
+                = f.label :email, "メールアドレス", class: "font-weight-bold"
+                %br/
+                = f.email_field :email, autofocus: true, autocomplete: "email", placeholder: 'sample@example.com', class: 'form-control mb-2'
+              .actions
+                = f.submit "パスワード再設定メールを送信", class: 'btn btn-success px-5 btn-block'

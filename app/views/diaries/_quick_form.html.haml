@@ -1,24 +1,25 @@
 = form_with model: diary, local: true do |f|
   .field.mt-4
-    = f.label :post_date, "投稿日", class: "font-weight-bold"
+    = f.label :post_date, "日付", class: "font-weight-bold"
     .form-inline
-      = f.date_select :post_date, {}
+      = f.date_select :post_date, {}, class: "w-100 mr-1"
+      日
   .field
     = f.label :weight, "体重", class: "font-weight-bold"
-    .form-group
-      = f.text_field :weight, class: "form-control mr-1"
+    .form-inline
+      = f.text_field :weight, class: "form-control mr-1 w-100"
       kg
   .field
     = f.label :body_fat_percentage, "体脂肪率", class: "font-weight-bold"
-    .form-group
-      = f.text_field :body_fat_percentage, class: "form-control mr-1"
+    .form-inline
+      = f.text_field :body_fat_percentage, class: "form-control mr-1 w-100"
       \%
   .field.form-group
     .font-weight-bold.mb-2.mt-3 チェックリスト
     = f.fields_for :check_list_diaries do |c|
       - i = 0
       - current_customer.trying_diet_methods.each do |method|
-        - method.check_lists.each do |list|
+        - method.check_lists.where(is_deleted: false).each do |list|
           %div{ data: {index: "#{i}"} }
             = c.check_box :check_list_id, {name: "diary[check_list_diaries_attributes][#{i}][check_list_id]"}, list.id, nil
             = list.body

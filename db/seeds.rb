@@ -13,8 +13,6 @@
   password: "testpass",
   name: name,
   gender: "male",
-  birthyear: rand(1960..2015),
-  birthdate: "2021-02-03",
   height: rand(120..190),
   target_weight: rand(30..100),
   target_body_fat_percentage: rand(5..35),
