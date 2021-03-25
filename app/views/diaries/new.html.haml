@@ -1,11 +1,12 @@
-.container
+.container.mt-5
   .row
     .col-md-3
-      .sidebar
-        = render "layouts/sidebar", diary: @diary
+      = render "layouts/sidebar", diary: @diary
     .col-md-9
-      %h1.text-center.en.mb-0.mt-3 NewDiary
-      %p.text-center.mb-4.pb-3 日記作成
-      = render "layouts/errors", obj: @diary
-      #new-diary-form
-        = render "diaries/form"
+      .card.mb-3.shadow-sm
+        .card-body
+          %h1.text-center.en.mb-0.mt-3 NewDiary
+          %p.text-center.mb-4.pb-3 日記作成
+          = render "layouts/errors", obj: @diary
+          #new-diary-form
+            = render "diaries/form"

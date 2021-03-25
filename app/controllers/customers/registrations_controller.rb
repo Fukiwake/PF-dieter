@@ -14,7 +14,7 @@ class Customers::RegistrationsController < Devise::RegistrationsController
     @customer = Customer.new(sign_up_params)
     @customer.valid?
     unless @customer.valid_of_specified?(:email, :password)
-      flash.now[:alert] = "メールアドレスかパスワードが正しくありません"
+      flash.now[:alert] = "メールアドレスかパスワードが不正な値です。"
       render :new and return
     end
     session["devise.regist_data"] = {customer: @customer.attributes}
@@ -31,8 +31,9 @@ class Customers::RegistrationsController < Devise::RegistrationsController
     @customer.update(sign_up_params)
     if @customer.save
       flash[:notice] = "新規登録が完了しました"
+      session["devise.regist_data"] = nil
       sign_in(:customer, @customer)
-      redirect_to customers_path
+      redirect_to diaries_path
     else
       render :new_profile
     end
@@ -72,11 +73,11 @@ class Customers::RegistrationsController < Devise::RegistrationsController
   # If you have extra params to permit, append them to the sanitizer.
 
   def configure_sign_up_params
-    devise_parameter_sanitizer.permit(:sign_up, keys: [:name, :gender, :birthyear, :birthdate, :height, :target_weight, :target_body_fat_percentage, :diet_style1, :diet_style2, :diet_style3, :diet_style4])
+    devise_parameter_sanitizer.permit(:sign_up, keys: [:name, :gender, :age, :height, :target_weight, :target_body_fat_percentage, :diet_style1, :diet_style2, :diet_style3, :diet_style4])
   end
 
   def configure_account_update_params
-    devise_parameter_sanitizer.permit(:account_update, keys: [:email, :name, :profile_image, :introduce, :gender, :birthyear, :birthdate, :height, :target_weight, :target_body_fat_percentage, :diet_style1, :diet_style2, :diet_style3, :diet_style4])
+    devise_parameter_sanitizer.permit(:account_update, keys: [:email, :name, :profile_image, :introduce, :gender, :age, :height, :target_weight, :target_body_fat_percentage, :diet_style1, :diet_style2, :diet_style3, :diet_style4])
   end
 
   def update_resource(resource, params)
@@ -91,9 +92,7 @@ class Customers::RegistrationsController < Devise::RegistrationsController
     setting_path
   end
 
-  def after_sign_up_path_for(resource)
-    diaries_path
-  end
+
 
   # The path used after sign up.
   # def after_sign_up_path_for(resource)

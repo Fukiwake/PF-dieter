@@ -13,6 +13,7 @@ Rails.application.routes.draw do
     post 'customers/guest2_sign_in', to: 'customers/sessions#new_guest2'
     get 'customers/new_profile', to: 'customers/registrations#new_profile'
     post 'customers/create_profile', to: 'customers/registrations#create_profile'
+    get 'customers/create_profile', to: 'customers/registrations#new_profile'
   end
   mount ActionCable.server => '/cable'
   root "homes#top"
@@ -45,7 +46,7 @@ Rails.application.routes.draw do
   resources :contacts, only: [:new, :create]
   resources :reports, only: [:create]
   get 'finder' => "finders#finder"
-  
+
   namespace :admin do
     resources :customers, only: [:index, :show, :edit, :update] do
       collection do
@@ -68,5 +69,5 @@ Rails.application.routes.draw do
       end
     end
   end
-  
+
 end

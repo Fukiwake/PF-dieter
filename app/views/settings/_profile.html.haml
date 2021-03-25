@@ -5,7 +5,7 @@
     %table.table.table-borderless
       %tr
         %td.w-25.position-relative
-          = attachment_image_tag customer, :profile_image, size: "120x120", fallback: "no_image.png", class: "profile_image_large"
+          = attachment_image_tag customer, :profile_image, :fill, 120, 120, fallback: "no_image.png", size: "120x120"
           = f.attachment_field :profile_image, {onchange: "this.form.submit()", id: "file"}
           %i.fas.fa-camera.icon.text-light{onClick: "$('#file').click()"}
       %tr
@@ -21,14 +21,6 @@
           男性
           = f.radio_button :gender, "female"
           女性
-      %tr
-        %th 生年月日
-        %td
-          = f.text_field :birthyear, placeholder: "2000"
-          年
-        %td
-          = f.date_select :birthdate, {discard_year: true, use_month_numbers: true, date_separator: "月"}
-          日
       %tr
         %th 身長
         %td

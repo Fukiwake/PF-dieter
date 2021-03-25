@@ -71,6 +71,6 @@ class DietMethodsController < ApplicationController
   private
 
   def diet_method_params
-    params.require(:diet_method).permit(:title, :way, :attention, :image, :tag_list, diet_method_images_images: [], check_lists_attributes: [:body, :_destroy, :id])
+    params.require(:diet_method).permit(:title, :way, :attention, :image, :tag_list, diet_method_images_images: [], check_lists_attributes: [:body, :is_deleted, :id])
   end
 end
