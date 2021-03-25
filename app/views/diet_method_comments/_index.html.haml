@@ -1,7 +1,7 @@
-- diet_method.diet_method_comments.order("created_at DESC").each do |diet_method_comment|
+- diet_method.diet_method_comments.includes(:customer).order("created_at DESC").each do |diet_method_comment|
   .row
     .col-md-12
-      = attachment_image_tag diet_method.customer, :profile_image, fallback: "no_image.png", size: "50x50"
+      = attachment_image_tag diet_method.customer, :profile_image, :fill, 50, 50, fallback: "no_image.png", size: "50x50"
       %span.ml-2.font-weight-bold
         = diet_method_comment.customer.name
       #{time_ago_in_words(diet_method_comment.created_at).upcase}前

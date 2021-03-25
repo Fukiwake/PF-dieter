@@ -1,9 +1,38 @@
 .main-visual-wrapper.position-relative
-  = image_tag "mv.jpg"
+  = image_tag "mv.jpg", class: "w-100 h-100"
   - unless customer_signed_in?
     .costomer-button-wrapper
-      = link_to "新規登録", new_customer_registration_path, class: "btn btn-outline-primary mt-4 mr-3"
-      = link_to "ログイン", new_customer_session_path, class: "btn btn-outline-primary mt-4"
-.container
-  %h1.text-center.mt-5.en About
+      = link_to "新規登録", new_customer_registration_path, class: "btn btn-danger mt-4 mr-3"
+      = link_to "ログイン", new_customer_session_path, class: "btn btn-danger mt-4"
+.container-fluid
+  %h1.text-center.mt-5.mb-0.en About
   %p.text-center Dieterについて
+  .card.shadow-sm
+    .card-body
+      .row.py-5
+        .col-md-6.text-center.pt-5.d-flex.justify-content-center.flex-column
+          %h2.font-weight-bold 毎日の変化を日記につけよう！
+          %p.mt-5 体重や体脂肪率を日記につけることで、
+          %p 日々の変化をグラフやカレンダーで管理することができます。
+        .col-md-6.text-center
+          = image_tag "graph.jpg", class: "w-100"
+  .card.shadow-sm.my-5
+    .card-body
+      .row.py-5
+        .col-md-6.text-center.pt-5.d-flex.justify-content-center.flex-column
+          %h2.font-weight-bold 仲間のダイエットを参考にしよう！
+          %p.mt-5 仲間が投稿したダイエット方法を参考にして実践することができます。
+          %p また、自分が実践しているダイエット方法を共有するのも、
+          %p モチベーションの向上につながるのでおすすめです！
+        .col-md-6.text-center
+          = image_tag "diet_method.jpg", class: "w-100"
+  .card.shadow-sm
+    .card-body
+      .row.py-5
+        .col-md-6.text-center.pt-5.d-flex.justify-content-center.flex-column
+          %h2.font-weight-bold ランキングで競おう！
+          %p.mt-5 日記をつけたり、達成項目をクリアすることでレベルが上がります。
+          %p また、獲得した経験値によるランキングを見ることができるので、
+          %p 上位に入れるようにコツコツ頑張りましょう！
+        .col-md-6.text-center
+          = image_tag "ranking.jpg", class: "w-100"

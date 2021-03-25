@@ -1,0 +1,14 @@
+.modal.fade{"aria-hidden" => "true", "aria-labelledby" => "label#{diary.id}", role: "dialog", tabindex: "-1", id: "destroy-confirm-#{diary.id}"}
+  .modal-dialog.modal-dialog-centered{role: "document"}
+    .modal-content
+      .modal-header
+        %h5.modal-title{id: "label#{diary.id}"}
+          削除確認
+        %button.close{"aria-label" => "Close", "data-dismiss" => "modal", type: "button"}
+          %span{"aria-hidden" => "true"} ×
+      .modal-body.text-left
+        = diary.title
+        を削除しますか？
+      .modal-footer
+        %button.btn.btn-secondary{"data-dismiss" => "modal", type: "button"} Close
+        = button_to "削除", diary_path(diary), method: :delete, class: "btn btn-danger"

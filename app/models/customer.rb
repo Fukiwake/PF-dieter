@@ -31,6 +31,7 @@ class Customer < ApplicationRecord
   has_many :active_blocks, class_name: "Block", foreign_key: "blocker_id", dependent: :destroy
   has_many :passive_blocks, class_name: "Block", foreign_key: "blocked_id", dependent: :destroy
   has_many :blockings, through: :active_blocks, source: :blocked
+  has_many :blockers, through: :passive_blocks, source: :blocker
   has_many :entries
   has_many :chats
   has_many :rooms, through: :entries
@@ -40,12 +41,12 @@ class Customer < ApplicationRecord
   has_many :active_reports, class_name: "Report", foreign_key: 'visitor_id', dependent: :destroy
   has_many :passive_reports, class_name: "Report", foreign_key: 'visited_id', dependent: :destroy
 
-  validates :name, length: { minimum: 1, maximum: 10 }
+  validates :name, presence: true, length: { maximum: 10 }
   validates :gender, presence: true
-  validates :birthyear, numericality: {greater_than: 1000}
   validates :height, presence: true, numericality: true
   validates :target_weight, presence: true, numericality: true
-  validates :target_weight, numericality: true
+  validates :target_body_fat_percentage, numericality: true, allow_blank: true
+  validates :age, numericality: true, allow_blank: true
   validates :introduce, length: { maximum: 200 }
 
   def update_without_current_password(params, *options)
@@ -126,8 +127,7 @@ class Customer < ApplicationRecord
       customer.password = SecureRandom.urlsafe_base64
       customer.name = "ゲスト"
       customer.gender = "male"
-      customer.birthyear = 1999
-      customer.birthdate = "02-03"
+      customer.age = 20
       customer.height = 180
       customer.target_weight = 80
       customer.target_body_fat_percentage = 15
@@ -140,8 +140,7 @@ class Customer < ApplicationRecord
       customer.password = SecureRandom.urlsafe_base64
       customer.name = "ゲスト2"
       customer.gender = "female"
-      customer.birthyear = 1999
-      customer.birthdate = "02-03"
+      customer.age = 20
       customer.height = 160
       customer.target_weight = 49
       customer.target_body_fat_percentage = 15

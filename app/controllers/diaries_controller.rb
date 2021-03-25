@@ -6,8 +6,9 @@ class DiariesController < ApplicationController
     if customer_signed_in?
       following_ids = current_customer.followings.pluck(:id)
       blocking_ids = current_customer.blockings.pluck(:id)
-      # @diaries = Diary.where(customer_id: following_ids).where.not(customer_id: blocking_ids).page(params[:page]).per(20)
-      @diaries = Diary.includes(:customer, :check_list_diaries, :diary_images, :diary_favorites, :diary_comments).order("created_at DESC").page(params[:page]).per(20)
+      blocker_ids = current_customer.blockers.pluck(:id)
+      all_diaries = Diary.includes(:customer, :check_list_diaries, :diary_images, :diary_favorites, :diary_comments).order("created_at DESC").page(params[:page]).per(20)
+      @diaries = all_diaries.where(customer_id: following_ids).where.not(customer_id: blocking_ids).where.not(customer_id: blocker_ids).or(all_diaries.where(customer_id: current_customer.id)).page(params[:page]).per(20)
     else
       @diaries = Diary.includes(:customer, :check_list_diaries, :diary_images, :diary_favorites, :diary_comments).order("created_at DESC").page(params[:page]).per(20)
     end
@@ -67,7 +68,9 @@ class DiariesController < ApplicationController
     if diary.update(diary_params)
       if diary.check_list_diaries.present?
         diary.check_list_diaries.update(status: false)
-        CheckListDiary.where(id: params[:diary][:check_list_diary][:id]).update(status: true)
+        if params[:diary][:check_list_diary].present?
+          CheckListDiary.where(id: params[:diary][:check_list_diary][:id]).update(status: true)
+        end
       end
       flash[:notice] = "日記を編集しました"
       redirect_to diary_path(diary)
@@ -79,6 +82,7 @@ class DiariesController < ApplicationController
   def destroy
     @diary = Diary.find(params[:id])
     @diary.destroy
+    flash[:notice] = "日記を削除しました"
     redirect_to diaries_path
   end
 

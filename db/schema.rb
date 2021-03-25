@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_03_16_013509) do
+ActiveRecord::Schema.define(version: 2021_03_23_233131) do
 
   create_table "admins", force: :cascade do |t|
     t.string "email", default: "", null: false
@@ -52,6 +52,7 @@ ActiveRecord::Schema.define(version: 2021_03_16_013509) do
     t.string "body", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.boolean "is_deleted", default: false
   end
 
   create_table "contacts", force: :cascade do |t|
@@ -75,8 +76,6 @@ ActiveRecord::Schema.define(version: 2021_03_16_013509) do
     t.datetime "updated_at", null: false
     t.string "name"
     t.integer "gender"
-    t.text "birthyear"
-    t.date "birthdate"
     t.float "height"
     t.float "target_weight"
     t.float "target_body_fat_percentage"
@@ -99,7 +98,7 @@ ActiveRecord::Schema.define(version: 2021_03_16_013509) do
     t.boolean "all_notification", default: true
     t.string "provider"
     t.string "uid"
-    t.index ["birthyear"], name: "index_customers_on_birthyear"
+    t.integer "age"
     t.index ["email"], name: "index_customers_on_email", unique: true
     t.index ["introduce"], name: "index_customers_on_introduce"
     t.index ["name"], name: "index_customers_on_name"

@@ -23,5 +23,11 @@ $(function () {
       $('.navbar-nav a[href="/' + location.pathname.split("/")[1] + '"]').addClass('text-danger');
     }
 
+    $(document).on('click',function(e) {
+      if(!$(e.target).closest('.alert').length) {
+        $(".alert").hide();
+      }
+    });
+
   });
 });
