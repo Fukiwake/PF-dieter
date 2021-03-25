@@ -10,8 +10,10 @@ class Diary < ApplicationRecord
   has_many :notifications, dependent: :destroy
   has_many :reports, dependent: :destroy
 
+  validates :title, length: { maximum: 15 }
   validates :weight, numericality: true, presence: true
-  validates :body_fat_percentage, numericality: true
+  validates :body_fat_percentage, numericality: true, allow_blank: true
+  validates :body, length: { maximum: 200 }
 
   ransacker :diary_favorites_count do
     query = '(SELECT COUNT(diary_favorites.diary_id) FROM diary_favorites where diary_favorites.diary_id = diaries.id GROUP BY diary_favorites.diary_id)'

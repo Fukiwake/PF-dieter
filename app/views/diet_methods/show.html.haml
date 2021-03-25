@@ -8,7 +8,7 @@
         .col-md-5
           .d-flex
             .text-center
-              = link_to customer_path(@diet_method.customer), class: "text-dark font-weight-bold" do
+              = link_to customer_path(@diet_method.customer), data: {"turbolinks" => false}, class: "text-dark font-weight-bold" do
                 = attachment_image_tag(@diet_method.customer, :profile_image, size: "70x70", fallback: "no_image.png")
                 %br
                 = @diet_method.customer.name

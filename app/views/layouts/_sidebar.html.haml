@@ -10,38 +10,43 @@
     %li.mt-4
       = link_to "退会", "#withdraw", class: "text-dark"
 - elsif customer_signed_in? && request.fullpath.include?("diaries/new")
-  %h3
-    実践中の
-    %br
-    ダイエット方法
-  - current_customer.trying_diet_methods.each do |trying_diet_method|
-    %table.table.table-borderless.border-bottom
-      %tr
-        %td.profile_image.text-center{rowspan: "2"}
-          = attachment_image_tag(trying_diet_method.customer, :profile_image, size: "50x50", fallback: "no_image.png")
-          %br
-          = trying_diet_method.customer.name
-        %td.font-weight-bold
-          = trying_diet_method.title
-      %tr
-        %td.pt-0
-          %div{:id => "tries_buttons_#{trying_diet_method.id}"}
-            = render "tries/try", diet_method: trying_diet_method
+  .card.mb-3.shadow-sm
+    .card-body
+      %h3
+        実践中の
+        %br
+        ダイエット方法
+      - current_customer.trying_diet_methods.includes(:customer).each do |trying_diet_method|
+        %table.table.table-borderless.border-bottom
+          %tr
+            %td.profile_image.text-center{rowspan: "2"}
+              = link_to customer_path(trying_diet_method.customer), data: {"turbolinks" => false}, class: "text-dark" do
+                = attachment_image_tag(trying_diet_method.customer, :profile_image, :fill, 50, 50, fallback: "no_image.png", size: "50x50")
+                %br
+                = trying_diet_method.customer.name
+            %td.font-weight-bold
+              = link_to diet_method_path(trying_diet_method), class: "text-dark" do
+                = trying_diet_method.title
+          %tr
+            %td.pt-0
+              %div{:id => "tries_buttons_#{trying_diet_method.id}"}
+                = render "tries/try", diet_method: trying_diet_method
 - elsif customer_signed_in?
   .card.shadow-sm
     .card-body
-      %h2 投稿
+      %h2.text-center 投稿
       = link_to "日記を投稿", new_diary_path, class: "btn btn-success btn-block mt-4"
       = link_to "ダイエット方法を投稿", new_diet_method_path, class: "btn btn-success btn-block mt-4"
   .card.mt-3.shadow-sm
     .card-body
-      %h2 クイック投稿
-      #quick-diary-form
-        = render "diaries/quick_form", diary: diary
+      %h2.text-center クイック投稿
+      = render "diaries/quick_form", diary: diary
 - else
-  %h2 初めての方へ
-  = link_to "新規登録", new_customer_registration_path, class: "btn btn-outline-primary w-100 mt-4"
-  = link_to "ログイン", new_customer_session_path, class: "btn btn-outline-primary w-100 mt-4"
-  %ul.mt-4
-    %li
-      = link_to "お問い合わせ", new_contact_path, class: "text-dark"
+  .card.shadow-sm
+    .card-body
+      %h2.text-center 初めての方へ
+      = link_to "新規登録", new_customer_registration_path, class: "btn btn-danger w-100 mt-4"
+      = link_to "ログイン", new_customer_session_path, class: "btn btn-danger w-100 mt-4"
+      %ul.mt-4
+        %li
+          = link_to "お問い合わせ", new_contact_path, class: "text-dark"

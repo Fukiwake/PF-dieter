@@ -12,3 +12,22 @@ ja:
       gender:
         male: 男性
         female: 女性
+  activerecord:
+    models:
+      customer: ユーザー
+      diary: 日記
+    attributes:
+      customer:
+        name: 名前
+        gender: 性別
+        height: 身長
+        target_weight: 目標体重
+        target_body_fat_percentage: 目標体脂肪率
+        age: 年齢
+        introduce: 自己紹介
+      diary:
+        title: タイトル
+        weight: 体重
+        body_fat_percentage: 体脂肪率
+        body: 本文
+

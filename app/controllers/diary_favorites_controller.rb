@@ -6,6 +6,10 @@ class DiaryFavoritesController < ApplicationController
     favorite = current_customer.diary_favorites.new(diary_id: @diary.id)
     favorite.save
     @diary.create_notification_favorite(current_customer)
+    respond_to do |format|
+      format.html { redirect_to diaries_path }
+      format.js
+    end
   end
 
   def destroy
