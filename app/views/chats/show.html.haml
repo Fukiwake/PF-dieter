@@ -1,38 +1,36 @@
-.container
+.container.mt-5
   .row.mt-4
     .col-md-3
-      .sidebar
-        = render "layouts/sidebar", diary: @diary
+      = render "layouts/sidebar", diary: @diary
     .col-md-3
-      .sidebar
-        %h2 メッセージ
-        #rooms.d-flex.flex-column.mb-3
-          #room-now
-            %table
+      %h2 メッセージ
+      #rooms.d-flex.flex-column.mb-3
+        #room-now
+          %table
+            %tr
+              %td#chat-with.profile_image{rowspan: "2"}
+                = attachment_image_tag(@customer, :profile_image, size: "70x70", fallback: "no_image.png")
+              %td.font-weight-bold
+                = @customer.name
+            -if @chats.present?
               %tr
-                %td#chat-with.profile_image{rowspan: "2"}
-                  = attachment_image_tag(@customer, :profile_image, size: "70x70", fallback: "no_image.png")
-                %td.font-weight-bold
-                  = @customer.name
-              -if @chats.present?
-                %tr
-                  %td
-                    = @chats.last.message.truncate(13)
-          - if @other_rooms.present?
-            - @other_rooms.each do |room|
-              - customer = room.customers.where.not(id: current_customer.id)
-              - if customer.present?
-                = link_to chat_path(customer[0].id), class: "text-dark", data: {"turbolinks" => false} do
-                  %table.mb-3
+                %td
+                  = @chats.last.message.truncate(13)
+        - if @other_rooms.present?
+          - @other_rooms.each do |room|
+            - customer = room.customers.where.not(id: current_customer.id)
+            - if customer.present?
+              = link_to chat_path(customer[0].id), class: "text-dark", data: {"turbolinks" => false} do
+                %table.mb-3
+                  %tr
+                    %td.profile_image{rowspan: "2"}
+                      = attachment_image_tag(customer[0], :profile_image, size: "70x70", fallback: "no_image.png")
+                    %td.font-weight-bold
+                      = customer[0].name
+                  - if room.chats.present?
                     %tr
-                      %td.profile_image{rowspan: "2"}
-                        = attachment_image_tag(customer[0], :profile_image, size: "70x70", fallback: "no_image.png")
-                      %td.font-weight-bold
-                        = customer[0].name
-                    - if room.chats.present?
-                      %tr
-                        %td
-                          = room.chats.last.message.truncate(13)
+                      %td
+                        = room.chats.first.message.truncate(13)
 
     .col-md-6
       %h2{id: "customer_room", "data-room_id": "#{@room.id}", "data-current_customer_id": "#{current_customer.id}", "data-customer_id": "#{@customer.id}"}

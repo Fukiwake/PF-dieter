@@ -1,6 +1,6 @@
 - if @relationship.present?
   - if @relationship.notification == false
-    = link_to customer_relationships_path(@customer, notification: true), method: :patch, remote: true do
+    = link_to customer_relationships_path(@customer, notification: true), method: :patch, remote: true, id: "notification" do
       %i.far.fa-bell.icon.border.border-danger.rounded-circle.p-2.text-danger{title: "通知する"}
       %span.bell-plus.text-danger{title: "通知する"} ＋
   - else

@@ -17,11 +17,10 @@
 @import "bootstrap";
 @import 'font-awesome-sprockets';
 @import 'font-awesome';
-@import "slick-theme";
-@import "slick";
 @import "jquery.tagit";
 @import "tagit.ui-zendesk";
-@import "trix";
+@import "slick";
+@import "slick-theme";
 
 header {
   background-color: rgba(248,122,9,1);
@@ -33,6 +32,10 @@ header {
 
 h1 {
   font-size: 60px;
+}
+
+.active {
+  display: block !important;
 }
 
 .profile_image {
@@ -168,6 +171,27 @@ object {
 #bell-button {
   width: 21.88px;
   height: 28px;
+}
+
+.header-notification {
+  overflow-y: scroll;
+  height: 30vh;
+  &::-webkit-scrollbar {
+    width: 6px;
+    height: 10px;
+  }
+  &::-webkit-scrollbar-track {
+    border-radius: 5px;
+    box-shadow: 0 0 4px #aaa inset;
+  }
+  &::-webkit-scrollbar-thumb {
+    border-radius: 5px;
+    background: #f87a09;
+  }
+}
+
+.active {
+  display: block !important;
 }
 
 .level {
