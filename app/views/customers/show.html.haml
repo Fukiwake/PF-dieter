@@ -1,114 +1,125 @@
-.container
+.container.mt-5
   .row
     .col-md-3.mt-4
-      .sidebar
-        = render "layouts/sidebar", diary: @diary
+      = render "layouts/sidebar", diary: @diary
     .col-md-9.mt-4
-      #info-tab-menu.font-weight-bold
-        %input.mr-1{type: "radio", value: "#graph", name: "info", checked: "checked"} グラフ
-        %input.ml-3.mr-1{type: "radio", value: "#calendar", name: "info"} カレンダー
-      #info-tab-contents
-        #graph.tab
-          = render "graph"
-        #calendar.tab
-          = month_calendar events: @diaries do |date, diaries|
-            = date.day
-            - diaries.each do |diary|
-              %div
-                = link_to diary.title, diary_path(diary)
-      %table.table.table-borderless
-        %tr
-          %td.text-center{rowspan: "2", style: "width:8%"}
-            = attachment_image_tag(@customer, :profile_image, :fill, 100, 100, fallback: "no_image.png", size: "100x100")
-            %br
-            Lv.
-            = @customer.level
-          %td{style: "width:23%"}
-            %h3
-              = @customer.name
-          %td{style: "width:23%"}
-            = link_to followings_customer_path(@customer), class: "text-dark" do
-              %span{:id => "followings_count_#{@customer.id}"}
-                = @customer.followings.count
-              フォロー中
-            %br
-            = link_to followers_customer_path(@customer), class: "text-dark" do
-              %span{:id => "followers_count_#{@customer.id}"}
-                = @customer.followers.count
-              フォロワー
-          - if current_customer != @customer && customer_signed_in?
-            %td{style: "width:23%"}
-              %span{:id => "follow_bottons_#{@customer.id}"}
-                = render "relationships/follow_form", customer: @customer
-            %td.d-flex.align-items-center.text-center.position-relative{style: "width:180px"}
-              .dropdown
-                #dropdownCustomerMenuButton{"data-toggle": "dropdown", "aria-haspopup": "true", "aria-expanded": "false"}
-                  %i.fas.fa-ellipsis-h.icon.border.border-danger.rounded-circle.p-2.mr-3.text-danger{title: "もっと見る"}
-                .dropdown-menu.dropdown-menu-right.text-center{"aria-labelledby": "dropdownCustomerMenuButton"}
-                  - if current_customer.blocking?(@customer)
-                    = link_to "ブロック解除", "#", class: "text-dark d-block", "data-target": "#block-confirm-#{@customer.id}", "data-toggle": "modal", type: "button"
-                  - else
-                    = link_to "ブロック", "#", class: "text-dark d-block", "data-target": "#block-confirm-#{@customer.id}", "data-toggle": "modal", type: "button"
-                  - if Report.where(visitor_id: current_customer.id, visited_id: @customer.id).present?
-                    報告済みです
-                  -else
-                    = link_to "報告", reports_path(visited_id: @customer.id), method: :post, class: "text-dark"
-                = render "blocks/block_form", customer: @customer
-              #notification-button
-                = render "relationships/notification_button"
-              = link_to chat_path(@customer), data: {"turbolinks" => false} do
-                %i.far.fa-comments.icon.border.border-danger.rounded-circle.p-2.ml-3.text-danger{title: "チャット"}
-          - elsif customer_signed_in?
-            %td
-              = link_to "プロフィールを編集", setting_path(anchor: 'profile'), class: "btn btn-outline-danger rounded-pill"
-        - if @customer.introduce.present?
-          %tr
-            %td{colspan: "4"}
-              = @customer.introduce
-      %table.table.table-bordered
-        %tr.bg-success.text-light.text-center
-          %th.w-25
-            性別
-          %th.w-25
-            身長
-          %th.w-25
-            目標体重
-          %th.w-25
-            目標体脂肪率
-        %tr.text-center
-          %td
-            = @customer.gender_i18n
-          %td
-            = @customer.height
-            cm
-          %td
-            = @customer.target_weight
-            kg
-          %td
-            = @customer.target_body_fat_percentage
-            ％
-        - if @customer.diet_style1 || @customer.diet_style2 || @customer.diet_style3 || @customer.diet_style4
-          %tr.bg-secondary.text-light.text-center
-            %th{colspan: "4"}
-              ダイエットスタイル
-          %tr.text-center
-            %td{colspan: "4"}
-              - if @customer.diet_style1
-                運動メイン
+      .card.mb-3.shadow-sm
+        .card-body
+          #info-tab-menu.font-weight-bold
+            %input.mr-1{type: "radio", value: "#graph", name: "info", checked: "checked"} グラフ
+            %input.ml-3.mr-1{type: "radio", value: "#calendar", name: "info"} カレンダー
+          #info-tab-contents
+            #graph.tab.d-none.active
+              = render "graph"
+            #calendar.tab.d-none
+              = month_calendar events: @diaries do |date, diaries|
+                = date.day
+                - diaries.each do |diary|
+                  %div
+                    = link_to diary.title, diary_path(diary)
+      .card.shadow-sm
+        .card-body
+          %table.table.table-borderless
+            %tr
+              %td.text-center{rowspan: "2", style: "width:8%"}
+                = attachment_image_tag(@customer, :profile_image, :fill, 100, 100, fallback: "no_image.png", size: "100x100")
                 %br
-              - if @customer.diet_style2
-                食事制限メイン
+                Lv.
+                = @customer.level
+              %td{style: "width:23%"}
+                %h3
+                  = @customer.name
+              %td{style: "width:23%"}
+                = link_to followings_customer_path(@customer), class: "text-dark" do
+                  %span{:id => "followings_count_#{@customer.id}"}
+                    = @customer.followings.count
+                  フォロー中
                 %br
-              - if @customer.diet_style3
-                長期継続
-                %br
-              - if @customer.diet_style1
-                短期集中
+                = link_to followers_customer_path(@customer), class: "text-dark" do
+                  %span{:id => "followers_count_#{@customer.id}"}
+                    = @customer.followers.count
+                  フォロワー
+              - if current_customer != @customer && customer_signed_in?
+                %td{style: "width:23%"}
+                  %span{:id => "follow_bottons_#{@customer.id}"}
+                    = render "relationships/follow_form", customer: @customer
+                %td.d-flex.align-items-center.text-center.position-relative{style: "width:180px"}
+                  .dropdown
+                    #dropdownCustomerMenuButton{"data-toggle": "dropdown", "aria-haspopup": "true", "aria-expanded": "false"}
+                      %i.fas.fa-ellipsis-h.icon.border.border-danger.rounded-circle.p-2.mr-3.text-danger{title: "もっと見る"}
+                    .dropdown-menu.dropdown-menu-right.text-center{"aria-labelledby": "dropdownCustomerMenuButton"}
+                      - if current_customer.blocking?(@customer)
+                        = link_to "ブロック解除", "#", class: "text-dark d-block", "data-target": "#block-confirm-#{@customer.id}", "data-toggle": "modal", type: "button"
+                      - else
+                        = link_to "#", class: "text-dark d-block", "data-target": "#block-confirm-#{@customer.id}", "data-toggle": "modal", type: "button" do
+                          %i.fas.fa-ban
+                          ブロック
+                      - if Report.where(visitor_id: current_customer.id, visited_id: @customer.id).present?
+                        報告済みです
+                      -else
+                        = link_to reports_path(visited_id: @customer.id), method: :post, class: "text-dark" do
+                          %i.fas.fa-bullhorn
+                          報告
+                    = render "blocks/block_form", customer: @customer
+                  #notification-button
+                    = render "relationships/notification_button"
+                  = link_to chat_path(@customer), data: {"turbolinks" => false}, id: "chat-link" do
+                    %i.far.fa-comments.icon.border.border-danger.rounded-circle.p-2.ml-3.text-danger{title: "チャット"}
+              - elsif customer_signed_in?
+                %td
+                  = link_to "プロフィールを編集", setting_path(anchor: 'profile'), class: "btn btn-outline-danger rounded-pill"
+            - if @customer.introduce.present?
+              %tr
+                %td{colspan: "4"}
+                  = @customer.introduce
+          %table.table.table-bordered
+            %tr.bg-success.text-light.text-center
+              %th{style: "width: 33%"}
+                身長
+              %th{style: "width: 33%"}
+                目標体重
+              %th{style: "width: 33%"}
+                目標体脂肪率
+            %tr.text-center
+              %td
+                = @customer.height
+                cm
+              %td
+                = @customer.target_weight
+                kg
+              %td
+                = @customer.target_body_fat_percentage
+                ％
+            %tr.bg-success.text-light.text-center
+              %th
+                性別
+              %th
+                年齢
+              %th
+                ダイエットスタイル
+            %tr.text-center
+              %td
+                = @customer.gender_i18n
+              %td
+                = @customer.age
+                歳
+              %td
+                - if @customer.diet_style1
+                  運動メイン
+                  %br
+                - if @customer.diet_style2
+                  食事制限メイン
+                  %br
+                - if @customer.diet_style3
+                  長期継続
+                  %br
+                - if @customer.diet_style1
+                  短期集中
       #customer-tab-menu.d-flex.justify-content-between
         .mt-4.text-center.w-50.active
-          = link_to "日記", "#diary", class: "btn btn-danger btn-block"
+          = link_to "日記", "#diary", class: "btn btn-danger btn-block btn-lg"
         .mt-4.text-center.w-50
-          = link_to "ダイエット方法", "#diet_method", class: "btn btn-outline-secondary btn-block"
+          = link_to "ダイエット方法", "#diet_method", class: "btn btn-outline-secondary btn-block btn-lg"
       #customer-tab-contents
         #diary.tab
           = render "diaries/index", diaries: @customer.diaries.includes(:check_list_diaries, :diary_images, :diary_favorites, :diary_comments).page(params[:page]).per(20)

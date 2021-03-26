@@ -28,11 +28,9 @@ $(function(){
       event.preventDefault();
     });
 
-    $('#info-tab-contents .tab[id != "graph"]').hide();
-
     $('#info-tab-menu input').on('click', function(event) {
-      $("#info-tab-contents .tab").hide();
-      $($(this).attr("value")).show();
+      $("#info-tab-contents .tab").removeClass('active');
+      $($(this).attr("value")).addClass('active');
       document.$(this).checked = true;
       event.preventDefault();
     });

@@ -1,6 +1,8 @@
 $(function(){
   $(document).on('turbolinks:load', function() {
-    $('.images-wrapper').slick({
+
+
+    $('.images-wrapper').not('.slick-initialized').slick({
       dots: true,
       arrows: true,
     });
@@ -28,5 +30,17 @@ $(function(){
         });
       }
     });
+
+    $('#food-search-button').on('click', function() {
+      $.ajax({
+        url: "https://script.google.com/macros/s/AKfycbyqYIk4ityfdNoDeKE_eTV5sAC0g79d_PxK-o1Fz_xacVeGFUQR90BFo7__7kJTdOiZ/exec?q=" + $('#food-name').val(),
+        dataType : 'jsonp',
+      }).done(function (data) {
+        $('#food-search').text(data[0].food);
+      }).fail(function (data) {
+        alert('通信に失敗しました。');
+      });
+    });
+
   });
 });

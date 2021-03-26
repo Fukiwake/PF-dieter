@@ -22,6 +22,12 @@
           = f.radio_button :gender, "female"
           女性
       %tr
+        %th 年齢
+        %td
+          = f.text_field :age, placeholder: "20", class: "form-control"
+        %td
+          歳
+      %tr
         %th 身長
         %td
           = f.text_field :height, placeholder: "170.9"
