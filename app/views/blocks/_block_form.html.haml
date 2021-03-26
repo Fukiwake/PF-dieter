@@ -32,4 +32,4 @@
           また、このアカウントからの投稿や通知は今後表示されません。
         .modal-footer
           %button.btn.btn-secondary{"data-dismiss" => "modal", type: "button"} Close
-          = link_to "ブロック", customer_blocks_path(customer.id), method: :post, class: "btn btn-danger"
+          = link_to "ブロックする", customer_blocks_path(customer.id), method: :post, class: "btn btn-danger"

@@ -1,5 +1,5 @@
 - if notifications.present?
-  - notifications.each do |notification|
+  - notifications.includes(:visitor, :chat, :visited).each do |notification|
     - visitor = notification.visitor
     - visited = notification.visited
     %span
