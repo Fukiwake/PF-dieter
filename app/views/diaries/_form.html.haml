@@ -1,4 +1,4 @@
-= form_with model: @diary, local: true do |f|
+= form_with model: @diary, local: true, id: "diary-form" do |f|
   .field
     = f.label :post_date, "日付", class: "font-weight-bold"
     .form-inline
@@ -25,7 +25,7 @@
     %br/
     = f.text_area :body, size: "autox10", class: "form-control"
   .field
-    = f.label :image, "画像", class: "font-weight-bold"
+    = f.label :image, "画像(複数可)", class: "font-weight-bold"
     %br/
     = f.attachment_field :diary_images_images, multiple: true
   .field
@@ -44,7 +44,20 @@
       .col-md-6
         .form-inline.input-group
           %input#food-name.form-control{type: "text", placeholder: "食品名を検索", size: 24}
-          .btn.btn-danger#food-search-button 検索
-      .col-md-6#food-search
+          .btn.btn-success#food-search-button 検索
+          %select#food-genre.btn.btn-secondary
+            %option{value: ""} ジャンルで探す
+            %option{value: "基本メニュー"} 基本メニュー
+            %option{value: "和食"} 和食
+            %option{value: "洋食"} 洋食
+            %option{value: "中華"} 中華
+            %option{value: "デザート/飲み物"} デザート/飲み物
+        #food-search
+      .col-md-6
+        #food-selected
+        .form-inline
+          = f.label :food_calorie, "合計カロリー", class: "font-weight-bold mr-1"
+          = f.text_field :food_calorie, size: 25, class: "form-control mr-1"
+          Kcal
   .actions
     = f.submit "投稿する", class: "btn btn-success btn-block"

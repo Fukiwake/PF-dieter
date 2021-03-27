@@ -1,11 +1,11 @@
 .container
-  .row.mt-4
+  .row
     .col-md-3
       .sidebar
         = render "layouts/sidebar", diary: @diary
     .col-md-9
       -if @tag.present?
-        %h2 「#{@tag}」のダイエット方法一覧
+        %h2{style: "margin-top:128px"} 「#{@tag}」のダイエット方法一覧
       -else
         %h1.text-center.en.mb-0.mt-3 DietMethods
         %p.text-center.mb-0.pb-3 ダイエット方法
@@ -14,7 +14,9 @@
           %i.font-weight-bold.fas.fa-tags
             人気のタグ
           - @tags.each do |tag|
-            = link_to "#{tag.name}(#{tag.taggings_count})", diet_methods_path(tag: tag.name)
+            .badge.badge-white.border.rounded-pill
+              \#
+              = link_to "#{tag.name}(#{tag.taggings_count})", diet_methods_path(tag: tag.name), class: "text-dark"
         - else
           %p 登録されているタグはありません
       = render "index", diet_methods: @diet_methods

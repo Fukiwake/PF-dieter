@@ -67,6 +67,10 @@
             .row.py-2
               .col-md-12
                 = render "diaries/check_list", diary: diary
+                - if diary.food_calorie.present?
+                  %span.text-danger
+                    = diary.food_calorie
+                    Kcal
           - if diary.diary_images.present?
             .images-wrapper
               - diary.diary_images.each do |image|

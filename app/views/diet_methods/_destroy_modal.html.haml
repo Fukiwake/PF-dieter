@@ -1,14 +1,14 @@
-.modal.fade{"aria-hidden" => "true", "aria-labelledby" => "label#{diary.id}", role: "dialog", tabindex: "-1", id: "destroy-confirm-#{diary.id}"}
+.modal.fade{"aria-hidden" => "true", "aria-labelledby" => "label#{diet_method.id}", role: "dialog", tabindex: "-1", id: "destroy-confirm-#{diet_method.id}"}
   .modal-dialog.modal-dialog-centered{role: "document"}
     .modal-content
       .modal-header
-        %h5.modal-title{id: "label#{diary.id}"}
+        %h5.modal-title{id: "label#{diet_method.id}"}
           削除確認
         %button.close{"aria-label" => "Close", "data-dismiss" => "modal", type: "button"}
           %span{"aria-hidden" => "true"} ×
       .modal-body.text-left
-        = diary.title
+        = diet_method.title
         を削除しますか？
       .modal-footer
         %button.btn.btn-secondary{"data-dismiss" => "modal", type: "button"} Close
-        = link_to "削除する", diary_path(diary), method: :delete, class: "btn btn-danger"
+        = link_to "削除する", diet_method_path(diet_method), method: :delete, class: "btn btn-danger"

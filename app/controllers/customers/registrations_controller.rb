@@ -14,7 +14,7 @@ class Customers::RegistrationsController < Devise::RegistrationsController
     @customer = Customer.new(sign_up_params)
     @customer.valid?
     unless @customer.valid_of_specified?(:email, :password)
-      flash.now[:alert] = "メールアドレスかパスワードが不正な値です。"
+      flash.now[:alert] = "このメールアドレスは既に登録されています"
       render :new and return
     end
     session["devise.regist_data"] = {customer: @customer.attributes}
@@ -83,6 +83,9 @@ class Customers::RegistrationsController < Devise::RegistrationsController
   def update_resource(resource, params)
     if resource.email == 'guest@example.com' && params[:email] != 'guest@example.com'
       params[:email] = 'guest@example.com'
+      flash[:alert] = "ゲストユーザーのメールアドレスは変更できません"
+    elsif resource.email == 'guest2@example.com' && params[:email] != 'guest2@example.com'
+      params[:email] = 'guest2@example.com'
       flash[:alert] = "ゲストユーザーのメールアドレスは変更できません"
     end
     resource.update_without_password(params)

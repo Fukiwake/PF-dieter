@@ -76,7 +76,6 @@ gem 'rails-i18n'
 gem 'devise-i18n'
 gem 'devise-i18n-views'
 gem 'gimei'
-gem 'miyabi'
 gem 'acts-as-taggable-on', '~> 6.0'
 gem 'jquery-ui-rails'
 gem 'whenever', require: false
@@ -85,7 +84,6 @@ gem 'omniauth-google-oauth2'
 gem 'omniauth', '1.9.1'
 gem 'ransack'
 gem 'simple_calendar', '~> 2.0'
-gem 'trix'
 group :production do
   gem 'mysql2'
 end

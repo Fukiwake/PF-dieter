@@ -1,5 +1,5 @@
-.container
-  .row.mt-4
+.container.mt-5
+  .row
     .col-md-12
       %table.table.table-borderless
         %tr
@@ -27,16 +27,12 @@
       %table.table.table-bordered
         %tr.bg-secondary.text-light.text-center
           %th.w-25
-            性別
-          %th.w-25
             身長
           %th.w-25
             目標体重
           %th.w-25
             目標体脂肪率
         %tr.text-center
-          %td
-            = @customer.gender_i18n
           %td
             = @customer.height
             cm
@@ -47,10 +43,19 @@
             = @customer.target_body_fat_percentage
             ％
         %tr.bg-secondary.text-light.text-center
-          %th{colspan: "4"}
+          %th
+            性別
+          %th
+            年齢
+          %th
             ダイエットスタイル
         %tr.text-center
-          %td{colspan: "4"}
+          %td
+            = @customer.gender_i18n
+          %td
+            = @customer.age
+            歳
+          %td
             - if @customer.diet_style1
               運動メイン
               %br

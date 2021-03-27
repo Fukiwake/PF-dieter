@@ -28,7 +28,7 @@
               %i.far.fa-envelope
               メールアドレスで登録する
             .new-registration-form.mt-3
-              = form_with model: @customer, url: customer_registration_path, local: true do |f|
+              = form_with model: @customer, url: customer_registration_path, local: true, id: "new-registration-form" do |f|
                 .field
                   = f.label :email, "メールアドレス", class: "font-weight-bold"
                   %br/

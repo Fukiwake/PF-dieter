@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_03_23_233131) do
+ActiveRecord::Schema.define(version: 2021_03_26_103923) do
 
   create_table "admins", force: :cascade do |t|
     t.string "email", default: "", null: false
@@ -48,7 +48,7 @@ ActiveRecord::Schema.define(version: 2021_03_23_233131) do
   end
 
   create_table "check_lists", force: :cascade do |t|
-    t.integer "diet_method_id", null: false
+    t.integer "diet_method_id"
     t.string "body", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
@@ -117,6 +117,7 @@ ActiveRecord::Schema.define(version: 2021_03_23_233131) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.boolean "is_deleted", default: false
+    t.integer "food_calorie"
     t.index ["body"], name: "index_diaries_on_body"
     t.index ["body_fat_percentage"], name: "index_diaries_on_body_fat_percentage"
     t.index ["title"], name: "index_diaries_on_title"
