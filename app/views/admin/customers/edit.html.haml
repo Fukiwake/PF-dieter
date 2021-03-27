@@ -1,67 +1,84 @@
-.container
-  %h1.mb-4 会員情報編集
-  .customer-setting-form
-    = form_with model: @customer, url: admin_customer_path, local: true do |f|
-      = render 'layouts/errors', obj: @customer
-      %table.table.table-borderless
-        %tr
-          %td.w-25.position-relative
-            = attachment_image_tag @customer, :profile_image, size: "120x120", fallback: "no_image.png", class: "profile_image_large"
+.container.mt-5
+  .row
+    .col-md-7
+      %h1.mb-4 会員情報編集
+      .customer-setting-form
+        = form_with model: @customer, url: admin_customer_path, local: true do |f|
+          = render "devise/shared/error_messages", resource: @customer
+          .position-relative
+            = attachment_image_tag @customer, :profile_image, :fill, 120, 120, fallback: "no_image.png", size: "120x120"
             = f.attachment_field :profile_image, {onchange: "this.form.submit()", id: "file"}
             %i.fas.fa-camera.icon.text-light{onClick: "$('#file').click()"}
-        %tr
-          %th.w-25 ユーザー名
-          %td.w-25= f.text_field :name, placeholder: "10文字以内"
-        %tr
-          %th メールアドレス
-          %td= f.text_field :email, placeholder: "dieter@sample.com"
-        %tr
-          %th 性別
-          %td
-            = f.radio_button :gender, "male"
-            男性
-            = f.radio_button :gender, "female"
-            女性
-        %tr
-          %th 生年月日
-          %td
-            = f.text_field :birthyear, placeholder: "2000"
-            年
-          %td
-            = f.date_select :birthdate, {discard_year: true, use_month_numbers: true, date_separator: "月"}
-            日
-        %tr
-          %th 身長
-          %td
-            = f.text_field :height, placeholder: "170.9"
-          %td
-            cm
-        %tr
-          %th 目標体重
-          %td
-            = f.text_field :target_weight, placeholder: "67.6"
-          %td
-            kg
-        %tr
-          %th 目標体脂肪率
-          %td
-            = f.text_field :target_body_fat_percentage, placeholder: "15.3"
-          %td
-            ％
-        %tr
-        %th ダイエットスタイル
-        %td.form-group
-          = f.check_box :diet_style1 ,{}, "true", "false"
-          運動メイン
-          %br
-          = f.check_box :diet_style2 ,{}, "true", "false"
-          食事制限メイン
-          %br
-          = f.check_box :diet_style3 ,{}, "true", "false"
-          長期継続
-          %br
-          = f.check_box :diet_style4 ,{}, "true", "false"
-          短期集中
-        %tr
-          %th
-          %td= f.submit "編集内容を保存", class: "btn btn-success px-5"
+          .row.mb-3
+            .col-md-6.d-flex.align-items-center
+              = f.label :email, "メールアドレス", class: "font-weight-bold mb-0"
+            .col-md-6.form-inline
+              = f.text_field :email, class: "form-control"
+          .row.mb-3
+            .col-md-6.d-flex.align-items-center
+              = f.label :name, "ユーザー名", class: "font-weight-bold mb-0"
+            .col-md-6.form-inline
+              = f.text_field :name, placeholder: "10文字以内", class: "form-control"
+          .row.mb-3
+            .col-md-6.d-flex.align-items-center
+              = f.label :gender, "性別", class: "font-weight-bold mb-0"
+            .col-md-6.form-inline
+              = f.radio_button :gender, "male", class: "form-check-input"
+              男性
+              = f.radio_button :gender, "female", class: "form-check-input ml-2"
+              女性
+          .row.mb-3
+            .col-md-6.d-flex.align-items-center
+              = f.label :age, "年齢", class: "font-weight-bold mb-0"
+            .col-md-6.form-inline
+              = f.text_field :age, placeholder: "20", class: "form-control"
+              .ml-1 歳
+          .row.mb-3
+            .col-md-6.d-flex.align-items-center
+              = f.label :height, "身長", class: "font-weight-bold mb-0"
+            .col-md-6.form-inline
+              = f.text_field :height, placeholder: "170.9", class: "form-control"
+              .ml-1 cm
+          .row.mb-3
+            .col-md-6.d-flex.align-items-center
+              = f.label :target_weight, "目標体重", class: "font-weight-bold mb-0"
+            .col-md-6.form-inline
+              = f.text_field :target_weight, placeholder: "67.6", class: "form-control"
+              .ml-1 kg
+          .row.mb-3
+            .col-md-6.d-flex.align-items-center
+              = f.label :target_body_fat_percentage, "目標体脂肪率", class: "font-weight-bold mb-0"
+            .col-md-6.form-inline
+              = f.text_field :target_body_fat_percentage, placeholder: "15.3", class: "form-control"
+              .ml-1 %
+          .row.mb-3
+            .col-md-3.d-flex.align-items-center
+              = f.label :introduce, "自己紹介", class: "font-weight-bold mb-0"
+            .col-md-9.form-group
+              = f.text_area :introduce, size: "100%x5", class: "form-control"
+          .row.mb-3
+            .col-md-6.d-flex.align-items-center
+              = f.label :diet_style1, "ダイエットスタイル", class: "font-weight-bold mb-0"
+            .col-md-6.form-group
+              = f.check_box :diet_style1 ,{}, "true", "false"
+              運動メイン
+              %br
+              = f.check_box :diet_style2 ,{}, "true", "false"
+              食事制限メイン
+              %br
+              = f.check_box :diet_style3 ,{}, "true", "false"
+              長期継続
+              %br
+              = f.check_box :diet_style4 ,{}, "true", "false"
+              短期集中
+          .row.mb-3
+            .col-md-6.d-flex.align-items-center
+              = f.label :is_deleted, "ステータス", class: "font-weight-bold mb-0"
+            .col-md-6.form-group
+              = f.radio_button :is_deleted, "false"
+              有効
+              = f.radio_button :is_deleted, "true"
+              退会
+          .row
+            .col-md-12
+              = f.submit "プロフィールを編集", class: "btn btn-success btn-block px-5"

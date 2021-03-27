@@ -1,4 +1,4 @@
-.container
+.container.mt-5
   .row
     .col-md-6.mx-auto
       %h2 管理者ログイン
@@ -12,4 +12,4 @@
           %br/
           = f.password_field :password, autocomplete: "current-password", class: 'form-control mb-2'
         .actions
-          = f.submit "ログイン", class: 'btn btn-primary px-5'
+          = f.submit "ログイン", class: 'btn btn-danger px-5'

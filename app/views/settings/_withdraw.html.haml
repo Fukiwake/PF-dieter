@@ -2,6 +2,17 @@
 .text-center.mt-5
   %p.font-weight-bold.text-uppercase
     退会すると同じメールアドレスでの再登録はできません。
-    %br
-    また、過去に投稿したデータは退会後24時間以内に自動的に削除されます。
-  = link_to "退会する", customers_withdraw_path, {method: :patch, class: "btn btn-danger mt-3", data: { confirm: "本当に退会しますか？" }}
+  = link_to "退会する", "#", class: "btn btn-danger mt-3", "data-target": "#withdraw-confirm", "data-toggle": "modal", type: "button"
+  .modal.fade{"aria-hidden" => "true", "aria-labelledby" => "labelwithdraw", role: "dialog", tabindex: "-1", id: "withdraw-confirm"}
+    .modal-dialog.modal-dialog-centered{role: "document"}
+      .modal-content
+        .modal-header
+          %h5.modal-title{id: "labelwithdraw"}
+            退会確認
+          %button.close{"aria-label" => "Close", "data-dismiss" => "modal", type: "button"}
+            %span{"aria-hidden" => "true"} ×
+        .modal-body.text-left
+          本当に退会しますか？
+        .modal-footer
+          %button.btn.btn-secondary{"data-dismiss" => "modal", type: "button"} Close
+          = link_to "退会", customers_withdraw_path, method: :patch, class: "btn btn-danger"

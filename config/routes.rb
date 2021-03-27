@@ -68,6 +68,11 @@ Rails.application.routes.draw do
         patch "destroy_all"
       end
     end
+    resources :reports, only: [:index] do
+      collection do
+        patch "destroy_all"
+      end
+    end
   end
 
 end

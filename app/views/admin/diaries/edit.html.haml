@@ -1,5 +1,5 @@
-.container
-  .row.mt-4
+.container.mt-5
+  .row
     .col-md-12
       %h1.mb-4.pb-3 日記編集
       = render "layouts/errors", obj: @diary
@@ -32,6 +32,11 @@
             = f.text_area :body, size: "autox10", class: "form-control"
           .field
             = f.label :image, "画像", class: "font-weight-bold"
+            - if @diary.diary_images.present?
+              .images-wrapper
+                - @diary.diary_images.each do |image|
+                  .image.text-center.border
+                    = attachment_image_tag(image, :image, :fit, 783, 440)
             %br/
             = f.attachment_field :diary_images_images, multiple: true
           .field
@@ -46,5 +51,26 @@
                   = c.check_box :id, {multiple: true}, check_list_diary.id, nil
                   = check_list_diary.check_list.body
                   %br
+          .field
+            .font-weight-bold.mb-2.mt-3 食品カロリー計算
+            .row
+              .col-md-6
+                .form-inline.input-group
+                  %input#food-name.form-control{type: "text", placeholder: "食品名を検索", size: 24}
+                  .btn.btn-success#food-search-button 検索
+                  %select#food-genre.btn.btn-secondary
+                    %option{value: ""} ジャンルで探す
+                    %option{value: "基本メニュー"} 基本メニュー
+                    %option{value: "和食"} 和食
+                    %option{value: "洋食"} 洋食
+                    %option{value: "中華"} 中華
+                    %option{value: "デザート/飲み物"} デザート/飲み物
+                #food-search
+              .col-md-6
+                #food-selected
+                .form-inline
+                  = f.label :food_calorie, "合計カロリー", class: "font-weight-bold mr-1"
+                  = f.text_field :food_calorie, size: 25, class: "form-control mr-1"
+                  Kcal
           .actions
             = f.submit "編集する", class: "btn btn-success btn-block"

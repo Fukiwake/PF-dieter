@@ -1,12 +1,12 @@
 = search_form_for @diet_method_search, url: finder_path do |f|
   .row.mt-3
     .col-md-3
-      = f.select( :sorts, { '並び替え': 'id desc', '古い順': 'updated_at asc', '新しい順': 'updated_at desc' } , { selected: params[:q][:sorts] }, { onchange: 'this.form.submit()', class: "btn btn-secondary"} )
+      = f.select( :sorts, { '並び替え': 'id desc', '古い順': 'updated_at asc', '新しい順': 'updated_at desc', 'いいね多い順': 'diet_method_favorites_count desc', 'コメント多い順': 'diet_method_comments_count desc' } , { selected: params[:q][:sorts] }, { onchange: 'this.form.submit()', class: "btn btn-secondary"} )
     .col-md-9
       .position-relative
         .input-group-append.d-flex.align-items-center
-          = f.label :tags_name_cont_any, "タグ検索", class: "font-weight-bold mr-2 mb-0"
-          = f.text_field :tags_name_cont_any, id: "tags", class: "form-control tag_form d-none"
+          = f.label :tags_name_cont_all, "タグ検索", class: "font-weight-bold mr-2 mb-0"
+          = f.text_field :tags_name_cont_all, id: "tags", class: "form-control tag_form d-none"
           = f.submit "適用する", class: 'btn btn-success'
-        = f.hidden_field :name_or_introduce_cont_any, value: params[:q][:name_or_introduce_cont_any]
+        = f.hidden_field :name_or_introduce_cont_all, value: params[:q][:name_or_introduce_cont_all]
         = f.hidden_field :model, value: "method"

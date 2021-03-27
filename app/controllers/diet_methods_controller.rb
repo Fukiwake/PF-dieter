@@ -1,12 +1,11 @@
 class DietMethodsController < ApplicationController
   before_action :authenticate_customer!, except: [:index, :show]
+  before_action :set_new_diary, only: [:new, :index, :edit, :show]
 
   def new
     @diet_method = DietMethod.new
     @check_list = @diet_method.check_lists.new
     @tags = DietMethod.tag_counts_on(:tags).most_used(20)
-    @diary = Diary.new
-    @check_list_diary = @diary.check_list_diaries.new
   end
 
   def create
@@ -19,7 +18,9 @@ class DietMethodsController < ApplicationController
       end
       customer_ids = Relationship.where(followed_id: current_customer.id, notification: true).pluck(:follower_id)
       Customer.where(id: customer_ids).each do |customer|
-        customer.create_notification_diet_method(current_customer, @diet_method)
+        unless customer.blocking?(current_customer)
+          customer.create_notification_diet_method(current_customer, @diet_method)
+        end
       end
       flash[:notice] = "ダイエット方法を投稿しました"
       redirect_to diet_methods_path
@@ -29,9 +30,14 @@ class DietMethodsController < ApplicationController
   end
 
   def index
-    @diary = Diary.new
-    @check_list_diary = @diary.check_list_diaries.new
-    @diet_methods = DietMethod.includes(:customer, :diet_method_images, :diet_method_favorites, :diet_method_comments, :check_lists, :tag_taggings, :tags).page(params[:page]).per(20)
+    if customer_signed_in?
+      blocking_ids = current_customer.blockings.pluck(:id)
+      blocker_ids = current_customer.blockers.pluck(:id)
+      all_diet_methods = DietMethod.includes(:customer, :diet_method_images, :diet_method_favorites, :diet_method_comments, :tag_taggings, :tags).order("created_at DESC")
+      @diet_methods = all_diet_methods.where.not(customer_id: blocking_ids).where.not(customer_id: blocker_ids).page(params[:page]).per(20)
+    else
+      @diet_methods = DietMethod.includes(:customer, :diet_method_images, :diet_method_favorites, :diet_method_comments, :tag_taggings, :tags).order("created_at DESC").page(params[:page]).per(20)
+    end
     @tags = DietMethod.tag_counts_on(:tags).most_used(20)
     if @tag = params[:tag]
       @diet_methods = DietMethod.tagged_with(params[:tag]).page(params[:page]).per(20)
@@ -40,21 +46,23 @@ class DietMethodsController < ApplicationController
 
   def show
     @diet_method = DietMethod.find(params[:id])
+    if @diet_method.customer.blocking?(current_customer)
+      flash[:alert] = "ページが存在しません"
+      redirect_to diet_methods_path
+    end
     @tags = @diet_method.tag_counts_on(:tags)
     @diet_method_comment = DietMethodComment.new
-    @diary = Diary.new
-    @check_list_diary = @diary.check_list_diaries.new
   end
 
   def edit
     @diet_method = DietMethod.find(params[:id])
-    @diary = Diary.new
-    @check_list_diary = @diary.check_list_diaries.new
+    @check_list = @diet_method.check_lists.where(is_deleted: false)
   end
 
   def update
     diet_method = DietMethod.find(params[:id])
     if diet_method.update(diet_method_params)
+      diet_method.check_lists.where(is_deleted: true).update(diet_method_id: "")
       flash[:notice] = "ダイエット方法を編集しました"
       redirect_to diet_method_path(diet_method)
     else
@@ -65,6 +73,7 @@ class DietMethodsController < ApplicationController
   def destroy
     @diet_method = DietMethod.find(params[:id])
     @diet_method.destroy
+    flash[:notice] = "ダイエット方法を削除しました"
     redirect_to diet_methods_path
   end
 
