@@ -53,6 +53,5 @@
           .form-inline
             = f.check_box :diet_style4_eq ,{class: "form-check-input"}, "true", "false"
             短期集中
-          = f.hidden_field :name_or_introduce_cont_any, value: params[:q][:name_or_introduce_cont_any]
+          = f.hidden_field :name_or_introduce_cont_all, value: params[:q][:name_or_introduce_cont_all]
           = f.hidden_field :model, value: "customer"
-

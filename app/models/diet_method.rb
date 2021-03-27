@@ -1,10 +1,9 @@
 class DietMethod < ApplicationRecord
-  
+
   has_many :diet_method_images, dependent: :destroy
   accepts_attachments_for :diet_method_images, attachment: :image
   acts_as_taggable
-  
-  default_scope -> { order(created_at: :desc) }
+
   belongs_to :customer
   has_many :check_lists
   accepts_nested_attributes_for :check_lists, allow_destroy: true
@@ -13,17 +12,28 @@ class DietMethod < ApplicationRecord
   has_many :tries, dependent: :destroy
   has_many :notifications, dependent: :destroy
   has_many :reports, dependent: :destroy
-  
-  validates :title, presence: true
-  
+
+  validates :title, presence: true, length: { maximum: 15 }
+  validates :way, presence: true
+
+  ransacker :diet_method_favorites_count do
+    query = '(SELECT COUNT(diet_method_favorites.diet_method_id) FROM diet_method_favorites where diet_method_favorites.diet_method_id = diet_methods.id GROUP BY diet_method_favorites.diet_method_id)'
+    Arel.sql(query)
+  end
+
+  ransacker :diet_method_comments_count do
+    query = '(SELECT COUNT(diet_method_comments.diet_method_id) FROM diet_method_comments where diet_method_comments.diet_method_id = diet_methods.id GROUP BY diet_method_comments.diet_method_id)'
+    Arel.sql(query)
+  end
+
   def favorited_by?(customer)
     diet_method_favorites.where(customer_id: customer.id).exists?
   end
-  
+
   def tried_by?(customer)
     tries.where(customer_id: customer.id).exists?
   end
-  
+
   def create_notification_favorite(current_customer)
     # すでに「いいね」されているか検索
     temp = Notification.where(["visitor_id = ? and visited_id = ? and diet_method_id = ? and action = ? ", current_customer.id, customer_id, id, 'diet_method_favorite'])
@@ -41,7 +51,7 @@ class DietMethod < ApplicationRecord
       notification.save if notification.valid?
     end
   end
-  
+
   def create_notification_comment(current_customer, diet_method_comment_id)
     if customer.comment_notification == true && customer.all_notification == true
       # コメントは複数回することが考えられるため、１つの投稿に複数回通知する
@@ -58,5 +68,5 @@ class DietMethod < ApplicationRecord
       notification.save if notification.valid?
     end
   end
-  
+
 end
