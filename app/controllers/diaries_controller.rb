@@ -7,7 +7,7 @@ class DiariesController < ApplicationController
       following_ids = current_customer.followings.pluck(:id)
       blocking_ids = current_customer.blockings.pluck(:id)
       blocker_ids = current_customer.blockers.pluck(:id)
-      all_diaries = Diary.includes(:customer, :check_list_diaries, :diary_images, :diary_favorites, :diary_comments).order("created_at DESC").page(params[:page]).per(20)
+      all_diaries = Diary.includes(:customer, :check_list_diaries, :diary_images, :diary_favorites, :diary_comments).order("created_at DESC")
       @diaries = all_diaries.where(customer_id: following_ids).where.not(customer_id: blocking_ids).where.not(customer_id: blocker_ids).or(all_diaries.where(customer_id: current_customer.id)).page(params[:page]).per(20)
     else
       @diaries = Diary.includes(:customer, :check_list_diaries, :diary_images, :diary_favorites, :diary_comments).order("created_at DESC").page(params[:page]).per(20)
@@ -16,6 +16,10 @@ class DiariesController < ApplicationController
 
   def show
     @diary = Diary.find(params[:id])
+    if @diary.customer.blocking?(current_customer)
+      flash[:alert] = "ページが存在しません"
+      redirect_to diaries_path
+    end
     @new_diary = Diary.new
     @check_list_diary = @new_diary.check_list_diaries.new
     @diary_comment = DiaryComment.new
@@ -47,7 +51,9 @@ class DiariesController < ApplicationController
       end
       customer_ids = Relationship.where(followed_id: current_customer.id, notification: true).pluck(:follower_id)
       Customer.where(id: customer_ids).each do |customer|
-        customer.create_notification_diary(current_customer, @diary)
+        unless customer.blocking?(current_customer)
+          customer.create_notification_diary(current_customer, @diary)
+        end
       end
       flash[:notice] = "日記を投稿しました"
       redirect_to diaries_path
@@ -89,6 +95,6 @@ class DiariesController < ApplicationController
   private
 
   def diary_params
-    params.require(:diary).permit(:title, :body, :weight, :body_fat_percentage, :post_date, diary_images_images: [], check_list_diaries_attributes: [:check_list_id, :_destroy, :id])
+    params.require(:diary).permit(:title, :body, :weight, :body_fat_percentage, :post_date, :food_calorie, diary_images_images: [], check_list_diaries_attributes: [:check_list_id, :_destroy, :id])
   end
 end

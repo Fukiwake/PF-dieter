@@ -30,4 +30,7 @@ ja:
         weight: 体重
         body_fat_percentage: 体脂肪率
         body: 本文
+      diet_method:
+        title: タイトル
+        way: やり方・効果
 

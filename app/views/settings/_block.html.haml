@@ -1,20 +1,20 @@
 %h2 ブロックしているユーザー一覧
 - customers.each do |customer|
-  = link_to customer_path(customer.id), class: "text-decoration-none", data: {"turbolinks" => false} do
-    .table_link.border-bottom
-      %table.table.table-borderless
-        %tr
-          %td.profile_image.w-25
-            = attachment_image_tag(customer, :profile_image, size: "70x70", fallback: "no_image.png")
-          %td
-            %h3
-              = customer.name
-          %td
-            - if current_customer.blocking?(customer)
-              = link_to "ブロック解除", "#", class: "btn btn-danger rounded-pill", "data-target": "#block-confirm-#{customer.id}", "data-toggle": "modal", type: "button"
-            - else
-              = link_to "ブロック", "#", class: "btn btn-outline-danger rounded-pill", "data-target": "#block-confirm-#{customer.id}", "data-toggle": "modal", type: "button"
-            = render "blocks/block_form", customer: customer
+  = link_to customer_path(customer.id), class: "text-decoration-none text-dark", data: {"turbolinks" => false} do
+    %object.row.pt-2
+      .col-md-8
+        .d-flex
+          .text-center
+            = attachment_image_tag(customer, :profile_image, :fill, 70, 70, fallback: "no_image.png", size: "70x70")
+          %h3.ml-3.mt-3
+            = customer.name
+      .col-md-4.mt-3
+        - if current_customer.blocking?(customer)
+          = link_to "ブロック解除", "#", class: "btn btn-danger rounded-pill", "data-target": "#block-confirm-#{customer.id}", "data-toggle": "modal", type: "button"
+        - else
+          = link_to "ブロック", "#", class: "btn btn-outline-danger rounded-pill", "data-target": "#block-confirm-#{customer.id}", "data-toggle": "modal", type: "button"
+        = render "blocks/block_form", customer: customer
+    .row.border-bottom.py-2
+      .col-md-12
         - if customer.introduce.present?
-          %tr{colspan: "3"}
-            %td= customer.introduce
+          = customer.introduce.truncate(200)

@@ -56,7 +56,7 @@ describe 'ログイン後のテスト：日記' do
     context '削除を押下したとき' do
       before do
         click_link '日記'
-        click_button "削除"
+        click_link "削除する"
       end
       it '該当日記が削除される' do
         expect(Diary.where(id: diary.id).count).to eq 0
@@ -96,7 +96,7 @@ describe 'ログイン後のテスト：日記' do
     end
     context '削除を押下したとき' do
       before do
-        click_button "削除"
+        click_link "削除する"
       end
       it '該当日記が削除される' do
         expect(Diary.where(id: diary.id).count).to eq 0
@@ -145,7 +145,7 @@ describe 'ログイン後のテスト：日記' do
       end
     end
   end
-  
+
   describe 'クイック投稿のテスト' do
     before do
       click_link '日記'
@@ -156,7 +156,9 @@ describe 'ログイン後のテスト：日記' do
     end
     context '情報を入力して投稿したとき' do
       it '日記一覧画面に遷移する' do
-        expect(current_path).to eq '/diaries'
+        using_wait_time 5 do
+          expect(current_path).to eq '/diaries'
+        end
       end
       it '日記が投稿される' do
         expect(Diary.where(customer_id: customer.id).count).to eq 2

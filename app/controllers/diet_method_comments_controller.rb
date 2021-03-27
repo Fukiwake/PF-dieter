@@ -7,6 +7,10 @@ class DietMethodCommentsController < ApplicationController
     diet_method_comment.diet_method_id = @diet_method.id
     diet_method_comment.save
     @diet_method.create_notification_comment(current_customer, diet_method_comment.id)
+    respond_to do |format|
+      format.html { redirect_to request.referer }
+      format.js
+    end
   end
 
   def destroy

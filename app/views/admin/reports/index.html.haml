@@ -1,0 +1,17 @@
+.container.mt-5
+  .row
+    .col-md-12
+      %h1.mb-0.mt-3 報告一覧
+      #report-tab-menu.d-flex.justify-content-between
+        .mt-4.w-100.active
+          = link_to "日記", "#diary", class: "btn btn-danger btn-block btn-lg"
+        .mt-4.w-100
+          = link_to "ダイエット方法", "#method", class: "btn btn-outline-secondary btn-block btn-lg"
+        .mt-4.w-100
+          = link_to "ユーザー", "#customer", class: "btn btn-outline-secondary btn-block btn-lg"
+      #report-tab-contents
+        #diary.tab
+          = render "diaries", diaries: @diaries
+        #method.tab
+
+        #customer.tab

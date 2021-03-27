@@ -16,7 +16,7 @@ class RoomChannel < ApplicationCable::Channel
     if chat.save!
       customer = Customer.find(data['customer_room']["customer_id"])
       current_customer = Customer.find(data['customer_room']["current_customer_id"])
-      if customer.chat_notification == true && customer.all_notification == true
+      if customer.chat_notification == true && customer.all_notification == true && customer.blocking?(current_customer) == false
         notification = current_customer.active_notifications.new(
           chat_id: chat.id,
           visited_id: customer.id,

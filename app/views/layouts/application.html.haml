@@ -4,6 +4,7 @@
     %title Dieter
     = csrf_meta_tags
     = csp_meta_tag
+    = favicon_link_tag('favicon.ico')
     %meta{name: "viewport", content: "width=device-width, initial-scale=1, maximum-scale=1"}
     = stylesheet_link_tag    "application", media: "all", "data-turbolinks-track": "reload"
     = javascript_include_tag 'application', 'data-turbolinks-track': 'reload'
@@ -23,7 +24,7 @@
             .col-md-9
               - if admin_signed_in? && request.fullpath.include?("admin")
                 = render "layouts/admin_signed_in_nav"
-              - elsif customer_signed_in?
+              - elsif customer_signed_in? && request.fullpath.exclude?("admin")
                 = render "layouts/signed_in_nav"
               - else
                 = render "layouts/before_signed_in_nav"
