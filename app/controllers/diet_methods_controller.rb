@@ -30,18 +30,27 @@ class DietMethodsController < ApplicationController
   end
 
   def index
+    withdraw_ids = Customer.where(is_deleted: true).pluck(:id)
     if customer_signed_in?
       blocking_ids = current_customer.blockings.pluck(:id)
       blocker_ids = current_customer.blockers.pluck(:id)
+      withdraw_ids = Customer.where(is_deleted: true).pluck(:id)
       all_diet_methods = DietMethod.includes(:customer, :diet_method_images, :diet_method_favorites, :diet_method_comments, :tag_taggings, :tags).order("created_at DESC")
-      @diet_methods = all_diet_methods.where.not(customer_id: blocking_ids).where.not(customer_id: blocker_ids).page(params[:page]).per(20)
+      @diet_methods = all_diet_methods.where.not(customer_id: blocking_ids).where.not(customer_id: blocker_ids).where.not(customer_id: withdraw_ids)
     else
-      @diet_methods = DietMethod.includes(:customer, :diet_method_images, :diet_method_favorites, :diet_method_comments, :tag_taggings, :tags).order("created_at DESC").page(params[:page]).per(20)
+      @diet_methods = DietMethod.includes(:customer, :diet_method_images, :diet_method_favorites, :diet_method_comments, :tag_taggings, :tags).where.not(customer_id: withdraw_ids).order("created_at DESC")
     end
     @tags = DietMethod.tag_counts_on(:tags).most_used(20)
     if @tag = params[:tag]
-      @diet_methods = DietMethod.tagged_with(params[:tag]).page(params[:page]).per(20)
+      @diet_methods = @diet_methods.tagged_with(params[:tag]).page(params[:page]).per(20)
     end
+    if params[:q].present?
+      unless params[:q][:title_or_way_or_customer_name_cont_any].instance_of?(Array) || params[:q][:title_or_way_or_customer_name_cont_any].empty?
+        params[:q][:title_or_way_or_customer_name_cont_any] = params[:q][:title_or_way_or_customer_name_cont_any].split(/[[:blank:]]+/)
+      end
+    end
+    @diet_method_search = @diet_methods.ransack(params[:q])
+    @diet_methods = @diet_method_search.result(distinct: true).page(params[:page]).per(20)
   end
 
   def show

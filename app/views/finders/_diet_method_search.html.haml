@@ -5,8 +5,8 @@
     .col-md-9
       .position-relative
         .input-group-append.d-flex.align-items-center
-          = f.label :tags_name_cont_all, "タグ検索", class: "font-weight-bold mr-2 mb-0"
-          = f.text_field :tags_name_cont_all, id: "tags", class: "form-control tag_form d-none"
+          = f.label :tags_name_cont_any, "タグ検索", class: "font-weight-bold mr-2 mb-0"
+          = f.text_field :tags_name_cont_any, id: "tags", class: "form-control tag_form d-none"
           = f.submit "適用する", class: 'btn btn-success'
-        = f.hidden_field :name_or_introduce_cont_all, value: params[:q][:name_or_introduce_cont_all]
+        = f.hidden_field :name_or_introduce_cont_any, value: params[:q][:name_or_introduce_cont_any]
         = f.hidden_field :model, value: "method"

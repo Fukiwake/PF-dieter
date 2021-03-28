@@ -55,22 +55,26 @@ Rails.application.routes.draw do
     end
     resources :diaries, only: [:index, :show, :edit, :update, :destroy] do
       collection do
-        patch "destroy_all"
+        delete "destroy_all"
       end
     end
     resources :diet_methods, only: [:index, :show, :edit, :update, :destroy] do
       collection do
-        patch "destroy_all"
+        delete "destroy_all"
       end
     end
-    resources :contacts, only: [:index, :show] do
+    resources :contacts, only: [:index] do
       collection do
-        patch "destroy_all"
+        delete "destroy_all"
       end
     end
     resources :reports, only: [:index] do
       collection do
-        patch "destroy_all"
+        delete "diary_destroy_all"
+        delete "diet_method_destroy_all"
+        delete "diary_comment_destroy_all"
+        delete "diet_method_comment_destroy_all"
+        patch "withdraw_all"
       end
     end
   end

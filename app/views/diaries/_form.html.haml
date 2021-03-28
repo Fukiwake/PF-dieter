@@ -3,19 +3,16 @@
     = f.label :post_date, "日付", class: "font-weight-bold"
     .form-inline
       = f.date_select :post_date, {}, class: "form-control"
-  .row.d-flex
-    .col-md-5
-      .field
-        = f.label :weight, "体重", class: "font-weight-bold"
-        .form-inline
-          = f.text_field :weight, autofocus: true, size: 24, class: "form-control mr-1"
-          kg
-    .col-md-7
-      .field
-        = f.label :body_fat_percentage, "体脂肪率", class: "font-weight-bold"
-        .form-inline
-          = f.text_field :body_fat_percentage, size: 24, class: "form-control mr-1"
-          \%
+  .field
+    = f.label :weight, "体重", class: "font-weight-bold"
+    .form-inline
+      = f.text_field :weight, autofocus: true, size: 24, class: "form-control mr-1"
+      kg
+  .field
+    = f.label :body_fat_percentage, "体脂肪率", class: "font-weight-bold"
+    .form-inline
+      = f.text_field :body_fat_percentage, size: 24, class: "form-control mr-1"
+      \%
   .field
     = f.label :title, "タイトル", class: "font-weight-bold"
     .form-inline
@@ -39,7 +36,7 @@
             = list.body
           - i += 1
   .field
-    .font-weight-bold.mb-2.mt-3 食品カロリー計算
+    .font-weight-bold.mb-2.mt-3 摂取カロリー計算
     .row
       .col-md-6
         .form-inline.input-group
@@ -55,6 +52,27 @@
         #food-search
       .col-md-6
         #food-selected
+        .form-inline
+          = f.label :food_calorie, "合計カロリー", class: "font-weight-bold mr-1"
+          = f.text_field :food_calorie, size: 25, class: "form-control mr-1"
+          Kcal
+  .field
+    .font-weight-bold.mb-2.mt-3 消費カロリー計算
+    .row
+      .col-md-6
+        .form-inline.input-group
+          %input#activity-name.form-control{type: "text", placeholder: "食品名を検索", size: 24}
+          .btn.btn-success#activity-search-button 検索
+          %select#activity-genre.btn.btn-secondary
+            %option{value: ""} ジャンルで探す
+            %option{value: "ジム"} ジム
+            %option{value: "球技"} 球技
+            %option{value: "格闘技"} 格闘技
+            %option{value: "水泳"} 水泳
+            %option{value: "その他"} その他
+        #activity-search
+      .col-md-6
+        #activity-selected
         .form-inline
           = f.label :food_calorie, "合計カロリー", class: "font-weight-bold mr-1"
           = f.text_field :food_calorie, size: 25, class: "form-control mr-1"

@@ -1,0 +1,28 @@
+%h2.text-center 検索
+= search_form_for @diary_search, url: diaries_path do |f|
+  .position-relative
+    = f.text_field :title_or_body_or_customer_name_cont_any, placeholder: '日記を検索', class: "w-100 rounded-pill form-control"
+    = f.submit "", class: "search-submit"
+    - if params[:q].present?
+      = f.select( :sorts, { '並び替え': 'id desc', '古い順': 'updated_at asc', '新しい順': 'updated_at desc', 'いいね多い順': 'diary_favorites_count desc', 'コメント多い順': 'diary_comments_count desc' } , { selected: params[:q][:sorts]  }, { onchange: 'this.form.submit()', class: "btn btn-secondary btn-block mt-4"} )
+    - else
+      = f.select( :sorts, { '並び替え': 'id desc', '古い順': 'updated_at asc', '新しい順': 'updated_at desc', 'いいね多い順': 'diary_favorites_count desc', 'コメント多い順': 'diary_comments_count desc' } , {}, { onchange: 'this.form.submit()', class: "btn btn-secondary btn-block mt-4"} )
+  #slideDownSearchButton.btn.btn-success.btn-block.mt-4
+    詳細検索
+  #slideDownSearchForm
+    .d-flex.my-4
+      %input.formreset.btn.btn-danger.w-50.mr-1{type: "button", value: "クリア"}
+      = f.submit "適用する", class: 'btn btn-success w-50 .ml-1'
+    = f.label :weight_gteq, "体重", class: "font-weight-bold"
+    .form-inline.mb-4
+      = f.text_field :weight_gteq, placeholder: "Min", class: "form-control", size: "3"
+      ～
+      = f.text_field :weight_lteq, placeholder: "Max", class: "form-control mr-1", size: "3"
+      kg
+    = f.label :body_fat_percentage_gteq, "体脂肪率", class: "font-weight-bold"
+    .form-inline.mb-4
+      = f.text_field :body_fat_percentage_gteq, placeholder: "Min", class: "form-control", size: "3"
+      ～
+      = f.text_field :body_fat_percentage_lteq, placeholder: "Max", class: "form-control mr-1", size: "3"
+      \%
+

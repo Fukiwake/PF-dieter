@@ -1,5 +1,5 @@
 - if diaries.present?
-  .scroll-list.jscroll
+  .diary-scroll-list.jscroll
     - diaries.each do |diary|
       .card.mb-3.shadow-sm
         .card-body
@@ -11,9 +11,15 @@
                     = link_to customer_path(diary.customer), data: {"turbolinks" => false}, class: "text-dark font-weight-bold" do
                       = attachment_image_tag(diary.customer, :profile_image, :fill, 70, 70, fallback: "no_image.png", size: "70x70")
                       %br
-                      = diary.customer.name
+                      - if params[:q].present?
+                        = highlight(diary.customer.name, params[:q][:title_or_body_or_customer_name_cont_any])
+                      - else
+                        = diary.customer.name
                   %h3.ml-3.mt-3
-                    = diary.title.truncate(10)
+                    - if params[:q].present?
+                      = highlight(diary.title.truncate(10), params[:q][:title_or_body_or_customer_name_cont_any])
+                    - else
+                      = diary.title.truncate(10)
               .col-md-6.d-flex.justify-content-between.align-items-start.mt-3
                 .info
                   %span.badge.badge-danger
@@ -54,7 +60,7 @@
                       - if Report.where(visitor_id: current_customer.id, diary_id: diary.id).present?
                         報告済みです
                       -else
-                        = link_to reports_path(visited_id: diary.customer.id, diary_id: diary.id), method: :post, class: "text-dark" do
+                        = link_to reports_path(diary_id: diary.id), method: :post, class: "text-dark" do
                           %i.fas.fa-bullhorn
                           報告
                   = render "blocks/block_form", customer: diary.customer
@@ -63,7 +69,10 @@
               .col-md-12.body-wrapper
                 - if diary.body.present?
                   %p.mb-0
-                    = safe_join(diary.body.truncate(200).split("\n"),tag(:br))
+                    - if params[:q].present?
+                      = highlight(safe_join(diary.body.truncate(200).split("\n"),tag(:br)), params[:q][:title_or_body_or_customer_name_cont_any])
+                    - else
+                      = safe_join(diary.body.truncate(200).split("\n"),tag(:br))
             .row.py-2
               .col-md-12
                 = render "diaries/check_list", diary: diary
