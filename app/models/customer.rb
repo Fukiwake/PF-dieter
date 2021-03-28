@@ -37,7 +37,6 @@ class Customer < ApplicationRecord
   has_many :rooms, through: :entries
   has_many :active_notifications, class_name: 'Notification', foreign_key: 'visitor_id', dependent: :destroy
   has_many :passive_notifications, class_name: 'Notification', foreign_key: 'visited_id', dependent: :destroy
-  has_many :contacts
   has_many :active_reports, class_name: "Report", foreign_key: 'visitor_id', dependent: :destroy
   has_many :passive_reports, class_name: "Report", foreign_key: 'visited_id', dependent: :destroy
 
@@ -48,6 +47,11 @@ class Customer < ApplicationRecord
   validates :target_body_fat_percentage, numericality: true, allow_blank: true
   validates :age, numericality: true, allow_blank: true
   validates :introduce, length: { maximum: 200 }
+
+  ransacker :followers_count do
+    query = '(SELECT COUNT(relationships.follower_id) FROM relationships where relationships.followed_id = customers.id GROUP BY relationships.followed_id)'
+    Arel.sql(query)
+  end
 
   def update_without_current_password(params, *options)
     params.delete(:current_password)

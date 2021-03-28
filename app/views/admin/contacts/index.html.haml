@@ -23,21 +23,16 @@
               %tr
                 %td.text-center.align-middle{rowspan: 2}
                   = f.check_box :contact_ids, {}, contact.id, nil
-                %td.text-center{rowspan: "4"}
-                  = link_to admin_contact_path(contact), class: "text-decoration-none" do
-                    = contact.name
+                %td
+                  = contact.name
                 %td.w-25
-                  = link_to admin_contact_path(contact), class: "text-decoration-none" do
-                    = contact.email
+                  = contact.email
                 %td.w-25
-                  = link_to admin_contact_path(contact), class: "text-decoration-none" do
-                    = contact.created_at.strftime("%m月%d日 %H:%M")
+                  = contact.created_at.strftime("%m月%d日 %H:%M")
                 %td.w-25
-                  = link_to admin_contact_path(contact), class: "text-decoration-none" do
-                    = contact.status
-                    = contact.genre
+                  = contact.genre_i18n
               - if contact.body.present?
                 %tr
-                  %td{colspan: "3"}= contact.body.truncate(200)
+                  %td{colspan: "4"}= contact.body
       .d-flex.justify-content-center.mt-4
         = paginate @contacts

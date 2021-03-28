@@ -2,6 +2,9 @@
   .row
     .col-md-3
       .sidebar
+        .card.shadow-sm.mb-3
+          .card-body
+            = render "diet_methods/search"
         = render "layouts/sidebar", diary: @diary
     .col-md-9
       -if @tag.present?

@@ -1,4 +1,4 @@
 = search_form_for @customer_search, url: finder_path, class: "mr-4" do |f|
   .position-relative
-    = f.text_field :name_or_introduce_cont_all, placeholder: 'キーワード検索', class: "w-100 rounded-pill form-control"
-    = f.submit "", id: "search-submit"
+    = f.text_field :name_or_introduce_cont_any, placeholder: 'キーワード検索', class: "w-100 rounded-pill form-control"
+    = f.submit "", class: "search-submit"

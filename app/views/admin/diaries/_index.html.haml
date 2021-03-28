@@ -27,7 +27,7 @@
       - diaries.each do |diary|
         %tr
           %td
-            = f.check_box :diary_ids, {}, diary.id, nil
+            = f.check_box :diary_ids, {multiple: true}, diary.id, nil
           %td
             = diary.id
           %td

@@ -27,7 +27,7 @@
       - diet_methods.each do |diet_method|
         %tr
           %td
-            = f.check_box :diet_method_ids, {}, diet_method.id, nil
+            = f.check_box :diet_method_ids, {multiple: true}, diet_method.id, nil
           %td
             = diet_method.id
           %td

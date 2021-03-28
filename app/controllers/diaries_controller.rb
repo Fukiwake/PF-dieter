@@ -3,15 +3,23 @@ class DiariesController < ApplicationController
   before_action :set_new_diary, except: [:show, :edit]
 
   def index
+    withdraw_ids = Customer.where(is_deleted: true).pluck(:id)
     if customer_signed_in?
       following_ids = current_customer.followings.pluck(:id)
       blocking_ids = current_customer.blockings.pluck(:id)
       blocker_ids = current_customer.blockers.pluck(:id)
       all_diaries = Diary.includes(:customer, :check_list_diaries, :diary_images, :diary_favorites, :diary_comments).order("created_at DESC")
-      @diaries = all_diaries.where(customer_id: following_ids).where.not(customer_id: blocking_ids).where.not(customer_id: blocker_ids).or(all_diaries.where(customer_id: current_customer.id)).page(params[:page]).per(20)
+      @diaries = all_diaries.where(customer_id: following_ids).where.not(customer_id: blocking_ids).where.not(customer_id: blocker_ids).where.not(customer_id: withdraw_ids).or(all_diaries.where(customer_id: current_customer.id))
     else
-      @diaries = Diary.includes(:customer, :check_list_diaries, :diary_images, :diary_favorites, :diary_comments).order("created_at DESC").page(params[:page]).per(20)
+      @diaries = Diary.includes(:customer, :check_list_diaries, :diary_images, :diary_favorites, :diary_comments).where.not(customer_id: withdraw_ids).order("created_at DESC")
     end
+    if params[:q].present?
+      unless params[:q][:title_or_body_or_customer_name_cont_any].instance_of?(Array) || params[:q][:title_or_body_or_customer_name_cont_any].empty?
+        params[:q][:title_or_body_or_customer_name_cont_any] = params[:q][:title_or_body_or_customer_name_cont_any].split(/[\p{blank}\s]+/)
+      end
+    end
+    @diary_search = @diaries.ransack(params[:q])
+    @diaries = @diary_search.result(distinct: true).page(params[:page]).per(20)
   end
 
   def show

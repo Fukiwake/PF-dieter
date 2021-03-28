@@ -34,5 +34,21 @@ $(function(){
       document.$(this).checked = true;
       event.preventDefault();
     });
+
+    $('#slideDownSearchButton').click(function() {
+      $('#slideDownSearchForm').slideToggle("fast");
+    });
+
+    $(window).on('scroll', function() {
+      scrollHeight = $(document).height();
+      scrollPosition = $(window).height() + $(window).scrollTop();
+      if ( (scrollHeight - scrollPosition) / scrollHeight <= 0.05) {
+        $('.customer-scroll-list').jscroll({
+          loadingHtml: '<div class="text-center"><img src="/assets/loading-71b831bc52ecef717245e2f57223d1be74a0185546166e78983a4f9c4230d2e8.gif"></div>',
+          contentSelector: '.customer-scroll-list',
+          nextSelector: 'li.next:last a'
+        });
+      }
+    });
   });
 });

@@ -57,7 +57,7 @@
                     - if Report.where(visitor_id: current_customer.id, diet_method_id: @diet_method.id).present?
                       報告済みです
                     -else
-                      = link_to reports_path(visited_id: @diet_method.customer.id, diet_method_id: @diet_method.id), method: :post, class: "text-dark" do
+                      = link_to reports_path(diet_method_id: @diet_method.id), method: :post, class: "text-dark" do
                         %i.fas.fa-bullhorn
                         報告
                 = render "blocks/block_form", customer: @diet_method.customer
