@@ -17,5 +17,17 @@ $(function(){
       $(".ui-widget-content.ui-autocomplete-input").attr(
       'placeholder','あと' + tag_count + '個入力できます');
     });
+
+    $(window).on('scroll', function() {
+      scrollHeight = $(document).height();
+      scrollPosition = $(window).height() + $(window).scrollTop();
+      if ( (scrollHeight - scrollPosition) / scrollHeight <= 0.05) {
+        $('.diet-method-scroll-list').jscroll({
+          loadingHtml: '<div class="text-center"><img src="/assets/loading-71b831bc52ecef717245e2f57223d1be74a0185546166e78983a4f9c4230d2e8.gif"></div>',
+          contentSelector: '.diet-method-scroll-list',
+          nextSelector: 'li.next:last a'
+        });
+      }
+    });
   });
 });

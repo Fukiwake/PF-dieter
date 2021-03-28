@@ -4,7 +4,14 @@ class CustomersController < ApplicationController
   before_action :set_customer, only: [:show, :followings, :followers]
 
   def index
-    @customers = Customer.includes(:diaries).order("created_at DESC").page(params[:page]).per(20)
+    @customers = Customer.includes(:diaries).order("created_at DESC")
+    if params[:q].present?
+      unless params[:q][:name_or_introduce_cont_any].instance_of?(Array) || params[:q][:name_or_introduce_cont_any].empty?
+        params[:q][:name_or_introduce_cont_any] = params[:q][:name_or_introduce_cont_any].split(/[\p{blank}\s]+/)
+      end
+    end
+    @customer_search = @customers.ransack(params[:q])
+    @customers = @customer_search.result(distinct: true).page(params[:page]).per(20)
   end
 
   def show

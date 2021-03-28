@@ -1,40 +1,48 @@
-- customers.each do |customer|
-  = link_to customer_path(customer.id), class: "text-decoration-none text-dark", data: {"turbolinks" => false} do
-    %object.row.pt-2
-      .col-md-6
-        .d-flex
-          .text-center
-            = attachment_image_tag(customer, :profile_image, :fill, 70, 70, fallback: "no_image.png", size: "70x70")
+.customer-scroll-list.jscroll
+  - customers.each do |customer|
+    = link_to customer_path(customer.id), class: "text-decoration-none text-dark", data: {"turbolinks" => false} do
+      %object.row.pt-2
+        .col-md-6
+          .d-flex
+            .text-center
+              = attachment_image_tag(customer, :profile_image, :fill, 70, 70, fallback: "no_image.png", size: "70x70")
+              %br
+              %strong
+                Lv.
+                = customer.level
+            %h3.ml-3.mt-3
+              - if params[:q].present?
+                = highlight(customer.name, params[:q][:name_or_introduce_cont_any])
+              - else
+                = customer.name
+        .col-md-6.d-flex.justify-content-between.mt-3
+          .info
+            %span.badge.badge-danger
+              now
+            = customer.height
+            cm&nbsp;
+            - if customer.diaries.present?
+              = customer.diaries.last.weight
+              kg&nbsp;
+              = customer.diaries.last.body_fat_percentage
+              \%
             %br
-            Lv.
-            = customer.level
-          %h3.ml-3.mt-3
-            = customer.name
-      .col-md-6.d-flex.justify-content-between.mt-3
-        .info
-          %span.badge.badge-danger
-            now
-          = customer.height
-          cm&nbsp;
-          - if customer.diaries.present?
-            = customer.diaries.last.weight
+            %span.badge.badge-success
+              goal
+            = customer.target_weight
             kg&nbsp;
-            = customer.diaries.last.body_fat_percentage
+            =customer.target_body_fat_percentage
             \%
-          %br
-          %span.badge.badge-success
-            goal
-          = customer.target_weight
-          kg&nbsp;
-          =customer.target_body_fat_percentage
-          \%
-        .follow{:id => "follow_bottons_#{customer.id}"}
-          - if customer_signed_in?
-            - if current_customer != customer
-              = render "relationships/follow_form", customer: customer
-    .row.border-bottom.py-2
-      .col-md-12
-        - if customer.introduce.present?
-          = customer.introduce.truncate(200)
-.d-flex.justify-content-center.mt-4
-  = paginate customers
+          .follow{:id => "follow_bottons_#{customer.id}"}
+            - if customer_signed_in?
+              - if current_customer != customer
+                = render "relationships/follow_form", customer: customer
+      .row.border-bottom.py-2
+        .col-md-12
+          - if customer.introduce.present?
+            - if params[:q].present?
+              = highlight(customer.introduce.truncate(200), params[:q][:name_or_introduce_cont_any])
+            - else
+              = customer.introduce.truncate(200)
+  .d-none
+    = paginate customers

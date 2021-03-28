@@ -6,5 +6,5 @@
         = search_form_for @diary_search, url: admin_diaries_path, class: "mr-4" do |f|
           .position-relative
             = f.text_field :title_or_customer_name_cont_any, placeholder: 'タイトル・会員名', class: "w-100 rounded-pill form-control"
-            = f.submit "", id: "search-submit"
+            = f.submit "", class: "search-submit"
       = render "admin/diaries/index", diaries: @diaries

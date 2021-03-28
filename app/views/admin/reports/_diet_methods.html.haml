@@ -1,0 +1,46 @@
+- if diet_methods.present?
+  = form_with url: diet_method_destroy_all_admin_reports_path, method: :delete, local: true do |f|
+    %button.btn.btn-danger{"data-target" => "#diet_method_destroy_confirm", "data-toggle" => "modal", type: "button"}
+      選択したダイエット方法をまとめて削除
+    #diet_method_destroy_confirm.modal.fade{"aria-hidden" => "true", "aria-labelledby" => "label1", role: "dialog", tabindex: "-1"}
+      .modal-dialog{role: "document"}
+        .modal-content
+          .modal-header
+            %h5#label1.modal-title 削除確認
+            %button.close{"aria-label" => "Close", "data-dismiss" => "modal", type: "button"}
+              %span{"aria-hidden" => "true"} ×
+          .modal-body
+            選択されたダイエット方法を削除しますか？
+          .modal-footer
+            %button.btn.btn-secondary{"data-dismiss" => "modal", type: "button"} Close
+            = f.submit "OK", class: "btn btn-danger"
+    = f.submit "選択した報告を解決済みにする", class: "btn btn-success", name: "report"
+    - diet_methods.each do |diet_method|
+      .row.border-bottom
+        .col-md-1.d-flex.justify-content-center.align-items-center
+          = f.check_box :diet_method_ids, {multiple: true}, diet_method.id, nil
+        .col-md-11
+          = link_to admin_diet_method_path(diet_method.id), class: "text-decoration-none text-dark" do
+            %object.row.pt-2
+              .col-md-6
+                .d-flex
+                  .text-center
+                    = link_to admin_customer_path(diet_method.customer), class: "text-dark font-weight-bold" do
+                      = attachment_image_tag(diet_method.customer, :profile_image, :fill, 70, 70, fallback: "no_image.png", size: "70x70")
+                      %br
+                      = diet_method.customer.name
+                  %h3.ml-3.mt-3
+                    = diet_method.title.truncate(10)
+            .row.py-2
+              .col-md-12.body-wrapper
+                - if diet_method.way.present?
+                  %p.mb-0
+                    = safe_join(diet_method.way.truncate(200).split("\n"),tag(:br))
+            .text-right #{time_ago_in_words(diet_method.created_at).upcase}前
+    %button.btn.btn-danger{"data-target" => "#diet_method_destroy_confirm", "data-toggle" => "modal", type: "button"}
+      選択したダイエット方法をまとめて削除
+    = f.submit "選択した報告を解決済みにする", class: "btn btn-success", name: "report"
+    .d-flex.justify-content-center
+      = paginate diet_methods
+- else
+  %p 報告されたダイエット方法はありません

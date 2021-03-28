@@ -12,5 +12,19 @@ $(function() {
       $($(this).attr("href")).show();
       event.preventDefault();
     });
+
+    $('#diary-tab-menu input').on('click', function(event) {
+      $("#diary-tab-contents .tab").removeClass('active');
+      $($(this).attr("value")).addClass('active');
+      document.$(this).checked = true;
+      event.preventDefault();
+    });
+
+    $('#method-tab-menu input').on('click', function(event) {
+      $("#method-tab-contents .tab").removeClass('active');
+      $($(this).attr("value")).addClass('active');
+      document.$(this).checked = true;
+      event.preventDefault();
+    });
   });
 });

@@ -6,7 +6,7 @@
         = search_form_for @customer_search, url: admin_customers_path, class: "mr-4" do |f|
           .position-relative
             = f.text_field :name_cont_any, placeholder: '名前検索', class: "w-100 rounded-pill form-control"
-            = f.submit "", id: "search-submit"
+            = f.submit "", class: "search-submit"
       = form_with url: withdraw_all_admin_customers_path, method: :patch, local: true do |f|
         %button.btn.btn-danger.mb-3{"data-target" => "#withdraw_confirm", "data-toggle" => "modal", type: "button"}
           選択した会員をまとめて退会
@@ -36,7 +36,7 @@
             - @customers.each do |customer|
               %tr
                 %td
-                  = f.check_box :customer_ids, {}, customer.id, nil
+                  = f.check_box :customer_ids, {multiple: true}, customer.id, nil
                 %td
                   = customer.id
                 %td

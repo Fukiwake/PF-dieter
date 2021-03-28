@@ -50,10 +50,10 @@
                       = link_to "#", class: "text-dark d-block", "data-target": "#block-confirm-#{@diary.customer.id}", "data-toggle": "modal", type: "button" do
                         %i.fas.fa-ban
                         ブロック
-                    - if Report.where(visitor_id: current_customer.id, visited_id: @diary.customer.id, diary_id: @diary.id).present?
+                    - if Report.where(visitor_id: current_customer.id, diary_id: @diary.id).present?
                       報告済みです
                     -else
-                      = link_to reports_path(visited_id: @diary.customer.id, diary_id: @diary.id), method: :post, class: "text-dark" do
+                      = link_to reports_path(diary_id: @diary.id), method: :post, class: "text-dark" do
                         %i.fas.fa-bullhorn
                         報告
                 = render "blocks/block_form", customer: @diary.customer
