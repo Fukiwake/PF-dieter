@@ -36,7 +36,7 @@ class ApplicationController < ActionController::Base
 
   def set_header_notification
     if customer_signed_in?
-      @header_notifications = current_customer.passive_notifications.where.not(visitor_id: current_customer.id, checked: true)
+      @header_notifications = current_customer.passive_notifications.includes(:diet_method, :diet_method_comment, :diary, :diary_comment).where.not(visitor_id: current_customer.id, checked: true)
     end
   end
 

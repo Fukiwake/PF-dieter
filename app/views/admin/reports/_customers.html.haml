@@ -1,0 +1,42 @@
+- if customers.present?
+  = form_with url: withdraw_all_admin_reports_path, method: :patch, local: true do |f|
+    %button.btn.btn-danger{"data-target" => "#customer_destroy_confirm", "data-toggle" => "modal", type: "button"}
+      選択した会員をまとめて退会
+    #customer_destroy_confirm.modal.fade{"aria-hidden" => "true", "aria-labelledby" => "label1", role: "dialog", tabindex: "-1"}
+      .modal-dialog{role: "document"}
+        .modal-content
+          .modal-header
+            %h5#label1.modal-title 退会確認
+            %button.close{"aria-label" => "Close", "data-dismiss" => "modal", type: "button"}
+              %span{"aria-hidden" => "true"} ×
+          .modal-body
+            選択された会員を退会させますか？
+          .modal-footer
+            %button.btn.btn-secondary{"data-dismiss" => "modal", type: "button"} Close
+            = f.submit "OK", class: "btn btn-danger"
+    = f.submit "選択した報告を解決済みにする", class: "btn btn-success", name: "report"
+    - customers.each do |customer|
+      .row.border-bottom
+        .col-md-1.d-flex.justify-content-center.align-items-center
+          = f.check_box :customer_ids, {multiple: true}, customer.id, nil
+        .col-md-11
+          = link_to admin_customer_path(customer.id), class: "text-decoration-none text-dark" do
+            %object.row.pt-2
+              .col-md-6
+                .d-flex
+                  .text-center
+                    = attachment_image_tag(customer, :profile_image, :fill, 70, 70, fallback: "no_image.png", size: "70x70")
+                  %h3.ml-3.mt-3
+                    = customer.name
+            .row.py-2
+              .col-md-12.body-wrapper
+                - if customer.introduce.present?
+                  %p.mb-0
+                    = safe_join(customer.introduce.truncate(200).split("\n"),tag(:br))
+    %button.btn.btn-danger{"data-target" => "#customer_destroy_confirm", "data-toggle" => "modal", type: "button"}
+      選択した会員をまとめて退会
+    = f.submit "選択した報告を解決済みにする", class: "btn btn-success", name: "report"
+    .d-flex.justify-content-center
+      = paginate customers
+- else
+  %p 報告された会員はありません

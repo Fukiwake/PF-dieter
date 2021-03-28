@@ -3,9 +3,14 @@ class FindersController < ApplicationController
 
   def finder
     if params[:q].present?
-      params[:q][:name_or_introduce_cont_all] = params[:q][:name_or_introduce_cont_all].split(/[[:blank:]]+/)
-      params[:q][:title_or_body_or_customer_name_cont_all] = params[:q][:name_or_introduce_cont_all]
-      params[:q][:title_or_way_or_customer_name_cont_all] = params[:q][:name_or_introduce_cont_all]
+      unless params[:q][:name_or_introduce_cont_any].instance_of?(Array) || params[:q][:name_or_introduce_cont_any].empty?
+        params[:q][:name_or_introduce_cont_any] = params[:q][:name_or_introduce_cont_any].split(/[[:blank:]]+/)
+      end
+      params[:q][:title_or_body_or_customer_name_cont_any] = params[:q][:name_or_introduce_cont_any]
+      params[:q][:title_or_way_or_customer_name_cont_any] = params[:q][:name_or_introduce_cont_any]
+    else
+      flash[:alert] = "検索ワードを入力してください"
+      redirect_to diaries_path
     end
     @customer_search = Customer.includes(:diaries).ransack(params[:q])
     @customers = @customer_search.result(distinct: true).page(params[:page]).per(20)

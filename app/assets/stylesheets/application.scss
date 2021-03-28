@@ -147,7 +147,11 @@ meter {
   width: 114px;
 }
 
-#search-submit {
+#slideDownSearchForm {
+  display: none;
+}
+
+.search-submit {
   width: 30px;
   border: none;
   background-image: image-url('search');
@@ -237,6 +241,11 @@ footer {
 
 ul {
   margin-bottom: 0px;
+}
+
+mark {
+  background-color: yellow;
+  padding: 0px;
 }
 
 

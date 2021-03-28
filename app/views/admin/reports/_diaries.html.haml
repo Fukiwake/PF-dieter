@@ -1,52 +1,46 @@
-= form_with url: destroy_all_admin_reports_path, method: :patch, local: true do |f|
-  %button.btn.btn-danger.mb-3{"data-target" => "#destroy_confirm", "data-toggle" => "modal", type: "button"}
-    選択した日記をまとめて削除
-  #destroy_confirm.modal.fade{"aria-hidden" => "true", "aria-labelledby" => "label1", role: "dialog", tabindex: "-1"}
-    .modal-dialog{role: "document"}
-      .modal-content
-        .modal-header
-          %h5#label1.modal-title 削除確認
-          %button.close{"aria-label" => "Close", "data-dismiss" => "modal", type: "button"}
-            %span{"aria-hidden" => "true"} ×
-        .modal-body
-          選択された日記を削除しますか？
-        .modal-footer
-          %button.btn.btn-secondary{"data-dismiss" => "modal", type: "button"} Close
-          = f.submit "OK", class: "btn btn-danger"
-  = f.submit "選択した報告を解決済みにする", class: "btn btn-su"
-  - diaries.each do |diary|
-    = link_to admin_diary_path(diary.id), class: "text-decoration-none text-dark" do
-      %object.row.pt-2
-        .col-md-6
-          .d-flex
-            .text-center
-              = f.check_box :diary_ids, {}, diary.id, nil
-              = link_to admin_customer_path(diary.customer), class: "text-dark font-weight-bold" do
-                = attachment_image_tag(diary.customer, :profile_image, :fill, 70, 70, fallback: "no_image.png", size: "70x70")
-                %br
-                = diary.customer.name
-            %h3.ml-3.mt-3
-              = diary.title.truncate(10)
-      .row.py-2
-        .col-md-12.body-wrapper
-          - if diary.body.present?
-            %p.mb-0
-              = safe_join(diary.body.truncate(200).split("\n"),tag(:br))
-      .row.py-2
-        .col-md-12
-          = render "diaries/check_list", diary: diary
-          - if diary.food_calorie.present?
-            %span.text-danger
-              = diary.food_calorie
-              Kcal
-    - if diary.diary_images.present?
-      .images-wrapper
-        - diary.diary_images.each do |image|
-          .image.text-center.border
-            = attachment_image_tag(image, :image, :fit, 783, 440)
-      = link_to diary_path(diary.id), class: "text-decoration-none text-dark d-block col-md-9 text-right" do
-        #{time_ago_in_words(diary.created_at).upcase}前
-  %button.btn.btn-danger{"data-target" => "#destroy_confirm", "data-toggle" => "modal", type: "button"}
-    選択した日記をまとめ削除
-  .d-flex.justify-content-center
-    = paginate diaries
+- if diaries.present?
+  = form_with url: diary_destroy_all_admin_reports_path, method: :delete, local: true do |f|
+    %button.btn.btn-danger{"data-target" => "#diary_destroy_confirm", "data-toggle" => "modal", type: "button"}
+      選択した日記をまとめて削除
+    #diary_destroy_confirm.modal.fade{"aria-hidden" => "true", "aria-labelledby" => "label1", role: "dialog", tabindex: "-1"}
+      .modal-dialog{role: "document"}
+        .modal-content
+          .modal-header
+            %h5#label1.modal-title 削除確認
+            %button.close{"aria-label" => "Close", "data-dismiss" => "modal", type: "button"}
+              %span{"aria-hidden" => "true"} ×
+          .modal-body
+            選択された日記を削除しますか？
+          .modal-footer
+            %button.btn.btn-secondary{"data-dismiss" => "modal", type: "button"} Close
+            = f.submit "OK", class: "btn btn-danger"
+    = f.submit "選択した報告を解決済みにする", class: "btn btn-success", name: "report"
+    - diaries.each do |diary|
+      .row.border-bottom
+        .col-md-1.d-flex.justify-content-center.align-items-center
+          = f.check_box :diary_ids, {multiple: true}, diary.id, nil
+        .col-md-11
+          = link_to admin_diary_path(diary.id), class: "text-decoration-none text-dark" do
+            %object.row.pt-2
+              .col-md-6
+                .d-flex
+                  .text-center
+                    = link_to admin_customer_path(diary.customer), class: "text-dark font-weight-bold" do
+                      = attachment_image_tag(diary.customer, :profile_image, :fill, 70, 70, fallback: "no_image.png", size: "70x70")
+                      %br
+                      = diary.customer.name
+                  %h3.ml-3.mt-3
+                    = diary.title.truncate(10)
+            .row.py-2
+              .col-md-12.body-wrapper
+                - if diary.body.present?
+                  %p.mb-0
+                    = safe_join(diary.body.truncate(200).split("\n"),tag(:br))
+            .text-right #{time_ago_in_words(diary.created_at).upcase}前
+    %button.btn.btn-danger{"data-target" => "#diary_destroy_confirm", "data-toggle" => "modal", type: "button"}
+      選択した日記をまとめて削除
+    = f.submit "選択した報告を解決済みにする", class: "btn btn-success", name: "report"
+    .d-flex.justify-content-center
+      = paginate diaries
+- else
+  %p 報告された日記はありません

@@ -1,0 +1,11 @@
+%h2.text-center 検索
+= search_form_for @diet_method_search, url: diet_methods_path do |f|
+  .position-relative
+    = f.text_field :title_or_way_or_customer_name_cont_any, placeholder: 'ダイエット方法を検索', class: "w-100 rounded-pill form-control"
+    = f.submit "", class: "search-submit"
+    - if params[:q].present?
+      = f.select( :sorts, { '並び替え': 'id desc', '古い順': 'updated_at asc', '新しい順': 'updated_at desc', 'いいね多い順': 'diet_method_favorites_count desc', 'コメント多い順': 'diet_method_comments_count desc' } , { selected: params[:q][:sorts]  }, { onchange: 'this.form.submit()', class: "btn btn-secondary btn-block mt-4"} )
+    - else
+      = f.select( :sorts, { '並び替え': 'id desc', '古い順': 'updated_at asc', '新しい順': 'updated_at desc', 'いいね多い順': 'diet_method_favorites_count desc', 'コメント多い順': 'diet_method_comments_count desc' } , {}, { onchange: 'this.form.submit()', class: "btn btn-secondary btn-block mt-4"} )
+
+

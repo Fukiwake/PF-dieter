@@ -1,0 +1,46 @@
+- if diary_comments.present?
+  = form_with url: diary_comment_destroy_all_admin_reports_path, method: :delete, local: true do |f|
+    %button.btn.btn-danger{"data-target" => "#diary_comment_destroy_confirm", "data-toggle" => "modal", type: "button"}
+      選択したコメントをまとめて削除
+    #diary_comment_destroy_confirm.modal.fade{"aria-hidden" => "true", "aria-labelledby" => "label1", role: "dialog", tabindex: "-1"}
+      .modal-dialog{role: "document"}
+        .modal-content
+          .modal-header
+            %h5#label1.modal-title 削除確認
+            %button.close{"aria-label" => "Close", "data-dismiss" => "modal", type: "button"}
+              %span{"aria-hidden" => "true"} ×
+          .modal-body
+            選択されたコメントを削除しますか？
+          .modal-footer
+            %button.btn.btn-secondary{"data-dismiss" => "modal", type: "button"} Close
+            = f.submit "OK", class: "btn btn-danger"
+    = f.submit "選択した報告を解決済みにする", class: "btn btn-success", name: "report"
+    - diary_comments.each do |diary_comment|
+      .row.border-bottom
+        .col-md-1.d-flex.justify-content-center.align-items-center
+          = f.check_box :diary_comment_ids, {multiple: true}, diary_comment.id, nil
+        .col-md-11
+          = link_to admin_diary_path(diary_comment.diary.id), class: "text-decoration-none text-dark" do
+            %object.row.pt-2
+              .col-md-6
+                .d-flex
+                  .text-center
+                    = link_to admin_customer_path(diary_comment.customer), class: "text-dark font-weight-bold" do
+                      = attachment_image_tag(diary_comment.customer, :profile_image, :fill, 70, 70, fallback: "no_image.png", size: "70x70")
+                      %br
+                      = diary_comment.diary.title
+                  %h3.ml-3.mt-3
+                    = diary_comment.customer.name
+            .row.py-2
+              .col-md-12.body-wrapper
+                - if diary_comment.body.present?
+                  %p.mb-0
+                    = safe_join(diary_comment.body.truncate(200).split("\n"),tag(:br))
+            .text-right #{time_ago_in_words(diary_comment.created_at).upcase}前
+    %button.btn.btn-danger{"data-target" => "#diary_comment_destroy_confirm", "data-toggle" => "modal", type: "button"}
+      選択したコメントをまとめて削除
+    = f.submit "選択した報告を解決済みにする", class: "btn btn-success", name: "report"
+    .d-flex.justify-content-center
+      = paginate diary_comments
+- else
+  %p 報告された日記コメントはありません
