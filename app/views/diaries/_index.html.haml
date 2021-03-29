@@ -93,8 +93,8 @@
               - diary.diary_images.each do |image|
                 .image.text-center.border
                   = attachment_image_tag(image, :image, :fit, 783, 440)
-          %object.row
-            = link_to diary_path(diary.id), class: "text-decoration-none text-dark" do
+          = link_to diary_path(diary.id), class: "text-decoration-none text-dark" do
+            %object.row
               .col-md-1
                 - if customer_signed_in?
                   %div{:id => "favorites_buttons_#{diary.id}"}
