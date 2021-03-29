@@ -5,22 +5,27 @@
       = f.date_select :post_date, {}, class: "form-control"
   .field
     = f.label :weight, "体重", class: "font-weight-bold"
+    %span.badge.badge-danger.ml-2 必須
     .form-inline
-      = f.text_field :weight, autofocus: true, size: 24, class: "form-control mr-1"
+      = f.text_field :weight, autofocus: true, size: 24, class: "form-control mr-1", "data-error_placement": "#weight_error", "data-gender": current_customer.gender, "data-height": current_customer.height, "data-age": current_customer.age
       kg
+    #weight_error
   .field
     = f.label :body_fat_percentage, "体脂肪率", class: "font-weight-bold"
     .form-inline
-      = f.text_field :body_fat_percentage, size: 24, class: "form-control mr-1"
+      = f.text_field :body_fat_percentage, size: 24, class: "form-control mr-1", "data-error_placement": "#body_fat_percentage_error"
       \%
+    #body_fat_percentage_error
   .field
     = f.label :title, "タイトル", class: "font-weight-bold"
     .form-inline
-      = f.text_field :title, size: 24, class: "form-control"
+      = f.text_field :title, size: 24, class: "form-control", "data-error_placement": "#title_error"
+    #title_error
   .field.form-group
     = f.label :body, "本文", class: "font-weight-bold"
     %br/
-    = f.text_area :body, size: "autox10", class: "form-control"
+    = f.text_area :body, size: "autox10", class: "form-control", "data-error_placement": "#body_error"
+  #body_error
   .field
     = f.label :image, "画像(複数可)", class: "font-weight-bold"
     %br/
@@ -53,15 +58,17 @@
       .col-md-6
         #food-selected
         .form-inline
-          = f.label :food_calorie, "合計カロリー", class: "font-weight-bold mr-1"
-          = f.text_field :food_calorie, size: 25, class: "form-control mr-1"
+          = f.label :food_calorie, "合計摂取カロリー", class: "font-weight-bold mr-1"
+          = f.text_field :food_calorie, size: 21, class: "form-control mr-1"
           Kcal
   .field
     .font-weight-bold.mb-2.mt-3 消費カロリー計算
-    .row
+    #activity-error.text-danger
+      消費カロリー計算をするためには、体重を入力してください
+    .row#activity-field.d-none
       .col-md-6
         .form-inline.input-group
-          %input#activity-name.form-control{type: "text", placeholder: "食品名を検索", size: 24}
+          %input#activity-name.form-control{type: "text", placeholder: "運動名を検索", size: 24}
           .btn.btn-success#activity-search-button 検索
           %select#activity-genre.btn.btn-secondary
             %option{value: ""} ジャンルで探す
@@ -72,10 +79,19 @@
             %option{value: "その他"} その他
         #activity-search
       .col-md-6
+        .row.mb-2
+          .col-md-8.font-weight-bold
+            基礎代謝
+            %i.far.fa-question-circle.text-primary{"data-html": "true", "data-toggle": "tooltip", title: "基礎代謝量はハリス・ベネディクト方程式(改良版)を使って計算しています。<br>男性: 13.397 × 体重kg + 4.799 x 身長cm - 5.677 × 年齢 + 88.362<br>女性: 9.247 × 体重kg + 3.098 x 身長cm - 4.33 × 年齢 + 447.593"}
+          .col-md-4.d-flex
+            .activity-calorie#base-calorie{"data-weight": current_customer.target_weight}
+              0
+            Kcal
+        #activity_quantity_error
         #activity-selected
         .form-inline
-          = f.label :food_calorie, "合計カロリー", class: "font-weight-bold mr-1"
-          = f.text_field :food_calorie, size: 25, class: "form-control mr-1"
+          = f.label :activity_calorie, "合計消費カロリー", class: "font-weight-bold mr-1"
+          = f.text_field :activity_calorie, size: 21, class: "form-control mr-1"
           Kcal
   .actions
     = f.submit "投稿する", class: "btn btn-success btn-block"

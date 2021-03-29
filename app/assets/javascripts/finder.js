@@ -29,7 +29,6 @@ $(function() {
       $($(this).attr("href")).show();
       event.preventDefault();
       $('.slick-next').trigger("click");
-      $('.slick-prev').trigger("click");
     });
 
     $(".formreset").on("click", function(){
