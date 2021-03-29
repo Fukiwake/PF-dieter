@@ -5,6 +5,7 @@ require 'rails_helper'
 describe 'ログイン後のテスト：会員' do
   let!(:customer) { create(:customer) }
   let!(:other_customer) { create(:customer, name: "test") }
+
   before do
     99.times do |n|
       LevelSetting.create(
@@ -28,15 +29,18 @@ describe 'ログイン後のテスト：会員' do
         click_link 'ユーザー'
         click_link other_customer.name
       end
+
       it '該当会員の詳細画面に遷移する' do
         expect(current_path).to eq '/customers/' + other_customer.id.to_s
       end
     end
+
     context 'フォローボタンを押下したとき' do
       before do
         click_link 'ユーザー'
         click_link "フォロー"
       end
+
       it '該当会員をフォローする' do
         expect(Relationship.where(follower_id: customer.id, followed_id: other_customer.id).present?).to eq true
       end
@@ -48,10 +52,12 @@ describe 'ログイン後のテスト：会員' do
       click_link 'ユーザー'
       click_link other_customer.name
     end
+
     context 'フォローボタンを押下したとき' do
       before do
         click_link "フォロー"
       end
+
       it '該当会員をフォローする' do
         expect(Relationship.where(follower_id: customer.id, followed_id: other_customer.id).present?).to eq true
       end
@@ -59,31 +65,38 @@ describe 'ログイン後のテスト：会員' do
         before do
           find('#notification').click
         end
+
         it 'Relationshipが更新される' do
           expect(Relationship.find_by(follower_id: customer.id, followed_id: other_customer.id).notification).to eq true
         end
       end
     end
+
     context 'ブロックを押下したとき' do
       before do
         click_link "ブロックする"
       end
+
       it '該当会員をブロックする' do
         expect(Block.find_by(blocker_id: customer.id, blocked_id: other_customer.id).present?).to eq true
       end
     end
+
     context '報告を押下したとき' do
       before do
         click_link "報告"
       end
+
       it '該当会員を報告する' do
         expect(Report.find_by(visitor_id: customer.id, visited_id: other_customer.id).present?).to eq true
       end
     end
+
     context 'チャットを押下したとき' do
       before do
         find('#chat-link').click
       end
+
       it 'チャット詳細画面に遷移する' do
         expect(current_path).to eq '/chat/' + other_customer.id.to_s
       end
@@ -94,6 +107,7 @@ describe 'ログイン後のテスト：会員' do
     before do
       click_link 'マイページ'
     end
+
     it 'ヘッダーのマイページを押すと、マイページに遷移する' do
       expect(current_path).to eq '/customers/' + customer.id.to_s
     end
@@ -117,5 +131,4 @@ describe 'ログイン後のテスト：会員' do
   #     end
   #   end
   # end
-
 end

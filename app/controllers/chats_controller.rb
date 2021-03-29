@@ -20,5 +20,4 @@ class ChatsController < ApplicationController
     end
     Notification.where(visitor_id: @customer.id, visited_id: current_customer.id, action: "chat").update(checked: true)
   end
-
 end

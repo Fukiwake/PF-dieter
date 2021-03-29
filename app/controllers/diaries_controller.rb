@@ -37,17 +37,17 @@ class DiariesController < ApplicationController
   end
 
   def create
-    unless current_customer.diaries.find_by(post_date: "#{params[:diary]["post_date(1i)"]}-#{params[:diary]["post_date(2i)"]}-#{params[:diary]["post_date(3i)"]}").present?
-      @diary = current_customer.diaries.new(diary_params)
-    else
+    if current_customer.diaries.find_by(post_date: "#{params[:diary]["post_date(1i)"]}-#{params[:diary]["post_date(2i)"]}-#{params[:diary]["post_date(3i)"]}").present?
       flash[:alert] = "同じ日付の日記がすでに投稿されています"
-      redirect_to diaries_path and return
+      redirect_to(diaries_path) && return
+    else
+      @diary = current_customer.diaries.new(diary_params)
     end
     if @diary.title.blank?
       @diary.title = "日記"
     end
     if @diary.save
-      #チェックされていないチェックリストのcheck_list_diary(中間テーブル)を作成
+      # チェックされていないチェックリストのcheck_list_diary(中間テーブル)を作成
       current_customer.trying_diet_methods.each do |method|
         check_list_ids = method.check_lists.pluck(:id)
         check_list_ids.each do |check_list_id|
@@ -71,10 +71,10 @@ class DiariesController < ApplicationController
         end
       end
       flash[:notice] = "日記を投稿しました"
-      redirect_to diaries_path and return
+      redirect_to(diaries_path) && return
     else
       @diary.check_list_diaries.destroy_all
-      render :new and return
+      render(:new) && return
     end
   end
 

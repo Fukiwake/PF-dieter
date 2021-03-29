@@ -15,5 +15,4 @@ class NotificationsController < ApplicationController
       notification.update(checked: true)
     end
   end
-
 end

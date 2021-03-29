@@ -23,26 +23,20 @@ rails_env = Rails.env.to_sym
 set :environment, rails_env
 set :output, 'log/cron.log'
 every 1.day, :at => '0am' do
-  begin
-    runner "Batch::ExpReset.day_exp_reset"
-  rescue => e
-    Rails.logger.error("aborted rails runner")
-    raise e
-  end
+  runner "Batch::ExpReset.day_exp_reset"
+rescue => e
+  Rails.logger.error("aborted rails runner")
+  raise e
 end
 every :monday, :at => '0am' do
-  begin
-    runner "Batch::ExpReset.week_exp_reset"
-  rescue => e
-    Rails.logger.error("aborted rails runner")
-    raise e
-  end
+  runner "Batch::ExpReset.week_exp_reset"
+rescue => e
+  Rails.logger.error("aborted rails runner")
+  raise e
 end
 every 1.month, at: 'start of the month at 0am' do
-  begin
-    runner "Batch::ExpReset.month_exp_reset"
-  rescue => e
-    Rails.logger.error("aborted rails runner")
-    raise e
-  end
+  runner "Batch::ExpReset.month_exp_reset"
+rescue => e
+  Rails.logger.error("aborted rails runner")
+  raise e
 end

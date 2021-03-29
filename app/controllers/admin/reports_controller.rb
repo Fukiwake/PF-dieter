@@ -4,11 +4,11 @@ class Admin::ReportsController < ApplicationController
   def index
     @diaries = Diary.includes(:customer).where(id: Report.pluck(:diary_id).uniq)
     @diaries = Kaminari.paginate_array(@diaries).page(params[:page]).per(20)
-    @diary_comments= DiaryComment.includes(:customer, :diary).where(id: Report.pluck(:diary_comment_id).uniq)
+    @diary_comments = DiaryComment.includes(:customer, :diary).where(id: Report.pluck(:diary_comment_id).uniq)
     @diary_comments = Kaminari.paginate_array(@diary_comments).page(params[:page]).per(20)
     @diet_methods = DietMethod.includes(:customer).where(id: Report.pluck(:diet_method_id).uniq)
     @diet_methods = Kaminari.paginate_array(@diet_methods).page(params[:page]).per(20)
-    @diet_method_comments= DietMethodComment.includes(:customer, :diet_method).where(id: Report.pluck(:diet_method_comment_id).uniq)
+    @diet_method_comments = DietMethodComment.includes(:customer, :diet_method).where(id: Report.pluck(:diet_method_comment_id).uniq)
     @diet_method_comments = Kaminari.paginate_array(@diet_method_comments).page(params[:page]).per(20)
     @customers = Customer.where(id: Report.pluck(:visited_id).uniq, is_deleted: false)
     @customers = Kaminari.paginate_array(@customers).page(params[:page]).per(20)

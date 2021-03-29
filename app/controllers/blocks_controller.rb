@@ -17,5 +17,4 @@ class BlocksController < ApplicationController
     flash[:notice] = "ユーザーのブロックを解除しました"
     redirect_to request.referer
   end
-
 end

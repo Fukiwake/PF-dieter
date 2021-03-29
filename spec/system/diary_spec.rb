@@ -7,6 +7,7 @@ describe 'ログイン後のテスト：日記' do
   let!(:diary) { create(:diary, customer_id: customer.id) }
   let!(:diet_method) { create(:diet_method, customer_id: customer.id) }
   let!(:check_list) { create(:check_list, diet_method_id: diet_method.id) }
+
   before do
     99.times do |n|
       LevelSetting.create(
@@ -31,42 +32,51 @@ describe 'ログイン後のテスト：日記' do
         click_link '日記'
         click_link diary.title
       end
+
       it '該当日記の詳細画面に遷移する' do
         expect(current_path).to eq '/diaries/' + diary.id.to_s
       end
     end
+
     context '任意の会員名を押下したとき' do
       before do
         click_link '日記'
         click_link customer.name
       end
+
       it '該当会員の詳細画面に遷移する' do
         expect(current_path).to eq '/customers/' + customer.id.to_s
       end
     end
+
     context '編集を押下したとき' do
       before do
         click_link '日記'
         click_link "編集"
       end
+
       it '該当日記の詳細画面に遷移する' do
         expect(current_path).to eq '/diaries/' + diary.id.to_s + '/edit'
       end
     end
+
     context '削除を押下したとき' do
       before do
         click_link '日記'
         click_link "削除する"
       end
+
       it '該当日記が削除される' do
         expect(Diary.where(id: diary.id).count).to eq 0
       end
     end
+
     context 'いいねボタンを押下したとき' do
       before do
         click_link '日記'
         click_link 'いいね'
       end
+
       it '該当日記がいいねされる' do
         expect(DiaryFavorite.where(diary_id: diary.id, customer_id: customer.id).count).to eq 1
       end
@@ -78,43 +88,53 @@ describe 'ログイン後のテスト：日記' do
       click_link '日記'
       click_link diary.title
     end
+
     context '会員名を押下したとき' do
       before do
         click_link customer.name
       end
+
       it '該当会員の詳細画面に遷移する' do
         expect(current_path).to eq '/customers/' + customer.id.to_s
       end
     end
+
     context '編集を押下したとき' do
       before do
         click_link "編集"
       end
+
       it '該当日記の詳細画面に遷移する' do
         expect(current_path).to eq '/diaries/' + diary.id.to_s + '/edit'
       end
     end
+
     context '削除を押下したとき' do
       before do
         click_link "削除する"
       end
+
       it '該当日記が削除される' do
         expect(Diary.where(id: diary.id).count).to eq 0
       end
     end
+
     context 'いいねボタンを押下したとき' do
       before do
         click_link 'いいね'
       end
+
       it '該当日記がいいねされる' do
         expect(DiaryFavorite.where(diary_id: diary.id, customer_id: customer.id).present?).to eq true
       end
     end
+
     context 'コメントを入力し、送信したとき' do
       before do
         fill_in 'diary_comment[body]', with: 'コメントテスト'
         click_button '送信'
       end
+
       it '該当コメントが投稿され、表示される' do
         expect(DiaryComment.where(diary_id: diary.id, customer_id: customer.id, body: 'コメントテスト').present?).to eq true
         expect(page).to have_content 'コメントテスト'
@@ -133,6 +153,7 @@ describe 'ログイン後のテスト：日記' do
       check "diary[check_list_diaries_attributes][0][check_list_id]"
       click_button '投稿する'
     end
+
     context '情報を入力して投稿したとき' do
       it '日記一覧画面に遷移する' do
         expect(current_path).to eq '/diaries'
@@ -154,6 +175,7 @@ describe 'ログイン後のテスト：日記' do
       check "diary[check_list_diaries_attributes][0][check_list_id]"
       click_button '投稿'
     end
+
     context '情報を入力して投稿したとき' do
       it '日記一覧画面に遷移する' do
         using_wait_time 5 do
@@ -176,6 +198,7 @@ describe 'ログイン後のテスト：日記' do
       fill_in 'diary[title]', with: '編集テスト'
       click_button '編集する'
     end
+
     context '情報を入力して投稿したとき' do
       it '該当日記の詳細画面に遷移する' do
         expect(current_path).to eq '/diaries/' + diary.id.to_s

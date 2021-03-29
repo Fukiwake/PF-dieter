@@ -1,5 +1,4 @@
 class Diary < ApplicationRecord
-
   has_many :diary_images, dependent: :destroy
   accepts_attachments_for :diary_images, attachment: :image
   belongs_to :customer
@@ -26,15 +25,15 @@ class Diary < ApplicationRecord
   end
 
   def self.get_one_year_diary
-    if self.first.post_date < self.last.post_date.prev_year
-      self.where("post_date > ?",self.last.post_date.prev_year)
+    if first.post_date < last.post_date.prev_year
+      where("post_date > ?", last.post_date.prev_year)
     else
-      self.all
+      all
     end
   end
 
   def start_time
-    self.post_date
+    post_date
   end
 
   def favorited_by?(customer)
@@ -75,5 +74,4 @@ class Diary < ApplicationRecord
       notification.save if notification.valid?
     end
   end
-
 end

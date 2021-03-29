@@ -1,12 +1,11 @@
 Rails.application.routes.draw do
-
   devise_for :admin, controllers: {
     sessions: 'admins/sessions',
   }
   devise_for :customers, controllers: {
     registrations: 'customers/registrations',
     sessions: 'customers/sessions',
-    omniauth_callbacks: 'customers/omniauth_callbacks'
+    omniauth_callbacks: 'customers/omniauth_callbacks',
   }
   devise_scope :customer do
     post 'customers/guest_sign_in', to: 'customers/sessions#new_guest'
@@ -78,5 +77,4 @@ Rails.application.routes.draw do
       end
     end
   end
-
 end

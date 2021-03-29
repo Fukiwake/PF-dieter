@@ -21,4 +21,4 @@
               報告
   .row
     .col-md-12.border-bottom
-      = diary_comment.body
+      = safe_join(diary_comment.body.split("\n"),tag(:br))

@@ -3,12 +3,12 @@ class Customer < ApplicationRecord
   # :confirmable, :lockable, :timeoutable, :trackable and :omniauthable
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :validatable,
-         :omniauthable, omniauth_providers: %i[google_oauth2 twitter]
+         :omniauthable, omniauth_providers: %i(google_oauth2 twitter)
 
   def self.from_omniauth(auth)
     where(provider: auth.provider, uid: auth.uid).first_or_initialize do |customer|
       customer.email = auth.info.email
-      customer.password = Devise.friendly_token[0,20]
+      customer.password = Devise.friendly_token[0, 20]
     end
   end
 
@@ -68,7 +68,7 @@ class Customer < ApplicationRecord
 
   def valid_of_specified?(*columns)
     columns.each do |column|
-      return false if self.errors.messages.include?(column)
+      return false if errors.messages.include?(column)
     end
     true
   end
@@ -98,7 +98,7 @@ class Customer < ApplicationRecord
   end
 
   def create_notification_follow(current_customer)
-    temp = Notification.where(["visitor_id = ? and visited_id = ? and action = ? ",current_customer.id, id, 'follow'])
+    temp = Notification.where(["visitor_id = ? and visited_id = ? and action = ? ", current_customer.id, id, 'follow'])
     if temp.blank? && follow_notification == true && all_notification == true
       notification = current_customer.active_notifications.new(
         visited_id: id,
@@ -151,5 +151,4 @@ class Customer < ApplicationRecord
       customer.introduce = "ゲストアカウント2です。チャット機能や通知機能を試す際にご利用ください。"
     end
   end
-
 end

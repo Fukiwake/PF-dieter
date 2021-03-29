@@ -44,5 +44,4 @@ class Admin::DietMethodsController < ApplicationController
   def set_diet_method
     @diet_method = DietMethod.find(params[:id])
   end
-
 end

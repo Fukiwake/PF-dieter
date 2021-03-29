@@ -30,13 +30,13 @@ class CustomersController < ApplicationController
 
   def withdraw
     if current_customer.email == 'guest@example.com' || current_customer.email == 'guest2@example.com'
-      redirect_to root_path, alert: 'ゲストユーザーは退会できません' and return
+      redirect_to(root_path, alert: 'ゲストユーザーは退会できません') && return
     end
     current_customer.is_deleted = true
     current_customer.save
     reset_session
     flash[:notice] = "ありがとうございました。またのご利用を心よりお待ちしております。"
-    redirect_to root_path and return
+    redirect_to(root_path) && return
   end
 
   def followings

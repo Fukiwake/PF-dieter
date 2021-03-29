@@ -23,5 +23,4 @@ class DietMethodCommentsController < ApplicationController
   def diet_method_comment_params
     params.require(:diet_method_comment).permit(:body)
   end
-
 end
