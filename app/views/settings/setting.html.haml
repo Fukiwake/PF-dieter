@@ -7,9 +7,9 @@
         #profile.tab
           = render "profile", customer: current_customer
         #block.tab
-          = render "block", customers: @customers
+          = render "block", customers: @blocking_customers
         #notification.tab
-          = render "notification"
+          = render "notification", customers: @notification_customers
         #withdraw.tab
           = render "withdraw", customer: current_customer
 
