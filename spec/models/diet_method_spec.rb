@@ -3,7 +3,8 @@
 require 'rails_helper'
 
 RSpec.describe DietMethod, type: :model do
-  subject{ diet_method.valid? }
+  subject { diet_method.valid? }
+
   let(:customer) { create(:customer) }
   let!(:diet_method) { build(:diet_method, customer_id: customer.id) }
 
@@ -15,7 +16,7 @@ RSpec.describe DietMethod, type: :model do
 
   context 'バリデーションのテスト' do
     it 'titleカラムが15文字以内であること' do
-      diet_method.title = Faker::Lorem.characters(number:16)
+      diet_method.title = Faker::Lorem.characters(number: 16)
       is_expected.to eq false
       expect(diet_method.errors[:title]).to include("は15文字以内で入力してください")
     end

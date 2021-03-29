@@ -3,7 +3,8 @@
 require 'rails_helper'
 
 RSpec.describe Customer, type: :model do
-  subject{ customer.valid? }
+  subject { customer.valid? }
+
   let!(:customer) { build(:customer) }
 
   describe '実際に保存してみる' do
@@ -19,7 +20,7 @@ RSpec.describe Customer, type: :model do
       expect(customer.errors[:name]).to include("を入力してください")
     end
     it 'nameカラムが10文字以内であること' do
-      customer.name = Faker::Lorem.characters(number:11)
+      customer.name = Faker::Lorem.characters(number: 11)
       is_expected.to eq false
       expect(customer.errors[:name]).to include("は10文字以内で入力してください")
     end
@@ -59,7 +60,7 @@ RSpec.describe Customer, type: :model do
       expect(customer.errors[:age]).to include("は数値で入力してください")
     end
     it 'introduceカラムが200文字以内であること' do
-      customer.introduce = Faker::Lorem.characters(number:201)
+      customer.introduce = Faker::Lorem.characters(number: 201)
       is_expected.to eq false
       expect(customer.errors[:introduce]).to include("は200文字以内で入力してください")
     end

@@ -5,5 +5,4 @@ class SettingsControllerTest < ActionDispatch::IntegrationTest
     get settings_setting_url
     assert_response :success
   end
-
 end

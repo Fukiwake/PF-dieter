@@ -16,5 +16,4 @@ class TriesController < ApplicationController
     @diary = Diary.new
     @check_list_diary = @diary.check_list_diaries.new
   end
-
 end

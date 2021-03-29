@@ -42,8 +42,8 @@ class Customers::OmniauthCallbacksController < Devise::OmniauthCallbacksControll
       sign_in_and_redirect @customer, event: :authentication
       set_flash_message(:notice, :success, kind: "#{provider}".capitalize) if is_navigational_format?
     else
-      session["devise.regist_data"] = {customer: @customer.attributes}
-      session["devise.regist_data"][:customer]["password"] = Devise.friendly_token[0,20]
+      session["devise.regist_data"] = { customer: @customer.attributes }
+      session["devise.regist_data"][:customer]["password"] = Devise.friendly_token[0, 20]
       redirect_to customers_new_profile_path
     end
   end
@@ -51,5 +51,4 @@ class Customers::OmniauthCallbacksController < Devise::OmniauthCallbacksControll
   def failure
     redirect_to root_path
   end
-
 end

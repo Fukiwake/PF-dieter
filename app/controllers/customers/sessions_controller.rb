@@ -48,5 +48,4 @@ class Customers::SessionsController < Devise::SessionsController
     sign_in customer
     redirect_to diaries_path, notice: 'ゲストユーザー2としてログインしました。'
   end
-
 end

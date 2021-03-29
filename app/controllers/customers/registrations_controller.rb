@@ -15,9 +15,9 @@ class Customers::RegistrationsController < Devise::RegistrationsController
     @customer.valid?
     unless @customer.valid_of_specified?(:email, :password)
       flash.now[:alert] = "このメールアドレスは既に登録されています"
-      render :new and return
+      render(:new) && return
     end
-    session["devise.regist_data"] = {customer: @customer.attributes}
+    session["devise.regist_data"] = { customer: @customer.attributes }
     session["devise.regist_data"][:customer]["password"] = params[:customer][:password]
     redirect_to customers_new_profile_path
   end
@@ -30,6 +30,7 @@ class Customers::RegistrationsController < Devise::RegistrationsController
     @customer = Customer.new(session["devise.regist_data"]["customer"])
     @customer.update(sign_up_params)
     if @customer.save
+      NotificationMailer.complete_mail(@customer).deliver_now
       flash[:notice] = "新規登録が完了しました"
       session["devise.regist_data"] = nil
       sign_in(:customer, @customer)
@@ -94,8 +95,6 @@ class Customers::RegistrationsController < Devise::RegistrationsController
   def after_update_path_for(_resource)
     setting_path
   end
-
-
 
   # The path used after sign up.
   # def after_sign_up_path_for(resource)

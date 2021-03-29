@@ -1,0 +1,17 @@
+!!!
+%html{lang: "ja"}
+  %head
+    %meta{content: "text/html; charset=UTF-8", "http-equiv" => "Content-Type"}/
+    %meta{content: "text/html; charset=UTF-8"}/
+  %body
+    %div
+      %h1
+        ようこそ #{@customer.name} 様
+      %p
+        この度はアカウント登録頂きましてありがとうございます。
+      %p
+        Dieterを始める：#{@url}
+      %p
+        ユーザー名: #{@customer.name}
+      %p
+        メールアドレス: #{@customer.email}

@@ -53,6 +53,7 @@ describe 'ログイン前のテスト' do
         fill_in 'customer[target_body_fat_percentage]', with: rand(10..25)
         click_button '新規登録'
       end
+
       it '新規登録後、メッセージが表示される' do
         expect(page).to have_content('新規登録が完了しました')
       end
@@ -64,7 +65,7 @@ describe 'ログイン前のテスト' do
           expect(page).to have_link '日記'
         end
         it '「ダイエット方法」と表示される' do
-          expect(page).to have_link'ダイエット方法'
+          expect(page).to have_link 'ダイエット方法'
         end
         it '「マイページ」と表示される' do
           expect(page).to have_link 'マイページ'
@@ -81,6 +82,7 @@ describe 'ログイン前のテスト' do
 
   context 'ログインのテスト' do
     let(:customer) { create(:customer) }
+
     before do
       99.times do |n|
         LevelSetting.create(
@@ -93,6 +95,7 @@ describe 'ログイン前のテスト' do
       fill_in 'customer[password]', with: customer.password
       click_button 'ログイン'
     end
+
     it 'ログイン後、メッセージが表示される' do
       expect(page).to have_content('ログインしました。')
     end
@@ -104,7 +107,7 @@ describe 'ログイン前のテスト' do
         expect(page).to have_link '日記'
       end
       it '「ダイエット方法」と表示される' do
-        expect(page).to have_link'ダイエット方法'
+        expect(page).to have_link 'ダイエット方法'
       end
       it '「マイページ」と表示される' do
         expect(page).to have_link 'マイページ'

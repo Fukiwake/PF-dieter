@@ -1,5 +1,4 @@
 class DietMethod < ApplicationRecord
-
   has_many :diet_method_images, dependent: :destroy
   accepts_attachments_for :diet_method_images, attachment: :image
   acts_as_taggable
@@ -68,5 +67,4 @@ class DietMethod < ApplicationRecord
       notification.save if notification.valid?
     end
   end
-
 end

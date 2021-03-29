@@ -66,4 +66,17 @@ Rails.application.configure do
     Bullet.rails_logger = true
     Bullet.add_footer = true
   end
+
+  config.action_mailer.raise_delivery_errors = true
+  config.action_mailer.default_url_options = { :host => 'localhost:3000' }
+  config.action_mailer.delivery_method = :smtp
+  config.action_mailer.smtp_settings = {
+    :address => 'smtp.gmail.com',
+    :port => 587,
+    :domain => 'gmail.com',
+    :user_name => "tak0203753@gmail.com",
+    :password => "tvttzelfgqxlkdhj",
+    :authentication => :plain,
+    :enable_starttls_auto => true
+  }
 end

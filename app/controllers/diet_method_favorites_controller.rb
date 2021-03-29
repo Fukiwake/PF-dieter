@@ -17,5 +17,4 @@ class DietMethodFavoritesController < ApplicationController
     favorite = DietMethodFavorite.find_by(diet_method_id: params[:diet_method_id])
     favorite.destroy
   end
-
 end

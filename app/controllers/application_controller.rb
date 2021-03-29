@@ -4,12 +4,12 @@ class ApplicationController < ActionController::Base
   before_action :set_available_tags_to_gon
 
   def after_sign_in_path_for(resource)
-      case resource
-      when Admin
-        admin_customers_path
-      when Customer
-        diaries_path
-      end
+    case resource
+    when Admin
+      admin_customers_path
+    when Customer
+      diaries_path
+    end
   end
 
   def after_sign_out_path_for(resource)
@@ -48,5 +48,4 @@ class ApplicationController < ActionController::Base
   def set_available_tags_to_gon
     gon.available_tags = DietMethod.tags_on(:tags).pluck(:name)
   end
-
 end
