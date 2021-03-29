@@ -5,7 +5,7 @@ class DietMethodsController < ApplicationController
   def new
     @diet_method = DietMethod.new
     @check_list = @diet_method.check_lists.new
-    @tags = DietMethod.tag_counts_on(:tags).most_used(20)
+    gon.available_tags = DietMethod.tags_on(:tags).pluck(:name)
   end
 
   def create
