@@ -14,6 +14,9 @@ $(function(){
           required: true,
           equalTo: '#customer_password',
         },
+        "customer[age]": {
+          number: true,
+        },
       },
       messages: {
         "customer[email]": {
@@ -35,6 +38,10 @@ $(function(){
       rules: {
         "diary[weight]": {
           required: true,
+          number: true,
+        },
+        "diary[body_fat_percentage]": {
+          number: true,
         },
         "diary[title]": {
           maxlength: 15,
@@ -42,10 +49,17 @@ $(function(){
         "diary[body]": {
           maxlength: 200,
         },
+        "activity-quantity": {
+          digits: true,
+        },
       },
       messages: {
         "diary[weight]": {
           required: '体重を入力してください',
+          number: "数値で入力してください",
+        },
+        "diary[body_fat_percentage]": {
+          number: "数値で入力してください",
         },
         "diary[title]": {
           maxlength: 'タイトルは15文字以内で入力してください',
@@ -53,7 +67,13 @@ $(function(){
         "diary[body]": {
           maxlength: '本文は200文字以内で入力してください',
         },
+        "activity-quantity": {
+          digits: "数値で入力してください",
+        },
       },
+      errorPlacement: function(error, element){
+        error.appendTo(element.data('error_placement'));
+      }
     });
 
     $('#diet-method-form').validate({
@@ -76,5 +96,53 @@ $(function(){
         },
       },
     });
+
+    $('#new-profile-form').validate({
+      rules: {
+        "customer[name]": {
+          required: true,
+        },
+        "customer[age]": {
+          digits: true,
+          required: true,
+        },
+        "customer[height]": {
+          number: true,
+          required: true,
+        },
+        "customer[target_weight]": {
+          number: true,
+          required: true,
+        },
+        "customer[target_body_fat_percentage]": {
+          number: true,
+        },
+      },
+      messages: {
+        "customer[name]": {
+          required: "名前を入力してください",
+        },
+        "customer[age]": {
+          digits: "数値で入力してください",
+          required: "年齢を入力してください",
+        },
+        "customer[height]": {
+          number: "数値で入力してください",
+          required: "身長を入力してください",
+        },
+        "customer[target_weight]": {
+          number: "数値で入力してください",
+          required: "目標体重を入力してください",
+        },
+        "customer[target_body_fat_percentage]": {
+          number: "数値で入力してください",
+        },
+      },
+      errorPlacement: function(error, element){
+        error.appendTo(element.data('error_placement'));
+      }
+    });
+
+
   });
 })

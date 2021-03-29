@@ -6,14 +6,17 @@
       日
   .field
     = f.label :weight, "体重", class: "font-weight-bold"
+    %span.badge.badge-danger.ml-2 必須
     .form-inline
-      = f.text_field :weight, class: "form-control mr-1 w-100"
+      = f.text_field :weight, class: "form-control mr-1 w-100", "data-error_placement": "#weight_error"
       kg
+    #weight_error
   .field
     = f.label :body_fat_percentage, "体脂肪率", class: "font-weight-bold"
     .form-inline
-      = f.text_field :body_fat_percentage, class: "form-control mr-1 w-100"
+      = f.text_field :body_fat_percentage, class: "form-control mr-1 w-100", "data-error_placement": "#body_fat_percentage_error"
       \%
+    #body_fat_percentage_error
   .field.form-group
     .font-weight-bold.mb-2.mt-3 チェックリスト
     = f.fields_for :check_list_diaries do |c|

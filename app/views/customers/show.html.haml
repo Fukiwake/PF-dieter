@@ -6,17 +6,28 @@
       .card.mb-3.shadow-sm
         .card-body
           #info-tab-menu.font-weight-bold
-            %input.mr-1{type: "radio", value: "#graph", name: "info", checked: "checked"} グラフ
-            %input.ml-3.mr-1{type: "radio", value: "#calendar", name: "info"} カレンダー
+            %input.mr-1{type: "radio", value: "#calendar", name: "info", checked: "checked"} カレンダー
+            %input.ml-3.mr-1{type: "radio", value: "#graph", name: "info"} グラフ
           #info-tab-contents
-            #graph.tab.d-none.active
-              = render "graph"
-            #calendar.tab.d-none
+            #calendar.tab.active.d-none
               = month_calendar events: @diaries do |date, diaries|
                 = date.day
                 - diaries.each do |diary|
                   %div
-                    = link_to diary.title, diary_path(diary)
+                    = link_to diary.title, diary_path(diary), class: "text-dark font-weight-bold"
+                  - if diary.food_calorie.present? && diary.activity_calorie.present?
+                    - if diary.food_calorie - diary.activity_calorie <= 0
+                      .text-success
+                        -
+                        = diary.food_calorie - diary.activity_calorie
+                        Kcal
+                    - elsif diary.food_calorie - diary.activity_calorie > 0
+                      .text-danger
+                        +
+                        = diary.food_calorie - diary.activity_calorie
+                        Kcal
+            #graph.tab.d-none
+              = render "graph"
       .card.shadow-sm
         .card-body
           %table.table.table-borderless
@@ -122,6 +133,6 @@
           = link_to "ダイエット方法", "#diet_method", class: "btn btn-outline-secondary btn-block btn-lg"
       #customer-tab-contents
         #diary.tab
-          = render "diaries/index", diaries: @customer.diaries.includes(:check_list_diaries, :diary_images, :diary_favorites, :diary_comments).page(params[:page]).per(20)
+          = render "diaries/index", diaries: @customer.diaries.includes(:check_list_diaries, :diary_images, :diary_favorites, :diary_comments).order("created_at DESC").page(params[:page]).per(20)
         #diet_method.tab
-          = render "diet_methods/index", diet_methods: @customer.diet_methods.includes(:diet_method_images, :diet_method_favorites, :diet_method_comments, :check_lists, :tag_taggings, :tags).page(params[:page]).per(20)
+          = render "diet_methods/index", diet_methods: @customer.diet_methods.includes(:diet_method_images, :diet_method_favorites, :diet_method_comments, :tag_taggings, :tags).order("created_at DESC").page(params[:page]).per(20)
