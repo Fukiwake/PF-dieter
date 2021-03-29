@@ -13,6 +13,7 @@
             = form_with model: @diet_method, local: true, id: "diet-method-form" do |f|
               .field
                 = f.label :title, "タイトル", class: "font-weight-bold"
+                %span.badge.badge-danger.ml-2 必須
                 .form-inline
                   = f.text_field :title, size: 24, class: "form-control"
               .field
@@ -21,6 +22,7 @@
                   = f.text_field :tag_list, value: @diet_method.tag_list.join(','), id: "tags", class: "form-control tag_form d-none"
               .field
                 = f.label :way, "やり方・効果", class: "font-weight-bold"
+                %span.badge.badge-danger.ml-2 必須
                 .form-group
                   = f.text_area :way, size: "autox10", class: "form-control"
               .field
