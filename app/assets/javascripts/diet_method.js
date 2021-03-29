@@ -4,7 +4,7 @@ $(function(){
       $(".tag_form").tagit({
         tagLimit:10,         // タグの最大数
         singleField: true,   // タグの一意性
-     // availableTags: ['ruby', 'rails', ..]  自動補完する一覧を設定できる(※ 配列ならok)。今回は、Ajax通信でDBの値を渡す(後述)。
+        availableTags: gon.available_tags, 　//タグの自動補完
       });
       let tag_count = 10 - $(".tagit-choice").length    // 登録済みのタグを数える
       $(".ui-widget-content.ui-autocomplete-input").attr(
