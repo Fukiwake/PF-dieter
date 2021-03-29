@@ -45,7 +45,7 @@ class Customer < ApplicationRecord
   validates :height, presence: true, numericality: true
   validates :target_weight, presence: true, numericality: true
   validates :target_body_fat_percentage, numericality: true, allow_blank: true
-  validates :age, numericality: true, allow_blank: true
+  validates :age, numericality: true, presence: true
   validates :introduce, length: { maximum: 200 }
 
   ransacker :followers_count do
