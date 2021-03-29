@@ -37,7 +37,12 @@ class DiariesController < ApplicationController
   end
 
   def create
-    @diary = current_customer.diaries.new(diary_params)
+    unless current_customer.diaries.find_by(post_date: "#{params[:diary]["post_date(1i)"]}-#{params[:diary]["post_date(2i)"]}-#{params[:diary]["post_date(3i)"]}").present?
+      @diary = current_customer.diaries.new(diary_params)
+    else
+      flash[:alert] = "同じ日付の日記がすでに投稿されています"
+      redirect_to diaries_path and return
+    end
     if @diary.title.blank?
       @diary.title = "日記"
     end
@@ -55,7 +60,9 @@ class DiariesController < ApplicationController
       previous_diary = current_customer.diaries.first(2)[1]
       if previous_diary.present?
         level_up(previous_diary.weight * 10 - @diary.weight * 10, current_customer)
-        level_up(previous_diary.body_fat_percentage * 30 - @diary.body_fat_percentage * 30, current_customer)
+        if previous_diary.body_fat_percentage.present? && @diary.body_fat_percentage.present?
+          level_up(previous_diary.body_fat_percentage * 30 - @diary.body_fat_percentage * 30, current_customer)
+        end
       end
       customer_ids = Relationship.where(followed_id: current_customer.id, notification: true).pluck(:follower_id)
       Customer.where(id: customer_ids).each do |customer|
@@ -64,10 +71,10 @@ class DiariesController < ApplicationController
         end
       end
       flash[:notice] = "日記を投稿しました"
-      redirect_to diaries_path
+      redirect_to diaries_path and return
     else
       @diary.check_list_diaries.destroy_all
-      render :new
+      render :new and return
     end
   end
 
@@ -103,6 +110,6 @@ class DiariesController < ApplicationController
   private
 
   def diary_params
-    params.require(:diary).permit(:title, :body, :weight, :body_fat_percentage, :post_date, :food_calorie, diary_images_images: [], check_list_diaries_attributes: [:check_list_id, :_destroy, :id])
+    params.require(:diary).permit(:title, :body, :weight, :body_fat_percentage, :post_date, :food_calorie, :activity_calorie, diary_images_images: [], check_list_diaries_attributes: [:check_list_id, :_destroy, :id])
   end
 end

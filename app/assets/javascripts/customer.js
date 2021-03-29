@@ -26,6 +26,7 @@ $(function(){
       $(this).addClass("btn-danger");
       $($(this).attr("href")).show();
       event.preventDefault();
+      $('.slick-next').trigger("click");
     });
 
     $('#info-tab-menu input').on('click', function(event) {

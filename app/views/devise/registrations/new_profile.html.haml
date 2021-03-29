@@ -26,13 +26,14 @@
                 %br
                 %i.fas.fa-circle
             .new-profile-form.mt-4
-              = form_with model: @customer, url: customers_create_profile_path, local: true do |f|
+              = form_with model: @customer, url: customers_create_profile_path, local: true, id: "new-profile-form" do |f|
                 .row.mb-3
                   .col-md-6.d-flex.align-items-center
                     = f.label :name, "ユーザー名", class: "font-weight-bold mb-0"
                     %span.badge.badge-danger.ml-2 必須
                   .col-md-6
-                    = f.text_field :name, placeholder: "10文字以内", class: "form-control"
+                    = f.text_field :name, placeholder: "10文字以内", class: "form-control", "data-error_placement": "#name_error"
+                    #name_error
                 .row.mb-3
                   .col-md-6.d-flex.align-items-center
                     = f.label :gender, "性別", class: "font-weight-bold mb-0"
@@ -45,29 +46,38 @@
                 .row.mb-3
                   .col-md-6.d-flex.align-items-center
                     = f.label :age, "年齢", class: "font-weight-bold mb-0"
-                  .col-md-6.form-inline
-                    = f.text_field :age, placeholder: "20", class: "form-control"
-                    .ml-1 歳
+                    %span.badge.badge-danger.ml-2 必須
+                  .col-md-6
+                    .form-inline
+                      = f.text_field :age, placeholder: "20", class: "form-control", "data-error_placement": "#age_error"
+                      .ml-1 歳
+                    #age_error
                 .row.mb-3
                   .col-md-6.d-flex.align-items-center
                     = f.label :height, "身長", class: "font-weight-bold mb-0"
                     %span.badge.badge-danger.ml-2 必須
-                  .col-md-6.form-inline
-                    = f.text_field :height, placeholder: "170.9", class: "form-control"
-                    .ml-1 cm
+                  .col-md-6
+                    .form-inline
+                      = f.text_field :height, placeholder: "170.9", class: "form-control", "data-error_placement": "#height_error"
+                      .ml-1 cm
+                    #height_error
                 .row.mb-3
                   .col-md-6.d-flex.align-items-center
                     = f.label :target_weight, "目標体重", class: "font-weight-bold mb-0"
                     %span.badge.badge-danger.ml-2 必須
-                  .col-md-6.form-inline
-                    = f.text_field :target_weight, placeholder: "67.6", class: "form-control"
-                    .ml-1 kg
+                  .col-md-6
+                    .form-inline
+                      = f.text_field :target_weight, placeholder: "67.6", class: "form-control", "data-error_placement": "#target_weight_error"
+                      .ml-1 kg
+                    #target_weight_error
                 .row.mb-3
                   .col-md-6.d-flex.align-items-center
                     = f.label :target_body_fat_percentage, "目標体脂肪率", class: "font-weight-bold mb-0"
-                  .col-md-6.form-inline
-                    = f.text_field :target_body_fat_percentage, placeholder: "15.3", class: "form-control"
-                    .ml-1 %
+                  .col-md-6
+                    .form-inline
+                      = f.text_field :target_body_fat_percentage, placeholder: "15.3", class: "form-control", "data-error_placement": "#target_body_fat_percentage_error"
+                      .ml-1 %
+                    #target_body_fat_percentage_error
                 .row.mb-3
                   .col-md-6.d-flex.align-items-center
                     = f.label :diet_style1, "ダイエットスタイル", class: "font-weight-bold mb-0"

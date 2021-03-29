@@ -99,8 +99,12 @@ html {
   display: none;
 }
 
+.tooltip-inner{
+  max-width: 100%;
+}
+
 .field {
-  margin-bottom: 20px;
+  margin-bottom: 40px;
 }
 
 .header-notification {
