@@ -16,7 +16,13 @@
             %span.mx-1 男性
             = f.radio_button :gender_eq, 2
             %span.ml-1 女性
-          = f.label :target_weight_gteq, "身長", class: "font-weight-bold"
+          = f.label :age_gteq, "年齢", class: "font-weight-bold"
+          .form-inline.mb-4
+            = f.text_field :age_gteq, placeholder: "Min", class: "form-control", size: "3"
+            ～
+            = f.text_field :age_lteq, placeholder: "Max", class: "form-control mr-1", size: "3"
+            歳
+          = f.label :height_gteq, "身長", class: "font-weight-bold"
           .form-inline.mb-4
             = f.text_field :height_gteq, placeholder: "Min", class: "form-control", size: "3"
             ～

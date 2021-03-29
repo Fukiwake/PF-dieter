@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_03_28_153957) do
+ActiveRecord::Schema.define(version: 2021_03_29_071621) do
 
   create_table "admins", force: :cascade do |t|
     t.string "email", default: "", null: false
@@ -116,7 +116,6 @@ ActiveRecord::Schema.define(version: 2021_03_28_153957) do
     t.date "post_date", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.boolean "is_deleted", default: false
     t.integer "food_calorie"
     t.integer "activity_calorie"
     t.index ["body"], name: "index_diaries_on_body"
@@ -131,7 +130,6 @@ ActiveRecord::Schema.define(version: 2021_03_28_153957) do
     t.text "body", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.boolean "is_deleted", default: false
   end
 
   create_table "diary_favorites", force: :cascade do |t|
@@ -155,7 +153,6 @@ ActiveRecord::Schema.define(version: 2021_03_28_153957) do
     t.text "body", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.boolean "is_deleted", default: false
   end
 
   create_table "diet_method_favorites", force: :cascade do |t|
@@ -181,7 +178,6 @@ ActiveRecord::Schema.define(version: 2021_03_28_153957) do
     t.string "image_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.boolean "is_deleted", default: false
     t.index ["title"], name: "index_diet_methods_on_title"
     t.index ["way"], name: "index_diet_methods_on_way"
   end

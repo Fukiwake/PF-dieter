@@ -4,7 +4,7 @@ class Admin::DiariesController < ApplicationController
 
   def index
     @diary_search = Diary.includes(:customer).ransack(params[:q])
-    @diaries = @diary_search.result(distinct: true).page(params[:page]).per(20)
+    @diaries = @diary_search.result(distinct: true).order("created_at DESC").page(params[:page]).per(20)
   end
 
   def show
