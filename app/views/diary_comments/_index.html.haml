@@ -5,20 +5,21 @@
       %span.ml-2.font-weight-bold
         = diary_comment.customer.name
       #{time_ago_in_words(diary_comment.created_at).upcase}前
-      %span#dropdownCommentMenuButton{"data-toggle": "dropdown", "aria-haspopup": "true", "aria-expanded": "false"}
-        %i.fas.fa-ellipsis-h.icon.p-2.mr-3.text-danger{title: "もっと見る"}
-      .dropdown-menu.dropdown-menu-right.text-center{"aria-labelledby": "dropdownCommentMenuButton"}
-        - if diary_comment.customer == current_customer
-          = link_to diary_diary_comment_path(diary_comment.diary, diary_comment), method: :delete, remote: true, class: "text-dark" do
-            %i.far.fa-trash-alt
-            削除
-        - else
-          - if Report.where(visitor_id: current_customer.id, diary_comment_id: diary_comment.id).present?
-            報告済みです
-          -else
-            = link_to reports_path(diary_comment_id: diary_comment.id), method: :post, class: "text-dark" do
-              %i.fas.fa-bullhorn
-              報告
+      - if customer_signed_in?
+        %span#dropdownCommentMenuButton{"data-toggle": "dropdown", "aria-haspopup": "true", "aria-expanded": "false"}
+          %i.fas.fa-ellipsis-h.icon.p-2.mr-3.text-danger{title: "もっと見る"}
+        .dropdown-menu.dropdown-menu-right.text-center{"aria-labelledby": "dropdownCommentMenuButton"}
+          - if diary_comment.customer == current_customer
+            = link_to diary_diary_comment_path(diary_comment.diary, diary_comment), method: :delete, remote: true, class: "text-dark" do
+              %i.far.fa-trash-alt
+              削除
+          - else
+            - if Report.where(visitor_id: current_customer.id, diary_comment_id: diary_comment.id).present?
+              報告済みです
+            -else
+              = link_to reports_path(diary_comment_id: diary_comment.id), method: :post, class: "text-dark" do
+                %i.fas.fa-bullhorn
+                報告
   .row
     .col-md-12.border-bottom
       = safe_join(diary_comment.body.split("\n"),tag(:br))
