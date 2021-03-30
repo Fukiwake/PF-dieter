@@ -30,7 +30,6 @@ class Customers::RegistrationsController < Devise::RegistrationsController
     @customer = Customer.new(session["devise.regist_data"]["customer"])
     @customer.update(sign_up_params)
     if @customer.save
-      NotificationMailer.complete_mail(@customer).deliver_now
       flash[:notice] = "新規登録が完了しました"
       session["devise.regist_data"] = nil
       sign_in(:customer, @customer)
