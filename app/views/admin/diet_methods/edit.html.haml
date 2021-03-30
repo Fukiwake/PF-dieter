@@ -12,7 +12,7 @@
           .field
             = f.label :tag_list, "タグ", class: "font-weight-bold"
             .form-inline
-              = f.text_field :tag_list, value: @diet_method.tag_list.join(','), size: 24, id: "tags", class: "form-control"
+              = f.text_field :tag_list, value: @diet_method.tag_list.join(','), id: "tags", class: "form-control tag_form d-none"
           .field
             = f.label :way, "やり方・効果", class: "font-weight-bold"
             .form-group

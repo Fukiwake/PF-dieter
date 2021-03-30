@@ -6,7 +6,7 @@
       .card.mb-3.shadow-sm
         .card-body
           .row.pt-2
-            .col-md-6
+            .col-md-12
               .d-flex
                 .text-center
                   = link_to customer_path(@diary.customer), data: {"turbolinks" => false}, class: "text-dark font-weight-bold" do
@@ -15,7 +15,8 @@
                     = @diary.customer.name
                 %h3.ml-3.mt-3
                   = @diary.title
-            .col-md-6.d-flex.justify-content-between.align-items-start.mt-3
+          .row
+            .col-md-12.d-flex.justify-content-between.align-items-start.mt-3
               .info
                 %span.badge.badge-danger
                   now

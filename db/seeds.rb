@@ -199,6 +199,25 @@ Diary.create!(
   customer_id: 95
 )
 
+DiaryImage.create!(diary_id: 61, image: File.open("/home/ec2-user/environment/PF-dieter/app/assets/images/sample1.jpg"))
+DiaryImage.create!(diary_id: 61, image: File.open("/home/ec2-user/environment/PF-dieter/app/assets/images/sample2.jpg"))
+DiaryImage.create!(diary_id: 61, image: File.open("/home/ec2-user/environment/PF-dieter/app/assets/images/sample3.jpg"))
+DiaryImage.create!(diary_id: 62, image: File.open("/home/ec2-user/environment/PF-dieter/app/assets/images/sample2.jpg"))
+DiaryImage.create!(diary_id: 62, image: File.open("/home/ec2-user/environment/PF-dieter/app/assets/images/sample3.jpg"))
+DiaryImage.create!(diary_id: 62, image: File.open("/home/ec2-user/environment/PF-dieter/app/assets/images/sample1.jpg"))
+DiaryImage.create!(diary_id: 63, image: File.open("/home/ec2-user/environment/PF-dieter/app/assets/images/sample3.jpg"))
+DiaryImage.create!(diary_id: 63, image: File.open("/home/ec2-user/environment/PF-dieter/app/assets/images/sample1.jpg"))
+DiaryImage.create!(diary_id: 63, image: File.open("/home/ec2-user/environment/PF-dieter/app/assets/images/sample2.jpg"))
+DiaryImage.create!(diary_id: 64, image: File.open("/home/ec2-user/environment/PF-dieter/app/assets/images/sample1.jpg"))
+DiaryImage.create!(diary_id: 64, image: File.open("/home/ec2-user/environment/PF-dieter/app/assets/images/sample2.jpg"))
+DiaryImage.create!(diary_id: 64, image: File.open("/home/ec2-user/environment/PF-dieter/app/assets/images/sample3.jpg"))
+DiaryImage.create!(diary_id: 65, image: File.open("/home/ec2-user/environment/PF-dieter/app/assets/images/sample2.jpg"))
+DiaryImage.create!(diary_id: 65, image: File.open("/home/ec2-user/environment/PF-dieter/app/assets/images/sample1.jpg"))
+DiaryImage.create!(diary_id: 65, image: File.open("/home/ec2-user/environment/PF-dieter/app/assets/images/sample3.jpg"))
+DiaryImage.create!(diary_id: 66, image: File.open("/home/ec2-user/environment/PF-dieter/app/assets/images/sample3.jpg"))
+DiaryImage.create!(diary_id: 66, image: File.open("/home/ec2-user/environment/PF-dieter/app/assets/images/sample1.jpg"))
+DiaryImage.create!(diary_id: 66, image: File.open("/home/ec2-user/environment/PF-dieter/app/assets/images/sample2.jpg"))
+
 
 10.times do |n|
   DietMethod.create!(
@@ -331,6 +350,25 @@ DietMethod.create!(
   attention: "特になし",
   customer_id: 96
 )
+
+DietMethodImage.create!(diet_method_id: 61, image: File.open("/home/ec2-user/environment/PF-dieter/app/assets/images/sample1.jpg"))
+DietMethodImage.create!(diet_method_id: 61, image: File.open("/home/ec2-user/environment/PF-dieter/app/assets/images/sample2.jpg"))
+DietMethodImage.create!(diet_method_id: 61, image: File.open("/home/ec2-user/environment/PF-dieter/app/assets/images/sample3.jpg"))
+DietMethodImage.create!(diet_method_id: 62, image: File.open("/home/ec2-user/environment/PF-dieter/app/assets/images/sample2.jpg"))
+DietMethodImage.create!(diet_method_id: 62, image: File.open("/home/ec2-user/environment/PF-dieter/app/assets/images/sample1.jpg"))
+DietMethodImage.create!(diet_method_id: 62, image: File.open("/home/ec2-user/environment/PF-dieter/app/assets/images/sample3.jpg"))
+DietMethodImage.create!(diet_method_id: 63, image: File.open("/home/ec2-user/environment/PF-dieter/app/assets/images/sample3.jpg"))
+DietMethodImage.create!(diet_method_id: 63, image: File.open("/home/ec2-user/environment/PF-dieter/app/assets/images/sample2.jpg"))
+DietMethodImage.create!(diet_method_id: 63, image: File.open("/home/ec2-user/environment/PF-dieter/app/assets/images/sample1.jpg"))
+DietMethodImage.create!(diet_method_id: 64, image: File.open("/home/ec2-user/environment/PF-dieter/app/assets/images/sample1.jpg"))
+DietMethodImage.create!(diet_method_id: 64, image: File.open("/home/ec2-user/environment/PF-dieter/app/assets/images/sample2.jpg"))
+DietMethodImage.create!(diet_method_id: 64, image: File.open("/home/ec2-user/environment/PF-dieter/app/assets/images/sample3.jpg"))
+DietMethodImage.create!(diet_method_id: 65, image: File.open("/home/ec2-user/environment/PF-dieter/app/assets/images/sample2.jpg"))
+DietMethodImage.create!(diet_method_id: 65, image: File.open("/home/ec2-user/environment/PF-dieter/app/assets/images/sample1.jpg"))
+DietMethodImage.create!(diet_method_id: 65, image: File.open("/home/ec2-user/environment/PF-dieter/app/assets/images/sample3.jpg"))
+DietMethodImage.create!(diet_method_id: 66, image: File.open("/home/ec2-user/environment/PF-dieter/app/assets/images/sample3.jpg"))
+DietMethodImage.create!(diet_method_id: 66, image: File.open("/home/ec2-user/environment/PF-dieter/app/assets/images/sample2.jpg"))
+DietMethodImage.create!(diet_method_id: 66, image: File.open("/home/ec2-user/environment/PF-dieter/app/assets/images/sample1.jpg"))
 
 CheckList.create!(
   diet_method_id: 61,

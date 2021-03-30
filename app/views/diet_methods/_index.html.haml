@@ -5,7 +5,7 @@
         .card-body
           = link_to diet_method_path(diet_method.id), class: "text-decoration-none text-dark" do
             %object.row.pt-2
-              .col-md-5
+              .col-md-6
                 .d-flex
                   .text-center
                     = link_to customer_path(diet_method.customer), data: {"turbolinks" => false}, class: "text-dark font-weight-bold" do
@@ -20,12 +20,10 @@
                       = highlight(diet_method.title, params[:q][:title_or_way_or_customer_name_cont_any])
                     - else
                       = diet_method.title
-              .col-md-4.d-flex.justify-content-between.align-items-start.mt-3
+              .col-md-3.d-flex.justify-content-between.align-items-start.mt-3
                 .info
                   %span.badge.badge-danger
                     now
-                  = diet_method.customer.height
-                  cm&nbsp;
                   - if diet_method.customer.diaries.last.present?
                     = diet_method.customer.diaries.last.weight
                     kg&nbsp;
@@ -112,5 +110,7 @@
                 #{time_ago_in_words(diet_method.created_at).upcase}前
     .d-none
       = paginate diet_methods
+- elsif params[:q].present?
+  条件に一致するダイエット方法はありません。
 - else
   %p 投稿されたダイエット方法はありません。

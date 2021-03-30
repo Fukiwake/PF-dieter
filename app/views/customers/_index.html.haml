@@ -38,11 +38,12 @@
               - if current_customer != customer
                 = render "relationships/follow_form", customer: customer
       .row.border-bottom.py-2
-        .col-md-12
+        .col-md-12.body-wrapper
           - if customer.introduce.present?
-            - if params[:q].present?
-              = highlight(customer.introduce.truncate(200), params[:q][:name_or_introduce_cont_any])
-            - else
-              = customer.introduce.truncate(200)
+            %p.mb-0
+              - if params[:q].present?
+                = highlight(safe_join(customer.introduce.truncate(200).split("\n"),tag(:br)), params[:q][:name_or_introduce_cont_any])
+              - else
+                = safe_join(customer.introduce.truncate(200).split("\n"),tag(:br))
   .d-none
     = paginate customers
