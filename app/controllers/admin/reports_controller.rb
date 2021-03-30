@@ -50,6 +50,18 @@ class Admin::ReportsController < ApplicationController
     end
   end
 
+  def diet_method_comment_destroy_all
+    if params[:report].present?
+      Report.where(diet_method_comment_id: params[:diet_method_comment_ids]).destroy_all
+      flash[:notice] = "選択された報告が解決済になりました"
+      redirect_to admin_reports_path
+    else
+      DiaryComment.where(id: params[:diary_comment_ids]).destroy_all
+      flash[:notice] = "選択された日記コメントが削除されました"
+      redirect_to admin_reports_path
+    end
+  end
+
   def withdraw_all
     if params[:report].present?
       Report.where(visited_id: params[:customer_ids]).destroy_all
