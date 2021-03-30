@@ -14,6 +14,8 @@
     %link{href: "//cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.css", rel: "stylesheet", type: "text/css"}/
     %script{src: "//cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.min.js", type: "text/javascript"}
     = include_gon
+    - if Rails.env.production?
+      = render partial: 'layouts/google_analytics'
   %body
     %header.sticky-top.shadow-sm
       %nav.navbar.navbar-expand-lg.navbar-light.bg-white.pt-0

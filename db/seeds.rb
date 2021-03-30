@@ -373,5 +373,5 @@ CheckList.create!(
   )
 end
 
-Admin.create!(email: "admin@test.com", password: "password")
+Admin.create!(email: ENV['ADMIN_EMAIL'], password: ENV['ADMIN_PASSWORD'])
 
