@@ -30,16 +30,17 @@
     = f.label :image, "画像(複数可)", class: "font-weight-bold"
     %br/
     = f.attachment_field :diary_images_images, multiple: true
-  .field
-    .font-weight-bold.mt-3 チェックリスト
-    = f.fields_for :check_list_diaries do |c|
-      - i = 0
-      - current_customer.trying_diet_methods.each do |method|
-        - method.check_lists.where(is_deleted: false).each do |list|
-          %div{ data: {index: "#{i}"} }
-            = c.check_box :check_list_id, {name: "diary[check_list_diaries_attributes][#{i}][check_list_id]"}, list.id, nil
-            = list.body
-          - i += 1
+  - if current_customer.trying_diet_methods.present?
+    .field
+      .font-weight-bold.mt-3 チェックリスト
+      = f.fields_for :check_list_diaries do |c|
+        - i = 0
+        - current_customer.trying_diet_methods.each do |method|
+          - method.check_lists.where(is_deleted: false).each do |list|
+            %div{ data: {index: "#{i}"} }
+              = c.check_box :check_list_id, {name: "diary[check_list_diaries_attributes][#{i}][check_list_id]"}, list.id, nil
+              = list.body
+            - i += 1
   .field
     .font-weight-bold.mb-2.mt-3 摂取カロリー計算
     .row
@@ -95,3 +96,4 @@
           Kcal
   .actions
     = f.submit "投稿する", class: "btn btn-success btn-block"
+

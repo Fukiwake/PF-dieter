@@ -17,15 +17,16 @@
       = f.text_field :body_fat_percentage, class: "form-control mr-1 w-100", "data-error_placement": "#body_fat_percentage_error"
       \%
     #body_fat_percentage_error
-  .field.form-group
-    .font-weight-bold.mb-2.mt-3 チェックリスト
-    = f.fields_for :check_list_diaries do |c|
-      - i = 0
-      - current_customer.trying_diet_methods.each do |method|
-        - method.check_lists.where(is_deleted: false).each do |list|
-          %div{ data: {index: "#{i}"} }
-            = c.check_box :check_list_id, {name: "diary[check_list_diaries_attributes][#{i}][check_list_id]"}, list.id, nil
-            = list.body
-          - i += 1
+  - if current_customer.trying_diet_methods.present?
+    .field.form-group
+      .font-weight-bold.mb-2.mt-3 チェックリスト
+      = f.fields_for :check_list_diaries do |c|
+        - i = 0
+        - current_customer.trying_diet_methods.each do |method|
+          - method.check_lists.where(is_deleted: false).each do |list|
+            %div{ data: {index: "#{i}"} }
+              = c.check_box :check_list_id, {name: "diary[check_list_diaries_attributes][#{i}][check_list_id]"}, list.id, nil
+              = list.body
+            - i += 1
   .actions
     = f.submit "投稿", class: "btn btn-success btn-block"

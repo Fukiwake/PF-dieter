@@ -86,6 +86,8 @@ gem 'ransack'
 gem 'simple_calendar', '~> 2.0'
 gem 'gon'
 gem 'rubocop-airbnb'
+gem 'google-cloud-vision'
+gem "google-cloud-translate"
 group :production do
   gem 'mysql2'
 end

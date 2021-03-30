@@ -11,6 +11,8 @@
       %p.text-center.border-bottom.mb-0.pb-3 日記
       - if @diaries.present?
         = render "index", diaries: @diaries
+      - elsif params[:q].present?
+        条件に一致する日記はありません。
       - else
         .text-center
           ここにはフォローしているユーザーの日記が表示されます。
