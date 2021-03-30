@@ -17,9 +17,9 @@
                         = diet_method.customer.name
                   %h3.ml-3.mt-3
                     - if params[:q].present?
-                      = highlight(diet_method.title.truncate(10), params[:q][:title_or_way_or_customer_name_cont_any])
+                      = highlight(diet_method.title, params[:q][:title_or_way_or_customer_name_cont_any])
                     - else
-                      = diet_method.title.truncate(10)
+                      = diet_method.title
               .col-md-4.d-flex.justify-content-between.align-items-start.mt-3
                 .info
                   %span.badge.badge-danger

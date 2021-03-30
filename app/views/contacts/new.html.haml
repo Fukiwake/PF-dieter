@@ -14,7 +14,7 @@
         .field
           = f.label :genre, "お問い合わせ内容", class: "font-weight-bold"
           .form-inline
-            = f.select :genre, [ ["ご要望",1], ["良い点", 2], ["悪い点", 3 ] ,["その他", 4] ], {include_blank: "選択してください", selected: "選択してください"}, class: "form-control"
+            = f.select :genre, [ ["ご要望","demand"], ["良い点", "good"], ["悪い点", "bad" ] ,["その他", "other"] ], {include_blank: "選択してください", selected: "選択してください"}, class: "form-control"
         .field
           = f.label :body, "お問い合わせ詳細", class: "font-weight-bold"
           %br

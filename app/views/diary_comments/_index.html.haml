@@ -1,9 +1,10 @@
 - diary.diary_comments.includes(:customer).order("created_at DESC").each do |diary_comment|
   .row
     .col-md-12
-      = attachment_image_tag diary.customer, :profile_image, :fill, 50, 50, fallback: "no_image.png", size: "50x50"
-      %span.ml-2.font-weight-bold
-        = diary_comment.customer.name
+      = link_to customer_path(diary.customer), data: {"turbolinks" => false}, class: "text-dark font-weight-bold text-decoration-none " do
+        = attachment_image_tag diary.customer, :profile_image, :fill, 50, 50, fallback: "no_image.png", size: "50x50"
+        %span.ml-2
+          = diary_comment.customer.name
       #{time_ago_in_words(diary_comment.created_at).upcase}前
       - if customer_signed_in?
         %span#dropdownCommentMenuButton{"data-toggle": "dropdown", "aria-haspopup": "true", "aria-expanded": "false"}
