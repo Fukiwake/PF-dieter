@@ -34,7 +34,7 @@
                   %span.delete-form-btn.ml-3.text-danger.font-weight-bold
                     削除
                 - if @diet_method.persisted?
-                  = list.check_box :_destroy, data:{ index: list.index }, class: "hidden-destroy"
+                  = list.check_box :is_deleted, {data:{ index: list.index }, class: "hidden-destroy"}, true, false
           .add-form-btn.text-success.font-weight-bold
             追加する＋
           .actions.mt-4

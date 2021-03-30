@@ -4,17 +4,19 @@ class Admin::DietMethodsController < ApplicationController
 
   def index
     @diet_method_search = DietMethod.includes(:customer).ransack(params[:q])
-    @diet_methods = @diet_method_search.result(distinct: true).page(params[:page]).per(20)
+    @diet_methods = @diet_method_search.result(distinct: true).order("created_at DESC").page(params[:page]).per(20)
   end
 
   def show
   end
 
   def edit
+    @check_list = @diet_method.check_lists.where(is_deleted: false)
   end
 
   def update
     if @diet_method.update(diet_method_params)
+      @diet_method.check_lists.where(is_deleted: true).update(diet_method_id: "")
       flash[:notice] = "ダイエット方法を編集しました"
       redirect_to admin_diet_method_path(@diet_method)
     else
@@ -38,7 +40,7 @@ class Admin::DietMethodsController < ApplicationController
   private
 
   def diet_method_params
-    params.require(:diet_method).permit(:title, :way, :attention, :image, :tag_list, diet_method_images_images: [], check_lists_attributes: [:body, :_destroy, :id])
+    params.require(:diet_method).permit(:title, :way, :attention, :image, :tag_list, diet_method_images_images: [], check_lists_attributes: [:body, :is_deleted, :id])
   end
 
   def set_diet_method

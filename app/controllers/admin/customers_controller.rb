@@ -4,7 +4,7 @@ class Admin::CustomersController < ApplicationController
 
   def index
     @customer_search = Customer.ransack(params[:q])
-    @customers = @customer_search.result(distinct: true).page(params[:page]).per(20)
+    @customers = @customer_search.result(distinct: true).order("created_at DESC").page(params[:page]).per(20)
   end
 
   def show

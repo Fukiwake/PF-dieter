@@ -2,7 +2,7 @@
   .row
     .col-md-12
       %h1 お問い合わせ
-      = form_with url: destroy_all_admin_contacts_path, method: :patch, local: true do |f|
+      = form_with url: destroy_all_admin_contacts_path, method: :delete, local: true do |f|
         %button.btn.btn-danger.mb-3{"data-target" => "#destroy_confirm", "data-toggle" => "modal", type: "button"}
           選択したお問い合わせをまとめて削除
         #destroy_confirm.modal.fade{"aria-hidden" => "true", "aria-labelledby" => "label1", role: "dialog", tabindex: "-1"}

@@ -1,6 +1,7 @@
 class DiariesController < ApplicationController
   before_action :authenticate_customer!, except: [:index, :show]
   before_action :set_new_diary, except: [:show, :edit]
+  before_action :set_diary, only: [:show, :edit, :update]
 
   def index
     withdraw_ids = Customer.where(is_deleted: true).pluck(:id)
@@ -23,7 +24,6 @@ class DiariesController < ApplicationController
   end
 
   def show
-    @diary = Diary.find(params[:id])
     if @diary.customer.blocking?(current_customer)
       flash[:alert] = "ページが存在しません"
       redirect_to diaries_path
@@ -79,22 +79,20 @@ class DiariesController < ApplicationController
   end
 
   def edit
-    @diary = Diary.find(params[:id])
     @new_diary = Diary.new
     @check_list_diary = @new_diary.check_list_diaries.new
   end
 
   def update
-    diary = Diary.find(params[:id])
-    if diary.update(diary_params)
-      if diary.check_list_diaries.present?
-        diary.check_list_diaries.update(status: false)
+    if @diary.update(diary_params)
+      if @diary.check_list_diaries.present?
+        @diary.check_list_diaries.update(status: false)
         if params[:diary][:check_list_diary].present?
           CheckListDiary.where(id: params[:diary][:check_list_diary][:id]).update(status: true)
         end
       end
       flash[:notice] = "日記を編集しました"
-      redirect_to diary_path(diary)
+      redirect_to diary_path(@diary)
     else
       render :edit
     end
@@ -111,5 +109,9 @@ class DiariesController < ApplicationController
 
   def diary_params
     params.require(:diary).permit(:title, :body, :weight, :body_fat_percentage, :post_date, :food_calorie, :activity_calorie, diary_images_images: [], check_list_diaries_attributes: [:check_list_id, :_destroy, :id])
+  end
+  
+  def set_diary
+    @diary = Diary.find(params[:id])
   end
 end

@@ -50,6 +50,18 @@
       .row.py-2
         .col-md-12
           = render "diaries/check_list", diary: @diary
+      .row.py-2
+        .col-md-12
+          - if @diary.food_calorie.present?
+            %span.badge.badge-success.ml-2 摂取
+            %span.text-success
+              = @diary.food_calorie
+              Kcal
+          - if @diary.activity_calorie.present?
+            %span.badge.badge-danger.ml-2 消費
+            %span.text-danger
+              = @diary.activity_calorie
+              Kcal
       - if @diary.diary_images.present?
         .images-wrapper
           - @diary.diary_images.each do |image|

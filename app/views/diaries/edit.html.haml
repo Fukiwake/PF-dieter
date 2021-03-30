@@ -78,5 +78,38 @@
                       = f.label :food_calorie, "合計カロリー", class: "font-weight-bold mr-1"
                       = f.text_field :food_calorie, size: 25, class: "form-control mr-1"
                       Kcal
+              .field
+                .font-weight-bold.mb-2.mt-3 消費カロリー計算
+                .row#activity-field
+                  .col-md-6
+                    .form-inline.input-group
+                      %input#activity-name.form-control{type: "text", placeholder: "運動名を検索", size: 24}
+                      .btn.btn-success#activity-search-button 検索
+                      %select#activity-genre.btn.btn-secondary
+                        %option{value: ""} ジャンルで探す
+                        %option{value: "ジム"} ジム
+                        %option{value: "球技"} 球技
+                        %option{value: "格闘技"} 格闘技
+                        %option{value: "水泳"} 水泳
+                        %option{value: "その他"} その他
+                    #activity-search
+                  .col-md-6
+                    .row.mb-2
+                      .col-md-8.font-weight-bold
+                        基礎代謝
+                        %i.far.fa-question-circle.text-primary{"data-html": "true", "data-toggle": "tooltip", title: "基礎代謝量はハリス・ベネディクト方程式(改良版)を使って計算しています。<br>男性: 13.397 × 体重kg + 4.799 x 身長cm - 5.677 × 年齢 + 88.362<br>女性: 9.247 × 体重kg + 3.098 x 身長cm - 4.33 × 年齢 + 447.593"}
+                      .col-md-4.d-flex
+                        .activity-calorie#base-calorie{"data-weight": current_customer.target_weight}
+                          - if @diary.customer.gender == "male"
+                            = (13.397 * @diary.weight + 4.799 * @diary.customer.height - 5.677 * @diary.customer.age + 88.362).floor
+                          - else
+                            = (9.247 * @diary.weight + 3.098 * @diary.customer.height - 4.33 * @diary.customer.age + 447.593).floor
+                        Kcal
+                    #activity_quantity_error
+                    #activity-selected
+                    .form-inline
+                      = f.label :activity_calorie, "合計消費カロリー", class: "font-weight-bold mr-1"
+                      = f.text_field :activity_calorie, size: 21, class: "form-control mr-1"
+                      Kcal
               .actions
                 = f.submit "編集する", class: "btn btn-success btn-block"

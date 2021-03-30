@@ -52,25 +52,12 @@
                   = check_list_diary.check_list.body
                   %br
           .field
-            .font-weight-bold.mb-2.mt-3 食品カロリー計算
-            .row
-              .col-md-6
-                .form-inline.input-group
-                  %input#food-name.form-control{type: "text", placeholder: "食品名を検索", size: 24}
-                  .btn.btn-success#food-search-button 検索
-                  %select#food-genre.btn.btn-secondary
-                    %option{value: ""} ジャンルで探す
-                    %option{value: "基本メニュー"} 基本メニュー
-                    %option{value: "和食"} 和食
-                    %option{value: "洋食"} 洋食
-                    %option{value: "中華"} 中華
-                    %option{value: "デザート/飲み物"} デザート/飲み物
-                #food-search
-              .col-md-6
-                #food-selected
-                .form-inline
-                  = f.label :food_calorie, "合計カロリー", class: "font-weight-bold mr-1"
-                  = f.text_field :food_calorie, size: 25, class: "form-control mr-1"
-                  Kcal
+            = f.label :food_calorie, "合計摂取カロリー", class: "font-weight-bold"
+            .form-inline
+              = f.text_field :food_calorie, size: 24, class: "form-control"
+          .field
+            = f.label :activity_calorie, "合計消費カロリー", class: "font-weight-bold"
+            .form-inline
+              = f.text_field :activity_calorie, size: 24, class: "form-control"
           .actions
             = f.submit "編集する", class: "btn btn-success btn-block"
