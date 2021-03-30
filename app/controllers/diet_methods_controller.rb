@@ -10,6 +10,7 @@ class DietMethodsController < ApplicationController
   def create
     @diet_method = current_customer.diet_methods.new(diet_method_params)
     if @diet_method.save
+      Try.create(customer_id: current_customer.id, diet_method_id: @diet_method.id)
       @diet_method.check_lists.each do |check_list|
         if check_list.body.blank?
           check_list.destroy
