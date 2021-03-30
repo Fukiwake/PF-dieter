@@ -1,6 +1,7 @@
 class DietMethodsController < ApplicationController
   before_action :authenticate_customer!, except: [:index, :show]
   before_action :set_new_diary, only: [:new, :index, :edit, :show]
+  before_action :set_diet_method, only: [:show, :edit, :update]
 
   def new
     @diet_method = DietMethod.new
@@ -16,6 +17,7 @@ class DietMethodsController < ApplicationController
           check_list.destroy
         end
       end
+      level_up(20, current_customer)
       customer_ids = Relationship.where(followed_id: current_customer.id, notification: true).pluck(:follower_id)
       Customer.where(id: customer_ids).each do |customer|
         unless customer.blocking?(current_customer)
@@ -54,7 +56,6 @@ class DietMethodsController < ApplicationController
   end
 
   def show
-    @diet_method = DietMethod.find(params[:id])
     if @diet_method.customer.blocking?(current_customer)
       flash[:alert] = "ページが存在しません"
       redirect_to diet_methods_path
@@ -64,16 +65,14 @@ class DietMethodsController < ApplicationController
   end
 
   def edit
-    @diet_method = DietMethod.find(params[:id])
     @check_list = @diet_method.check_lists.where(is_deleted: false)
   end
 
   def update
-    diet_method = DietMethod.find(params[:id])
-    if diet_method.update(diet_method_params)
-      diet_method.check_lists.where(is_deleted: true).update(diet_method_id: "")
+    if @diet_method.update(diet_method_params)
+      @diet_method.check_lists.where(is_deleted: true).update(diet_method_id: "")
       flash[:notice] = "ダイエット方法を編集しました"
-      redirect_to diet_method_path(diet_method)
+      redirect_to diet_method_path(@diet_method)
     else
       render :edit
     end
@@ -90,5 +89,9 @@ class DietMethodsController < ApplicationController
 
   def diet_method_params
     params.require(:diet_method).permit(:title, :way, :attention, :image, :tag_list, diet_method_images_images: [], check_lists_attributes: [:body, :is_deleted, :id])
+  end
+
+  def set_diet_method
+    @diet_method = DietMethod.find(params[:id])
   end
 end

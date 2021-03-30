@@ -51,7 +51,7 @@
       .row.py-2
         .col-md-12
           %ul.text-success
-            - @diet_method.check_lists.each do |list|
+            - @diet_method.check_lists.where(is_deleted: false).each do |list|
               %li
                 = list.body
       - if @diet_method.diet_method_images.present?

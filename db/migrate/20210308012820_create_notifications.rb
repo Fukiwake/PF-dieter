@@ -4,7 +4,7 @@ class CreateNotifications < ActiveRecord::Migration[5.2]
       t.integer :visitor_id
       t.integer :visited_id
       t.integer :diary_id
-      t.integer :diary_method_id
+      t.integer :diet_method_id
       t.integer :diary_comment_id
       t.integer :diary_method_comment_id
       t.string :action
