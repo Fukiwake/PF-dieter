@@ -4,8 +4,8 @@ class ContactsController < ApplicationController
   end
 
   def create
-    contact = current_customer.contacts.new(contact_params)
-    if contact.save
+    contact = Contact.new(contact_params)
+    if contact.save!
       flash[:notice] = "お問い合わせを送信しました"
       redirect_to root_path
     else

@@ -17,9 +17,9 @@
                         = diary.customer.name
                   %h3.ml-3.mt-3
                     - if params[:q].present?
-                      = highlight(diary.title.truncate(10), params[:q][:title_or_body_or_customer_name_cont_any])
+                      = highlight(diary.title, params[:q][:title_or_body_or_customer_name_cont_any])
                     - else
-                      = diary.title.truncate(10)
+                      = diary.title
               .col-md-6.d-flex.justify-content-between.align-items-start.mt-3
                 .info
                   %span.badge.badge-danger
