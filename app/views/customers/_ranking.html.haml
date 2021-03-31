@@ -14,15 +14,16 @@
             .rank.text-center.mt-3
               = i + 1
           %br
-          Lv.
-          = customer.level
-          Exp.
-          - if range == "day"
-            = customer.day_exp
-          - if range == "week"
-            = customer.week_exp
-          - if range == "month"
-            = customer.month_exp
+          %span.font-weight-bold
+            Lv.
+            = customer.level
+            Exp.
+            - if range == "day"
+              = customer.day_exp
+            - if range == "week"
+              = customer.week_exp
+            - if range == "month"
+              = customer.month_exp
         .ml-2
           = attachment_image_tag(customer, :profile_image, :fill, 70, 70, fallback: "no_image.png", size: "70x70")
         .name
