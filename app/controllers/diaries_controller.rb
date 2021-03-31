@@ -39,7 +39,7 @@ class DiariesController < ApplicationController
   def create
     if current_customer.diaries.find_by(post_date: "#{params[:diary]["post_date(1i)"]}-#{params[:diary]["post_date(2i)"]}-#{params[:diary]["post_date(3i)"]}").present?
       flash[:alert] = "同じ日付の日記がすでに投稿されています"
-      redirect_to(diaries_path) && return
+      render(:new) && return
     else
       @diary = current_customer.diaries.new(diary_params)
     end
@@ -105,12 +105,56 @@ class DiariesController < ApplicationController
     redirect_to diaries_path
   end
 
+  def image_analysis
+    require "google/cloud/vision"
+    require "google/cloud/translate"
+    project_id = "watchful-force-308204"
+    language_code = 'ja'
+    image_annotator = Google::Cloud::Vision.image_annotator
+    file_name = File.open(params[:food_image].tempfile)
+    response = image_annotator.label_detection image: file_name
+    image_analysis_array = []
+    response.responses.each do |res|
+      res.label_annotations.each do |label|
+        translate   = Google::Cloud::Translate.translation_v2_service project_id: project_id
+        translation = translate.translate label.description, to: language_code
+        image_analysis_array.push(translation.text.inspect.delete(%Q[/"]))
+      end
+    end
+
+
+    require 'net/http'
+    require 'json'
+
+    # 1.urlを解析する
+    p image_analysis_array
+    p "#{image_analysis_array[0]}&q2=#{image_analysis_array[1]}&q3=#{image_analysis_array[2]}&q4=#{image_analysis_array[3]}&q5=#{image_analysis_array[4]}"
+    url = URI.encode("https://script.google.com/macros/s/AKfycbxE64MZNLxwqgS0sBhmsNfYvxJHKIC3iCmy9bnvJw7x8R4aR0R8ObO7_1w1_3Mk06Ym/exec?q=#{image_analysis_array[0]}&q2=#{image_analysis_array[1]}&q3=#{image_analysis_array[2]}&q4=#{image_analysis_array[3]}&q5=#{image_analysis_array[4]}&q6=#{image_analysis_array[5]}&q7=#{image_analysis_array[6]}&q8=#{image_analysis_array[7]}&q9=#{image_analysis_array[8]}&q10=#{image_analysis_array[9]}")
+    url = URI.parse(url)
+    # 2.httpの通信を設定する
+    # 通信先のホストやポートを設定
+    https = Net::HTTP.new(url.host, url.port)
+    # httpsで通信する場合、use_sslをtrueにする
+    https.use_ssl = true
+    # 3.リクエストを作成する
+    request = Net::HTTP::Get.new(url)
+    # 4.リクエストを投げる/レスポンスを受け取る
+    response = https.request(request)
+    if response.code == "302"
+      response = Net::HTTP.get_response(URI.parse(response.header['location']))
+    end
+    # 5.データを変換する
+    @result = JSON.parse(response.body)
+
+  end
+
+
   private
 
   def diary_params
     params.require(:diary).permit(:title, :body, :weight, :body_fat_percentage, :post_date, :food_calorie, :activity_calorie, diary_images_images: [], check_list_diaries_attributes: [:check_list_id, :_destroy, :id])
   end
-  
+
   def set_diary
     @diary = Diary.find(params[:id])
   end

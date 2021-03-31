@@ -2,6 +2,7 @@ class ApplicationController < ActionController::Base
   before_action :set_header_notification
   before_action :set_customer_search
   before_action :set_available_tags_to_gon
+  # before_action :logout, if: proc { customer_signed_in? && current_customer.is_deleted == true }
 
   def after_sign_in_path_for(resource)
     case resource
@@ -47,5 +48,9 @@ class ApplicationController < ActionController::Base
 
   def set_available_tags_to_gon
     gon.available_tags = DietMethod.tags_on(:tags).pluck(:name)
+  end
+
+  def logout
+    redirect_to logout_path
   end
 end

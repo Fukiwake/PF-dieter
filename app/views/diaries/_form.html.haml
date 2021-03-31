@@ -1,4 +1,4 @@
-= form_with model: @diary, local: true, id: "diary-form" do |f|
+= form_with model: @diary, url: diaries_path, method: :post, local: true, id: "diary-form" do |f|
   .field
     = f.label :post_date, "日付", class: "font-weight-bold"
     .form-inline
@@ -42,7 +42,10 @@
               = list.body
             - i += 1
   .field
-    .font-weight-bold.mb-2.mt-3 摂取カロリー計算
+    .font-weight-bold.mb-2.mt-3.d-flex
+      摂取カロリー計算
+      = link_to "#", class: "text-dark d-block", "data-target": "#food-image-search", "data-toggle": "modal", type: "button" do
+        %i.fas.fa-camera-retro.ml-3{title: "画像から食品名を検索する"}
     .row
       .col-md-6
         .form-inline.input-group
@@ -96,4 +99,27 @@
           Kcal
   .actions
     = f.submit "投稿する", class: "btn btn-success btn-block"
+.dropdown-menu.text-center{"aria-labelledby": "dropdownImageButton"}
+  .card.shadow-sm.mb-3#image-analysis-form
+    .card-body
+      = form_with url: image_analysis_diaries_path, method: :post, remote: true do |f|
+        = f.label :food_image, "画像から食品名を検索", class: "font-weight-bold"
+        %br
+        = f.file_field :food_image
+        %br
+        = f.submit "検索", class: "btn btn-success mt-2", id: "image-analysis-submit"
+.modal.fade{"aria-hidden" => "true", "aria-labelledby" => "labelFoodImage", role: "dialog", tabindex: "-1", id: "food-image-search"}
+  .modal-dialog.modal-dialog-centered{role: "document"}
+    .modal-content
+      .modal-header
+        %h5.modal-title{id: "labelFoodImage"}
+          画像から食品名を検索
+        %button.close{"aria-label" => "Close", "data-dismiss" => "modal", type: "button"}
+          %span{"aria-hidden" => "true"} ×
+      .modal-body.text-left
+        = form_with url: image_analysis_diaries_path, method: :post, remote: true do |f|
+          = f.file_field :food_image
+          %br
+          = f.submit "検索", class: "btn btn-success mt-2", id: "image-analysis-submit"
+
 
