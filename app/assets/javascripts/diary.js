@@ -264,14 +264,14 @@ $(function(){
     });
 
 
-    $(document).on("click", "#image-analysis-submit", function (e) {
-      e.preventDefault();
-      $.ajax({
-        url: "/diaries/image_analysis",
-        type: "POST",
-        data: $("#image-analysis-form").serialize(),
-        dataType: 'json'
-      });
-    });
+    // $(document).on("click", "#image-analysis-submit", function (e) {
+    //   e.preventDefault();
+    //   $.ajax({
+    //     url: "/diaries/image_analysis",
+    //     type: "POST",
+    //     data: $("#image-analysis-form").serialize(),
+    //     dataType: 'json'
+    //   });
+    // });
   });
 });
