@@ -127,8 +127,7 @@ class DiariesController < ApplicationController
     require 'json'
 
     # 1.urlを解析する
-    p image_analysis_array
-    p "#{image_analysis_array[0]}&q2=#{image_analysis_array[1]}&q3=#{image_analysis_array[2]}&q4=#{image_analysis_array[3]}&q5=#{image_analysis_array[4]}"
+    p "#{image_analysis_array[0]}&q2=#{image_analysis_array[1]}&q3=#{image_analysis_array[2]}&q4=#{image_analysis_array[3]}&q5=#{image_analysis_array[4]}&q6=#{image_analysis_array[5]}&q7=#{image_analysis_array[6]}&q8=#{image_analysis_array[7]}&q9=#{image_analysis_array[8]}&q10=#{image_analysis_array[9]}"
     url = URI.encode("https://script.google.com/macros/s/AKfycbxE64MZNLxwqgS0sBhmsNfYvxJHKIC3iCmy9bnvJw7x8R4aR0R8ObO7_1w1_3Mk06Ym/exec?q=#{image_analysis_array[0]}&q2=#{image_analysis_array[1]}&q3=#{image_analysis_array[2]}&q4=#{image_analysis_array[3]}&q5=#{image_analysis_array[4]}&q6=#{image_analysis_array[5]}&q7=#{image_analysis_array[6]}&q8=#{image_analysis_array[7]}&q9=#{image_analysis_array[8]}&q10=#{image_analysis_array[9]}")
     url = URI.parse(url)
     # 2.httpの通信を設定する
