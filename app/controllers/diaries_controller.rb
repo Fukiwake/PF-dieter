@@ -144,6 +144,10 @@ class DiariesController < ApplicationController
     end
     # 5.データを変換する
     @result = JSON.parse(response.body)
+    respond_to do |format|
+      format.html { redirect_to :root }
+      format.json { render json: @result }
+    end
 
   end
 

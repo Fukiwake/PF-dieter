@@ -264,14 +264,35 @@ $(function(){
     });
 
 
-    // $(document).on("click", "#image-analysis-submit", function (e) {
-    //   e.preventDefault();
-    //   $.ajax({
-    //     url: "/diaries/image_analysis",
-    //     type: "POST",
-    //     data: $("#image-analysis-form").serialize(),
-    //     dataType: 'json'
-    //   });
-    // });
+    $(document).on("click", "#image-analysis-submit", function (e) {
+      e.preventDefault();
+      $('#close-form-button').trigger("click");
+      Loading("food-search");
+      var formData = new FormData();
+      formData.append("food_image", $("#analysis-image")[0].files[0]);
+      $.ajax({
+        url: "/diaries/image_analysis",
+        type: "POST",
+        data: formData,
+        processData: false,
+        contentType: false,
+        async: true,
+        dataType: 'json'
+      })
+      .done(function(data) {
+        data.forEach(function( food ) {
+          $('#food-search').append(`<div class="d-flex justify-content-between">
+                                      <div class="d-flex align-items-center">${food.food}</div>
+                                      <div class="add-food-button btn btn-danger" data-food=${food.food} data-calorie=${food.calorie}>追加</div>
+                                    </div>`);
+        });
+        $('#food-search').prepend('<div class="text-center text-danger font-weight-bold close-food-search">閉じる</div>')
+        $('#food-search').append('<div class="text-center text-danger font-weight-bold close-food-search">閉じる</div>')
+        removeLoading();
+      })
+      .fail(function() {
+        alert("通信に失敗しました")
+      });
+    });
   });
 });
