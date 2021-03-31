@@ -263,9 +263,15 @@ $(function(){
       });
     });
 
-    $(".modal-body").on("click", ".#image-analysis-submit", function () {
-      Loading("food-search");
-    });
 
+    $(document).on("click", "#image-analysis-submit", function (e) {
+      e.preventDefault();
+      $.ajax({
+        url: "/diaries/image_analysis",
+        type: "POST",
+        data: $("#image-analysis-form").serialize(),
+        dataType: 'json'
+      });
+    });
   });
 });

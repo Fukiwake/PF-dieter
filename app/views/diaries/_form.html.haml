@@ -7,7 +7,7 @@
     = f.label :weight, "体重", class: "font-weight-bold"
     %span.badge.badge-danger.ml-2 必須
     .form-inline
-      = f.text_field :weight, autofocus: true, size: 24, class: "form-control mr-1", "data-error_placement": "#weight_error", "data-gender": current_customer.gender, "data-height": current_customer.height, "data-age": current_customer.age
+      = f.text_field :weight, size: 24, class: "form-control mr-1", "data-error_placement": "#weight_error", "data-gender": current_customer.gender, "data-height": current_customer.height, "data-age": current_customer.age
       kg
     #weight_error
   .field
@@ -117,7 +117,7 @@
         %button.close{"aria-label" => "Close", "data-dismiss" => "modal", type: "button"}
           %span{"aria-hidden" => "true"} ×
       .modal-body.text-left
-        = form_with url: image_analysis_diaries_path, method: :post, remote: true do |f|
+        = form_with url: image_analysis_diaries_path, method: :post, remote: true, id: "image-analysis-form" do |f|
           = f.file_field :food_image
           %br
           = f.submit "検索", class: "btn btn-success mt-2", id: "image-analysis-submit"
