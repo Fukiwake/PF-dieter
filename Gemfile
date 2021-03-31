@@ -86,6 +86,7 @@ gem 'ransack'
 gem 'simple_calendar', '~> 2.0'
 gem 'gon'
 gem 'rubocop-airbnb'
+gem 'pry-byebug'
 gem 'google-cloud-vision'
 gem "google-cloud-translate"
 group :production do

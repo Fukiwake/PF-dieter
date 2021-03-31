@@ -13,6 +13,7 @@ Rails.application.routes.draw do
     get 'customers/new_profile', to: 'customers/registrations#new_profile'
     post 'customers/create_profile', to: 'customers/registrations#create_profile'
     get 'customers/create_profile', to: 'customers/registrations#new_profile'
+    get '/logout', to: 'customers/sessions#destroy', as: :logout
   end
   mount ActionCable.server => '/cable'
   root "homes#top"
@@ -34,6 +35,9 @@ Rails.application.routes.draw do
   resources :diaries do
     resource :diary_favorites, only: [:create, :destroy]
     resources :diary_comments, only: [:create, :destroy]
+    collection do
+      post "image_analysis"
+    end
   end
   resources :diet_methods do
     resource :diet_method_favorites, only: [:create, :destroy]

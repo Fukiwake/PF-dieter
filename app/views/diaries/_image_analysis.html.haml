@@ -1,0 +1,7 @@
+.text-center.text-danger.font-weight-bold.close-food-search 閉じる
+- result.each do |food|
+  .d-flex.justify-content-between
+    .d-flex.align-items-center
+      = food["food"]
+    .add-food-button.btn.btn-danger{"data-calorie" => "#{food["calorie"]}", "data-food" => "#{food["food"]}"} 追加
+.text-center.text-danger.font-weight-bold.close-food-search 閉じる

@@ -261,9 +261,11 @@ $(function(){
       $('.activity-calorie[id != "base-calorie"]').each(function () {
         $(this).text(Math.round($(this).attr("id") * $('#diary_weight').val() * $(this).prev().val()))
       });
-      getTotalActivityCalorie();
     });
 
+    $(".modal-body").on("click", ".#image-analysis-submit", function () {
+      Loading("food-search");
+    });
 
   });
 });
