@@ -28,6 +28,7 @@
 |新規登録、ログイン(devise)|・メールアドレス、パスワードなどの情報で新規登録できる|○|
 |SNS認証(omniauth)|・google、ツイッターで登録できる|○|
 |投稿機能|・日記、ダイエット方法を投稿<br>・画像投稿(refile)<br>・カロリー計算(Google Apps Script)<br>・タグ機能(acts-as-taggable-on、Tag-it)|×︎|
+|画像解析機能|・食品の写真からカロリーを自動計算<br>・精度は低い<br>・README最下部にうまく機能する画像を掲載しています
 |いいね機能(Ajax)|・日記、ダイエット方法のいいねを非同期で行う|×︎|
 |コメント機能(Ajax)|・投稿へのコメントを非同期で行う|×|
 |フォロー機能(Ajax)|・会員フォローを非同期で行う<br>・日記一覧ページにはフォロー会員の日記が表示される|×︎|
@@ -57,4 +58,6 @@ https://docs.google.com/spreadsheets/d/11LIolmiFtRGLq7ztpPtjBHQx8L5_c0DKgPxQUITL
 - JSライブラリ：jQuery
 - IDE：Cloud9
 
-## 使用素材
+## 画像解析テスト用画像
+<img src="https://user-images.githubusercontent.com/75518740/113121670-d8a8a480-924d-11eb-9b6e-e068af90c96d.png">
+<img src="https://user-images.githubusercontent.com/75518740/113121766-eeb66500-924d-11eb-9b26-fa0b9dff0bc3.jpg">
