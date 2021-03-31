@@ -27,6 +27,7 @@ class ApplicationController < ActionController::Base
     level_settings.each do |setting|
       if setting.threshold <= customer.total_exp
         customer.update(level: setting.level, total_exp: customer.total_exp - setting.threshold)
+        flash[:alert] = "レベルが#{setting.level}に上がりました！"
       end
     end
   end

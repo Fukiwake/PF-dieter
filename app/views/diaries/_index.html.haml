@@ -107,13 +107,13 @@
                 %i.far.fa-comment{title: "コメント"}
                 - if diary.diary_comments.present?
                   = diary.diary_comments.count
-              .col-md-1
+              %object.col-md-1
                 - if current_customer == diary.customer
                   - if diary.body.present?
-                    = link_to "http://twitter.com/share?url=#{ENV['HOST']}diaries/#{diary.id}/&text=#{diary.body.truncate(100)}体重：#{diary.weight}kg・体脂肪率：#{diary.body_fat_percentage}％&hashtags=Dieter", target: :_blank, rel: "noopener noreferrer" do
+                    = link_to "http://twitter.com/share?url=#{ENV['HOST']}diaries/#{diary.id}/&text=#{diary.body.truncate(100)}体重：#{diary.weight}kg・体脂肪率：#{diary.body_fat_percentage}％&hashtags=Dieter", rel: "noopener noreferrer" do
                       %i.fab.fa-twitter.text-primary{title: "twitter"}
                   - else
-                    = link_to "http://twitter.com/share?url=#{ENV['HOST']}diaries/#{diary.id}/&text=体重：#{diary.weight}kg・体脂肪率：#{diary.body_fat_percentage}％&hashtags=Dieter", target: :_blank, rel: "noopener noreferrer" do
+                    = link_to "http://twitter.com/share?url=#{ENV['HOST']}diaries/#{diary.id}/&text=体重：#{diary.weight}kg・体脂肪率：#{diary.body_fat_percentage}％&hashtags=Dieter", rel: "noopener noreferrer" do
                       %i.fab.fa-twitter.text-primary{title: "twitter"}
               .col-md-9.text-right
                 #{time_ago_in_words(diary.created_at).upcase}前
