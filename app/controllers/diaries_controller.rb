@@ -112,7 +112,10 @@ class DiariesController < ApplicationController
     language_code = 'ja'
     image_annotator = Google::Cloud::Vision.image_annotator
     file_name = File.open(params[:food_image].tempfile)
-    response = image_annotator.label_detection image: file_name
+    response = image_annotator.label_detection(
+      image:       file_name,
+      max_results: 22
+    )
     image_analysis_array = []
     response.responses.each do |res|
       res.label_annotations.each do |label|
@@ -127,8 +130,16 @@ class DiariesController < ApplicationController
     require 'json'
 
     # 1.urlを解析する
-    p "#{image_analysis_array[0]}&q2=#{image_analysis_array[1]}&q3=#{image_analysis_array[2]}&q4=#{image_analysis_array[3]}&q5=#{image_analysis_array[4]}&q6=#{image_analysis_array[5]}&q7=#{image_analysis_array[6]}&q8=#{image_analysis_array[7]}&q9=#{image_analysis_array[8]}&q10=#{image_analysis_array[9]}"
-    url = URI.encode("https://script.google.com/macros/s/AKfycbxE64MZNLxwqgS0sBhmsNfYvxJHKIC3iCmy9bnvJw7x8R4aR0R8ObO7_1w1_3Mk06Ym/exec?q=#{image_analysis_array[0]}&q2=#{image_analysis_array[1]}&q3=#{image_analysis_array[2]}&q4=#{image_analysis_array[3]}&q5=#{image_analysis_array[4]}&q6=#{image_analysis_array[5]}&q7=#{image_analysis_array[6]}&q8=#{image_analysis_array[7]}&q9=#{image_analysis_array[8]}&q10=#{image_analysis_array[9]}")
+    delete_word = ["食物","食器","レシピ","成分","調理済み","皿"]
+    image_analysis_array.delete_if do |str|
+      delete_word.include?(str)
+    end
+    query = "?q=#{image_analysis_array[0]}"
+    14.times do |n|
+      query += "&q#{n + 2}=#{image_analysis_array[n + 1]}"
+    end
+    p query
+    url = URI.encode("https://script.google.com/macros/s/AKfycbwKdyKuBq2Tbgtr-y7yVjgj7LO9dZRsrk4_MZRQ0zRUEZJyt6NyqWmuoVesRsewXgwa/exec#{query}")
     url = URI.parse(url)
     # 2.httpの通信を設定する
     # 通信先のホストやポートを設定
