@@ -114,7 +114,7 @@ class DiariesController < ApplicationController
     file_name = File.open(params[:food_image].tempfile)
     response = image_annotator.label_detection(
       image:       file_name,
-      max_results: 22
+      max_results: 23
     )
     image_analysis_array = []
     response.responses.each do |res|
@@ -131,6 +131,7 @@ class DiariesController < ApplicationController
 
     # 1.urlを解析する
     delete_word = ["食物","食器","レシピ","成分","調理済み","皿"]
+    image_analysis_array = image_analysis_array.uniq
     image_analysis_array.delete_if do |str|
       delete_word.include?(str)
     end

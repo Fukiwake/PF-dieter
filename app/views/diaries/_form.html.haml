@@ -119,8 +119,9 @@
       .modal-body.text-left
         = form_with url: image_analysis_diaries_path, method: :post, remote: true, id: "image-analysis-form" do |f|
           = f.file_field :food_image, id: "analysis-image"
-          %br
-          = f.submit "検索", class: "btn btn-success mt-2", id: "image-analysis-submit"
+          .mt-2.d-flex.align-items-center
+            = f.submit "検索", class: "btn btn-success", id: "image-analysis-submit"
+            %span.ml-3 検索には数秒かかります
 
 
 
