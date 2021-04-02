@@ -4,7 +4,7 @@ class CustomersController < ApplicationController
   before_action :set_customer, only: [:show, :followings, :followers]
 
   def index
-    @customers = Customer.includes(:diaries).order("created_at DESC")
+    @customers = Customer.includes(:diaries).where(is_deleted: false).order("created_at DESC")
     if params[:q].present?
       unless params[:q][:name_or_introduce_cont_any].instance_of?(Array) || params[:q][:name_or_introduce_cont_any].empty?
         params[:q][:name_or_introduce_cont_any] = params[:q][:name_or_introduce_cont_any].split(/[\p{blank}\s]+/)
