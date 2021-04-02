@@ -5,6 +5,8 @@ $(function(){
     $('.images-wrapper').not('.slick-initialized').slick({
       dots: true,
       arrows: true,
+      autoplay: true,
+      autoplaySpeed: 2000,
     });
 
     $(".abort-button").mouseover(function() {

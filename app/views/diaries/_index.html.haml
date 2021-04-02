@@ -91,7 +91,7 @@
           - if diary.diary_images.present?
             .images-wrapper
               - diary.diary_images.each do |image|
-                .image.text-center.border
+                .image.text-center.border.slick-slide
                   = attachment_image_tag(image, :image, :fit, 783, 440)
           = link_to diary_path(diary.id), class: "text-decoration-none text-dark" do
             %object.row
