@@ -26,6 +26,14 @@ class CustomersController < ApplicationController
     if customer_signed_in?
       @relationship = Relationship.find_by(followed_id: @customer.id, follower_id: current_customer.id)
     end
+    all_diaries = Diary.includes(:check_list_diaries, :diary_images, :diary_favorites, :diary_comments, :customer).order("created_at DESC")
+    @post_diaries = all_diaries.where(customer_id: @customer.id).page(params[:page]).per(20)
+    favorite_diary_ids = @customer.diary_favorites.pluck(:diary_id)
+    @favorite_diaries = all_diaries.where(id: favorite_diary_ids).page(params[:page]).per(20)
+    all_diet_methods = DietMethod.includes(:diet_method_images, :diet_method_favorites, :diet_method_comments, :tag_taggings, :tags, :customer).order("created_at DESC")
+    @post_diet_methods = all_diet_methods.where(customer_id: @customer.id).page(params[:page]).per(20)
+    favorite_diet_method_ids = @customer.diet_method_favorites.pluck(:diet_method_id)
+    @favorite_diet_methods = all_diet_methods.where(id: favorite_diet_method_ids).page(params[:page]).per(20)
   end
 
   def withdraw

@@ -130,9 +130,23 @@
         .mt-4.text-center.w-50.active
           = link_to "日記", "#diary", class: "btn btn-danger btn-block btn-lg"
         .mt-4.text-center.w-50
-          = link_to "ダイエット方法", "#diet_method", class: "btn btn-outline-secondary btn-block btn-lg"
+          = link_to "ダイエット方法", "#method", class: "btn btn-outline-secondary btn-block btn-lg"
       #customer-tab-contents
         #diary.tab
-          = render "diaries/index", diaries: @customer.diaries.includes(:check_list_diaries, :diary_images, :diary_favorites, :diary_comments).order("created_at DESC").page(params[:page]).per(20)
-        #diet_method.tab
-          = render "diet_methods/index", diet_methods: @customer.diet_methods.includes(:diet_method_images, :diet_method_favorites, :diet_method_comments, :tag_taggings, :tags).order("created_at DESC").page(params[:page]).per(20)
+          #diary-tab-menu.font-weight-bold.my-3
+            %input.mr-1{type: "radio", value: "#post-diary", name: "diary", checked: "checked"} 投稿
+            %input.ml-3.mr-1{type: "radio", value: "#favorite-diary", name: "diary"} いいね
+          #diary-tab-contents
+            #post-diary.tab.d-none.active
+              = render "diaries/index", diaries: @post_diaries
+            #favorite-diary.tab.d-none
+              = render "diaries/index", diaries: @favorite_diaries
+        #method.tab
+          #method-tab-menu.font-weight-bold.my-3
+            %input.mr-1{type: "radio", value: "#post-method", name: "diet_method", checked: "checked"} 投稿
+            %input.ml-3.mr-1{type: "radio", value: "#favorite-method", name: "diet_method"} いいね
+          #method-tab-contents
+            #post-method.tab.d-none.active
+              = render "diet_methods/index", diet_methods: @post_diet_methods
+            #favorite-method.tab.d-none
+              = render "diet_methods/index", diet_methods: @favorite_diet_methods

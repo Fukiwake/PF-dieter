@@ -13,17 +13,17 @@ $(function() {
       event.preventDefault();
     });
 
-    $('#diary-tab-menu input').on('click', function(event) {
+    $('#diary-tab-menu input').on('change', function(event) {
       $("#diary-tab-contents .tab").removeClass('active');
       $($(this).attr("value")).addClass('active');
-      document.$(this).checked = true;
+      $('.slick-next').trigger("click");
       event.preventDefault();
     });
 
-    $('#method-tab-menu input').on('click', function(event) {
+    $('#method-tab-menu input').on('change', function(event) {
       $("#method-tab-contents .tab").removeClass('active');
       $($(this).attr("value")).addClass('active');
-      document.$(this).checked = true;
+      $('.slick-next').trigger("click");
       event.preventDefault();
     });
   });
