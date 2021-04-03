@@ -16,7 +16,9 @@ class DiaryCommentsController < ApplicationController
 
   def destroy
     @diary = Diary.find(params[:diary_id])
-    DiaryComment.find_by(id: params[:id], diary_id: params[:diary_id]).destroy
+    @diary_comment = DiaryComment.find_by(id: params[:id], diary_id: params[:diary_id])
+    @parent_id = @diary_comment.parent_id
+    @diary_comment.destroy
     @diary_comment_reply = DiaryComment.new
   end
 

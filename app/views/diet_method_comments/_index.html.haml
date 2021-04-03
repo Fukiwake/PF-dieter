@@ -1,26 +1,78 @@
-- diet_method.diet_method_comments.includes(:customer).order("created_at DESC").each do |diet_method_comment|
-  .row
-    .col-md-12
-      = link_to customer_path(diet_method.customer), data: {"turbolinks" => false}, class: "text-dark font-weight-bold text-decoration-none " do
-        = attachment_image_tag diet_method.customer, :profile_image, :fill, 50, 50, fallback: "no_image.png", size: "50x50"
-        %span.ml-2
-          = diet_method_comment.customer.name
-      #{time_ago_in_words(diet_method_comment.created_at).upcase}前
-      - if customer_signed_in?
-        %span#dropdownCommentMenuButton{"data-toggle": "dropdown", "aria-haspopup": "true", "aria-expanded": "false"}
-          %i.fas.fa-ellipsis-h.icon.p-2.mr-3.text-danger{title: "もっと見る"}
-        .dropdown-menu.dropdown-menu-right.text-center{"aria-labelledby": "dropdownCommentMenuButton"}
-          - if diet_method_comment.customer == current_customer
-            = link_to diet_method_diet_method_comment_path(diet_method_comment.diet_method, diet_method_comment), method: :delete, remote: true, class: "text-dark" do
-              %i.far.fa-trash-alt
-              削除
-          - else
-            - if Report.where(visitor_id: current_customer.id, diet_method_comment_id: diet_method_comment.id).present?
-              報告済みです
-            -else
-              = link_to reports_path(diet_method_comment_id: diet_method_comment.id), method: :post, class: "text-dark" do
-                %i.fas.fa-bullhorn
-                報告
-  .row
-    .col-md-12.border-bottom
-      = safe_join(diet_method_comment.body.split("\n"),tag(:br))
+- diet_method.diet_method_comments.where(parent_id: nil).includes(:customer, :replies).order("created_at DESC").each do |diet_method_comment|
+  .comment-container.border-bottom
+    .row
+      .col-md-12
+        = link_to customer_path(diet_method.customer), data: {"turbolinks" => false}, class: "font-weight-bold text-decoration-none " do
+          = attachment_image_tag diet_method.customer, :profile_image, :fill, 50, 50, fallback: "no_image.png", size: "50x50"
+          %span.ml-2
+            - if diet_method_comment.customer == diet_method.customer
+              %span.text-success
+                = diet_method_comment.customer.name
+            - else
+              %span.text-dark
+                = diet_method_comment.customer.name
+        #{time_ago_in_words(diet_method_comment.created_at).upcase}前
+        - if customer_signed_in?
+          %span#dropdownCommentMenuButton{"data-toggle": "dropdown", "aria-haspopup": "true", "aria-expanded": "false"}
+            %i.fas.fa-ellipsis-h.icon.p-2.mr-3.text-danger{title: "もっと見る"}
+          .dropdown-menu.dropdown-menu-right.text-center{"aria-labelledby": "dropdownCommentMenuButton"}
+            - if diet_method_comment.customer == current_customer
+              = link_to diet_method_diet_method_comment_path(diet_method_comment.diet_method, diet_method_comment), method: :delete, remote: true, class: "text-dark" do
+                %i.far.fa-trash-alt
+                削除
+            - else
+              - if Report.where(visitor_id: current_customer.id, diet_method_comment_id: diet_method_comment.id).present?
+                報告済みです
+              -else
+                = link_to reports_path(diet_method_comment_id: diet_method_comment.id), method: :post, class: "text-dark" do
+                  %i.fas.fa-bullhorn
+                  報告
+          %span.reply-button.text-danger.font-weight-bold{id: "#{diet_method_comment.id}"} 返信
+    .row
+      .col-md-12
+        = safe_join(diet_method_comment.body.split("\n"),tag(:br))
+    - if diet_method_comment.replies.present?
+      %span.dropdown-toggle.text-danger.show-reply-button{"data-comment_id": "#{diet_method_comment.id}"}
+        = diet_method_comment.replies.count
+        件の返信
+    .row.d-none{id: "reply-form-#{diet_method_comment.id}"}
+      .col-md-12
+        .new-replies.mt-3
+          = form_with(model: [diet_method, @diet_method_comment_reply]) do |f|
+            .input-group.form-inline.d-flex.align-items-center
+              = f.text_area :body, size: "24x1", placeholder: "返信する", class: "form-control"
+              = f.hidden_field :parent_id, value: diet_method_comment.id
+              = f.submit "返信", class: "btn btn-success"
+              %span.ml-2.close-reply-button.text-danger.font-weight-bold{"data-comment_id": "#{diet_method_comment.id}"} キャンセル
+    .reply-wrapper.d-none{id: "reply-field-#{diet_method_comment.id}"}
+      - diet_method_comment.replies.includes(:diet_method, :customer).each do |reply|
+        .row
+          .col-md-10.mx-auto
+            = link_to customer_path(diet_method.customer), data: {"turbolinks" => false}, class: "text-dark font-weight-bold text-decoration-none " do
+              = attachment_image_tag diet_method.customer, :profile_image, :fill, 30, 30, fallback: "no_image.png", size: "30x30"
+              %span.ml-2
+                - if reply.customer == diet_method.customer
+                  %span.text-success
+                    = reply.customer.name
+                - else
+                  %span.text-dark
+                    = reply.customer.name
+            #{time_ago_in_words(reply.created_at).upcase}前
+            - if customer_signed_in?
+              %span#dropdownCommentMenuButton{"data-toggle": "dropdown", "aria-haspopup": "true", "aria-expanded": "false"}
+                %i.fas.fa-ellipsis-h.icon.p-2.mr-3.text-danger{title: "もっと見る"}
+              .dropdown-menu.dropdown-menu-right.text-center{"aria-labelledby": "dropdownCommentMenuButton"}
+                - if reply.customer == current_customer
+                  = link_to diet_method_diet_method_comment_path(reply.diet_method, reply), method: :delete, remote: true, class: "text-dark" do
+                    %i.far.fa-trash-alt
+                    削除
+                - else
+                  - if Report.where(visitor_id: current_customer.id, diet_method_comment_id: reply.id).present?
+                    報告済みです
+                  -else
+                    = link_to reports_path(diet_method_comment_id: reply.id), method: :post, class: "text-dark" do
+                      %i.fas.fa-bullhorn
+                      報告
+        .row
+          .col-md-10.mx-auto
+            = safe_join(reply.body.split("\n"),tag(:br))

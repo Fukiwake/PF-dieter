@@ -62,6 +62,7 @@ class DietMethodsController < ApplicationController
     end
     @tags = @diet_method.tag_counts_on(:tags)
     @diet_method_comment = DietMethodComment.new
+    @diet_method_comment_reply = DietMethodComment.new
   end
 
   def edit

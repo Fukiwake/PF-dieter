@@ -1,3 +1,5 @@
 $("#comments").html("#{ j(render "diet_method_comments/index", diet_method: @diet_method) }")
 $("#comment_count").html("#{ @diet_method.diet_method_comments.count }")
 $("textarea").val('')
+$("#reply-field-#{ @diet_method_comment.parent_id }").addClass("active")
+$("#reply-form-#{ @diet_method_comment.parent_id }").addClass("active")
