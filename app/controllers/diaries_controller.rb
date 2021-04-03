@@ -31,6 +31,7 @@ class DiariesController < ApplicationController
     @new_diary = Diary.new
     @check_list_diary = @new_diary.check_list_diaries.new
     @diary_comment = DiaryComment.new
+    @diary_comment_reply = DiaryComment.new
   end
 
   def new

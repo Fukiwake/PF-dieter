@@ -1,3 +1,5 @@
 $("#comments").html("#{ j(render "diary_comments/index", diary: @diary) }")
 $("#comment_count").html("#{ @diary.diary_comments.count }")
 $("textarea").val('')
+$("#reply-field-#{ @diary_comment.parent_id }").addClass("active")
+$("#reply-form-#{ @diary_comment.parent_id }").addClass("active")
