@@ -13,7 +13,6 @@ class ChatsController < ApplicationController
       @room = entries.room
     end
     @chats = @room.chats.includes(:customer)
-    chat_last_page = (@chats.count / 30).ceil
     @chat = Chat.new(room_id: @room.id)
     @other_rooms = current_customer.rooms.includes(:chats).where.not(id: @room.id).order("chats.created_at DESC")
     #チャットがないルームを削除
