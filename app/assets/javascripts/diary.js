@@ -296,5 +296,14 @@ $(function(){
         alert("通信に失敗しました")
       });
     });
+
+    var url = location.href;
+    id = url.split("#")[1]
+    if(id){
+      $(`#${id}`).addClass("active")
+      const position = $(`#${id}`).offset().top;
+      const speed = 200;
+      $("html,body").animate({scrollTop:position},speed);
+    }
   });
 });
