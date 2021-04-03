@@ -39,6 +39,16 @@
       - when "diet_method"
         = link_to "#{notification.diet_method.title}", diet_method_path(notification.diet_method), class: "font-weight-bold"
         を投稿しました
+      - when "diary_reply"
+        = link_to "あなたの日記コメント", diary_path(notification.diary.id, anchor: "reply-field-#{notification.diary_comment.parent_id}"), class: "font-weight-bold"
+        に返信しました
+        %p.text-muted.mb-0
+          = notification.diary_comment.body.truncate(100)
+      - when "diet_method_reply"
+        = link_to "あなたのダイエット方法コメント", diet_method_path(notification.diet_method.id, anchor: "reply-field-#{notification.diet_method_comment.parent_id}"), class: "font-weight-bold"
+        に返信しました
+        %p.text-muted.mb-0
+          = notification.diet_method_comment.body.truncate(100)
     .small.text-muted.text-right
       #{time_ago_in_words(notification.created_at).upcase}前
     %hr

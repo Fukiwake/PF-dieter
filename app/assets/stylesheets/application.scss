@@ -113,10 +113,6 @@ html {
   margin-bottom: 40px;
 }
 
-.header-notification {
-  width: 300px;
-}
-
 #up-button {
   display: none;
 }
@@ -125,15 +121,6 @@ html {
   position: absolute;
   left: 10px;
   top: -10px;
-}
-
-.header-notification {
-  display: none;
-  position: absolute;
-  top: 40px;
-  right: 0;
-  background-color: white;
-  z-index: 1;
 }
 
 p.text-muted {
@@ -150,11 +137,12 @@ p.text-muted {
 
 .level {
   height: 40px;
+  width: 45px;
   line-height: 40px;
 }
 
 meter {
-  width: 114px;
+  width: 100%;
 }
 
 #slideDownSearchForm {
@@ -188,8 +176,15 @@ object {
 }
 
 .header-notification {
+  width: 300px;
+  display: none;
+  position: absolute;
+  top: 40px;
+  right: 0;
+  background-color: white;
+  z-index: 1;
   overflow-y: scroll;
-  height: 30vh;
+  height: 40vh;
   &::-webkit-scrollbar {
     width: 6px;
     height: 10px;
@@ -207,10 +202,6 @@ object {
 
 .active {
   display: block !important;
-}
-
-.level {
-  width: 150px;
 }
 
 .progress1 {

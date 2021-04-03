@@ -19,11 +19,13 @@
           %i.fas.fa-medal.header-icon
           .small ランキング
   .flex-column.mt-3
-    .level
-      Lv.
-      = current_customer.level
-      - threshold = LevelSetting.find_by(level: current_customer.level + 1).threshold
-      %meter{min: 0, max: threshold, value: current_customer.total_exp, "data-toggle": "tooltip", title: "あと#{threshold - current_customer.total_exp}exp"}
+    .d-flex.align-items-center
+      .level
+        Lv.
+        = current_customer.level
+        - threshold = LevelSetting.find_by(level: current_customer.level + 1).threshold
+      .exp_meter.w-75
+        %meter{min: 0, max: threshold, value: current_customer.total_exp, "data-toggle": "tooltip", title: "あと#{threshold - current_customer.total_exp}exp"}
     .d-flex.mt-3.align-items-center
       .dropdown
         #dropdownMenuButton.dropdown-toggle{"data-toggle": "dropdown", "aria-haspopup": "true", "aria-expanded": "false"}
