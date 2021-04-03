@@ -74,15 +74,16 @@ class Diary < ApplicationRecord
       notification.save if notification.valid?
     end
   end
-  
+
   def create_notification_reply(current_customer, diary_comment_id)
     #会員の通知設定が有効であるときのみ通知を送る
     if customer.comment_notification == true && customer.all_notification == true
+      parent_id = DiaryComment.find(diary_comment_id).parent_id
       # コメントは複数回することが考えられるため、１つの投稿に複数回通知する
       notification = current_customer.active_notifications.new(
         diary_id: id,
         diary_comment_id: diary_comment_id,
-        visited_id: customer_id,
+        visited_id: DiaryComment.find(parent_id).customer_id,
         action: 'diary_reply'
       )
       # 自分の投稿に対するコメントの場合は、通知済みとする

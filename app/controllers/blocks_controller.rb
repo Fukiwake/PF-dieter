@@ -5,6 +5,7 @@ class BlocksController < ApplicationController
     @customer = Customer.find(params[:customer_id])
     current_customer.block(params[:customer_id])
     flash[:notice] = "ユーザーをブロックしました"
+    #ブロックした会員からのフォローを解除
     if Relationship.find_by(follower_id: @customer.id, followed_id: current_customer.id).present?
       Relationship.find_by(follower_id: @customer.id, followed_id: current_customer.id).destroy
     end

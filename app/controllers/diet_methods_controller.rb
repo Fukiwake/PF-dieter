@@ -2,35 +2,7 @@ class DietMethodsController < ApplicationController
   before_action :authenticate_customer!, except: [:index, :show]
   before_action :set_new_diary, only: [:new, :index, :edit, :show]
   before_action :set_diet_method, only: [:show, :edit, :update]
-
-  def new
-    @diet_method = DietMethod.new
-    @check_list = @diet_method.check_lists.new
-  end
-
-  def create
-    @diet_method = current_customer.diet_methods.new(diet_method_params)
-    if @diet_method.save
-      Try.create(customer_id: current_customer.id, diet_method_id: @diet_method.id)
-      @diet_method.check_lists.each do |check_list|
-        if check_list.body.blank?
-          check_list.destroy
-        end
-      end
-      level_up(20, current_customer)
-      customer_ids = Relationship.where(followed_id: current_customer.id, notification: true).pluck(:follower_id)
-      Customer.where(id: customer_ids).each do |customer|
-        unless customer.blocking?(current_customer)
-          customer.create_notification_diet_method(current_customer, @diet_method)
-        end
-      end
-      flash[:notice] = "ダイエット方法を投稿しました"
-      redirect_to diet_methods_path
-    else
-      render :new
-    end
-  end
-
+  
   def index
     withdraw_ids = Customer.where(is_deleted: true).pluck(:id)
     if customer_signed_in?
@@ -63,6 +35,35 @@ class DietMethodsController < ApplicationController
     @tags = @diet_method.tag_counts_on(:tags)
     @diet_method_comment = DietMethodComment.new
     @diet_method_comment_reply = DietMethodComment.new
+  end
+
+  def new
+    @diet_method = DietMethod.new
+    @check_list = @diet_method.check_lists.new
+  end
+
+  def create
+    @diet_method = current_customer.diet_methods.new(diet_method_params)
+    if @diet_method.save
+      Try.create(customer_id: current_customer.id, diet_method_id: @diet_method.id)
+      @diet_method.check_lists.each do |check_list|
+        if check_list.body.blank?
+          check_list.destroy
+        end
+      end
+      level_up(20, current_customer)
+      #投稿の通知を設定している会員に通知
+      customer_ids = Relationship.where(followed_id: current_customer.id, notification: true).pluck(:follower_id)
+      Customer.where(id: customer_ids).each do |customer|
+        unless customer.blocking?(current_customer)
+          customer.create_notification_diet_method(current_customer, @diet_method)
+        end
+      end
+      flash[:notice] = "ダイエット方法を投稿しました"
+      redirect_to diet_methods_path
+    else
+      render :new
+    end
   end
 
   def edit

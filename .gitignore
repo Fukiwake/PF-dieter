@@ -30,4 +30,5 @@
 # Ignore master key for decrypting credentials and more.
 /config/master.key
 /.env
+/watchful-force-308204-21725a089214.json
 
