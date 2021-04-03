@@ -13,17 +13,9 @@ class ChatsController < ApplicationController
       @room = entries.room
     end
     @chats = @room.chats.includes(:customer)
-<<<<<<< HEAD
     @chat = Chat.new(room_id: @room.id)
     @other_rooms = current_customer.rooms.includes(:chats).where.not(id: @room.id).order("chats.created_at DESC")
     #チャットがないルームを削除
-    #チャットがないルームを削除
-=======
-    chat_last_page = (@chats.count / 30).ceil
-    @chat = Chat.new(room_id: @room.id)
-    @other_rooms = current_customer.rooms.includes(:chats).where.not(id: @room.id).order("chats.created_at DESC")
-    #チャットがないルームを削除
->>>>>>> 9e5ccb72e4523c02256dd95ee570eee9656c1870
     if @other_rooms.present? && Room.includes(:chats).last(2)[0].chats.blank?
       Room.includes(:chats, :entries).last(2)[0].destroy
     end
