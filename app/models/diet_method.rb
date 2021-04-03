@@ -11,6 +11,7 @@ class DietMethod < ApplicationRecord
   has_many :tries, dependent: :destroy
   has_many :notifications, dependent: :destroy
   has_many :reports, dependent: :destroy
+  
 
   validates :title, presence: true, length: { maximum: 15 }
   validates :way, presence: true
