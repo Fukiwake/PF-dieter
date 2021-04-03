@@ -11,7 +11,7 @@ class DietMethod < ApplicationRecord
   has_many :tries, dependent: :destroy
   has_many :notifications, dependent: :destroy
   has_many :reports, dependent: :destroy
-  
+
 
   validates :title, presence: true, length: { maximum: 15 }
   validates :way, presence: true
@@ -68,4 +68,23 @@ class DietMethod < ApplicationRecord
       notification.save if notification.valid?
     end
   end
+
+  def create_notification_comment(current_customer, diet_method_comment_id)
+    if customer.comment_notification == true && customer.all_notification == true
+      # コメントは複数回することが考えられるため、１つの投稿に複数回通知する
+      notification = current_customer.active_notifications.new(
+        diet_method_id: id,
+        diet_method_comment_id: diet_method_comment_id,
+        visited_id: customer_id,
+        action: 'diet_method_reply'
+      )
+      # 自分の投稿に対するコメントの場合は、通知済みとする
+      if notification.visitor_id == notification.visited_id
+        notification.checked = true
+      end
+      notification.save if notification.valid?
+    end
+  end
+
+
 end
