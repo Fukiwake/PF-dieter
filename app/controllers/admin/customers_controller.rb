@@ -32,7 +32,21 @@ class Admin::CustomersController < ApplicationController
   private
 
   def customer_params
-    params.require(:customer).permit(:email, :name, :profile_image, :introduce, :gender, :birthyear, :birthdate, :height, :target_weight, :target_body_fat_percentage, :diet_style1, :diet_style2, :diet_style3, :diet_style4, :is_deleted)
+    params.require(:customer).permit( :email,
+                                      :name,
+                                      :profile_image,
+                                      :introduce,
+                                      :gender,
+                                      :birthyear,
+                                      :birthdate,
+                                      :height,
+                                      :target_weight,
+                                      :target_body_fat_percentage,
+                                      :diet_style1,
+                                      :diet_style2,
+                                      :diet_style3,
+                                      :diet_style4,
+                                      :is_deleted)
   end
 
   def set_customer

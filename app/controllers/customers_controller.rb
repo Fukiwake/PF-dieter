@@ -15,8 +15,8 @@ class CustomersController < ApplicationController
   end
 
   def show
-    @diaries = @customer.diaries.all.order(post_date: "ASC")
     # グラフに表示される日記を過去1年分に限定する
+    @diaries = @customer.diaries.all.order(post_date: "ASC")
     if @diaries.present?
       @diaries = @diaries.get_one_year_diary
     end
