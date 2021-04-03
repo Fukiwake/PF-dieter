@@ -110,10 +110,10 @@
       .card.mb-3.shadow-sm
         .card-body
           - if customer_signed_in?
-            #new-comments.mt-3
+            .new-comments.mt-3
               = form_with(model: [@diary, @diary_comment]) do |f|
                 .input-group.form-inline
-                  = f.text_area :body, size: "autox1", placeholder: "コメントする", class: "w-100"
+                  = f.text_area :body, size: "autox1", placeholder: "コメントする", class: "form-control"
                   = f.submit "送信", class: "btn btn-success"
           #comments.mt-4
             = render "diary_comments/index", diary: @diary
