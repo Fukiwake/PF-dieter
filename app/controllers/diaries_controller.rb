@@ -49,6 +49,7 @@ class DiariesController < ApplicationController
     end
     if @diary.save
       # チェックされていないチェックリストのcheck_list_diary(中間テーブル)を作成
+      #チェックされたチェックリストの中間テーブルは上記の@diary.saveの際に作成される
       current_customer.trying_diet_methods.each do |method|
         check_list_ids = method.check_lists.pluck(:id)
         check_list_ids.each do |check_list_id|
@@ -58,13 +59,15 @@ class DiariesController < ApplicationController
         end
       end
       level_up(20, current_customer)
-      previous_diary = current_customer.diaries.first(2)[1]
+      #一つ前の日記と比べて体重、体脂肪率が減っていたら経験値が貯まる
+      previous_diary = current_customer.diaries.last(2)[0]
       if previous_diary.present?
         level_up(previous_diary.weight * 10 - @diary.weight * 10, current_customer)
         if previous_diary.body_fat_percentage.present? && @diary.body_fat_percentage.present?
           level_up(previous_diary.body_fat_percentage * 30 - @diary.body_fat_percentage * 30, current_customer)
         end
       end
+      #投稿の通知を設定している会員に通知
       customer_ids = Relationship.where(followed_id: current_customer.id, notification: true).pluck(:follower_id)
       Customer.where(id: customer_ids).each do |customer|
         unless customer.blocking?(current_customer)
@@ -130,7 +133,6 @@ class DiariesController < ApplicationController
     require 'net/http'
     require 'json'
 
-    # 1.urlを解析する
     delete_word = ["食物","食器","レシピ","成分","調理済み","皿"]
     image_analysis_array = image_analysis_array.uniq
     image_analysis_array.delete_if do |str|
@@ -141,6 +143,7 @@ class DiariesController < ApplicationController
       query += "&q#{n + 2}=#{image_analysis_array[n + 1]}"
     end
     p query
+    # 1.urlを解析する
     url = URI.encode("https://script.google.com/macros/s/AKfycbwKdyKuBq2Tbgtr-y7yVjgj7LO9dZRsrk4_MZRQ0zRUEZJyt6NyqWmuoVesRsewXgwa/exec#{query}")
     url = URI.parse(url)
     # 2.httpの通信を設定する

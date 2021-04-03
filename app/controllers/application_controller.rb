@@ -23,8 +23,10 @@ class ApplicationController < ActionController::Base
     week_exp = customer.week_exp + exp
     month_exp = customer.month_exp + exp
     customer.update(total_exp: total_exp, day_exp: day_exp, week_exp: week_exp, month_exp: month_exp)
+    #会員の現在のレベルより高いレベルしきい値を取得
     level_settings = LevelSetting.where("level > #{customer.level}").limit(2)
     level_settings.each do |setting|
+      #現在の経験値がしきい値より高い場合レベルアップ
       if setting.threshold <= customer.total_exp
         customer.update(level: setting.level, total_exp: customer.total_exp - setting.threshold)
         flash[:alert] = "レベルが#{setting.level}に上がりました！"

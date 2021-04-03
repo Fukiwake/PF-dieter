@@ -71,11 +71,12 @@ class DietMethod < ApplicationRecord
 
   def create_notification_comment(current_customer, diet_method_comment_id)
     if customer.comment_notification == true && customer.all_notification == true
+      parent_id = DietMethodComment.find(diet_method_comment_id).parent_id
       # コメントは複数回することが考えられるため、１つの投稿に複数回通知する
       notification = current_customer.active_notifications.new(
         diet_method_id: id,
         diet_method_comment_id: diet_method_comment_id,
-        visited_id: customer_id,
+        visited_id: DietMethodComment.find(parent_id).customer_id,
         action: 'diet_method_reply'
       )
       # 自分の投稿に対するコメントの場合は、通知済みとする

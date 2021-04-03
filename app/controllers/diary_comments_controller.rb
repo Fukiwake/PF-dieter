@@ -6,6 +6,8 @@ class DiaryCommentsController < ApplicationController
     @diary = Diary.find(params[:diary_id])
     @diary_comment.diary_id = @diary.id
     @diary_comment.save
+    #普通のコメントは投稿者に通知
+    #返信はコメント主に通知
     if @diary_comment.parent_id.present?
       @diary.create_notification_reply(current_customer, @diary_comment.id)
     else
