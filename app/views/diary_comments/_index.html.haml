@@ -1,4 +1,4 @@
-- diary.diary_comments.includes(:replies).where(parent_id: nil).includes(:customer).order("created_at DESC").each do |diary_comment|
+- diary.diary_comments.where(parent_id: nil).includes(:customer, :replies).order("created_at DESC").each do |diary_comment|
   .comment-container.border-bottom
     .row
       .col-md-12
