@@ -74,7 +74,11 @@
                     = render "blocks/block_form", customer: @customer
                   #notification-button
                     = render "relationships/notification_button", customer: @customer
+<<<<<<< HEAD
                   = link_to chat_path(@customer, page: "first"), data: {"turbolinks" => false}, id: "chat-link" do
+=======
+                  = link_to chat_path(@customer), data: {"turbolinks" => false}, id: "chat-link" do
+>>>>>>> 9e5ccb72e4523c02256dd95ee570eee9656c1870
                     %i.far.fa-comments.icon.border.border-danger.rounded-circle.p-2.ml-3.text-danger{title: "チャット"}
               - elsif customer_signed_in?
                 %td
