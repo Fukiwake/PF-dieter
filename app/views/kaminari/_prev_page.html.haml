@@ -1,7 +1,3 @@
-<<<<<<< HEAD
-%li.page-item.prev
-  = link_to_unless current_page.first?, raw(t 'views.pagination.previous'), url, rel: 'prev', remote: remote, class: 'page-link'
-=======
 %li.page-item
   = link_to_unless current_page.first?, raw(t 'views.pagination.previous'), url, rel: 'prev', remote: remote, class: 'page-link', params: params
->>>>>>> 9e5ccb72e4523c02256dd95ee570eee9656c1870
+
