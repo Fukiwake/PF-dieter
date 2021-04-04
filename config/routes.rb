@@ -23,6 +23,7 @@ Rails.application.routes.draw do
   patch "customers/notification_setting" => "customers#notification_setting"
   resources :customers, only: [:show, :update, :index] do
     resource :relationships, only: [:create, :destroy, :update]
+    resources :achievements, only: [:index]
     member do
       get :followings, :followers
     end

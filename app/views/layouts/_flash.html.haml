@@ -1,0 +1,22 @@
+- flash.each do |key, value|
+  - if key == 'notice'
+    %p.alert.alert-success.text-center.mb-0
+      = value
+      %button.close{"type" => "button", "data-dismiss" => "alert"} &times;
+  - if key == 'alert'
+    %p.alert.alert-danger.text-center.mb-0
+      = value
+      %button.close{"type" => "button", "data-dismiss" => "alert"} &times;
+  - if key == 'achievement'
+    .alert.alert-success.text-center.mb-0
+      %h3
+        %i{class: "#{Achievement.find(value).batch}"}
+        「
+        = Achievement.find(value).title
+        」を達成しました
+      %button.close{"type" => "button", "data-dismiss" => "alert"} &times;
+      %span
+        条件：
+        = Achievement.find(value).description
+      .mt-3
+        = link_to "達成項目一覧を見る", customer_achievements_path(current_customer) , class: "btn btn-success"

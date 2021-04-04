@@ -39,6 +39,7 @@ class Customer < ApplicationRecord
   has_many :passive_notifications, class_name: 'Notification', foreign_key: 'visited_id', dependent: :destroy
   has_many :active_reports, class_name: "Report", foreign_key: 'visitor_id', dependent: :destroy
   has_many :passive_reports, class_name: "Report", foreign_key: 'visited_id', dependent: :destroy
+  has_many :customer_achievements
 
   validates :name, presence: true, length: { maximum: 10 }
   validates :gender, presence: true

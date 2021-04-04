@@ -2,7 +2,7 @@ class DietMethodsController < ApplicationController
   before_action :authenticate_customer!, except: [:index, :show]
   before_action :set_new_diary, only: [:new, :index, :edit, :show]
   before_action :set_diet_method, only: [:show, :edit, :update]
-  
+
   def index
     withdraw_ids = Customer.where(is_deleted: true).pluck(:id)
     if customer_signed_in?
@@ -60,6 +60,11 @@ class DietMethodsController < ApplicationController
         end
       end
       flash[:notice] = "ダイエット方法を投稿しました"
+      if CustomerAchievement.where(customer_id: current_customer.id, achievement_id: 2, achievement_status: true).blank?
+        CustomerAchievement.create(customer_id: current_customer.id, achievement_id: 2, achievement_status: true)
+        flash[:achievement] = "2"
+        level_up(10, current_customer)
+      end
       redirect_to diet_methods_path
     else
       render :new

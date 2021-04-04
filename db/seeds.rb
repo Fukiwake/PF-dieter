@@ -413,3 +413,107 @@ end
 
 Admin.create!(email: ENV['ADMIN_EMAIL'], password: ENV['ADMIN_PASSWORD'])
 
+Achievement.create!(
+  title: "ダイエッターにようこそ！",
+  description: "新規登録を完了する",
+  difficulty: 1,
+  batch: "fas fa-seedling"
+)
+
+Achievement.create!(
+  title: "決意表明",
+  description: "はじめてダイエット方法を投稿する",
+  difficulty: 1,
+  batch: "fas fa-biking"
+)
+
+Achievement.create!(
+  title: "成功への第一歩",
+  description: "はじめて日記を投稿する",
+  difficulty: 1,
+  batch: "fas fa-list-alt"
+)
+
+Achievement.create!(
+  title: "いっしょに頑張りましょう！",
+  description: "はじめてユーザーをフォローする",
+  difficulty: 1,
+  batch: "far fa-handshake"
+)
+
+Achievement.create!(
+  title: "参考にさせていただきます！",
+  description: "はじめて他ユーザーのダイエット方法を実践する",
+  difficulty: 1,
+  batch: "fas fa-pray"
+)
+
+Achievement.create!(
+  title: "いいね！いいね！いいね！",
+  description: "日記かダイエット方法に合計5回いいねする",
+  difficulty: 2,
+  batch: "fas fa-hand-holding-heart"
+)
+
+Achievement.create!(
+  title: "グッドコミュニケーション",
+  description: "日記かダイエット方法に合計5個コメントする",
+  difficulty: 2,
+  batch: "far fa-comment-alt"
+)
+
+Achievement.create!(
+  title: "今日は記録だけ…",
+  description: "はじめてクイック投稿から日記を作成する",
+  difficulty: 2,
+  batch: "far fa-smile-wink"
+)
+
+Achievement.create!(
+  title: "仲良くしましょう！",
+  description: "はじめてチャットを送信する",
+  difficulty: 2,
+  batch: "far fa-comments"
+)
+
+Achievement.create!(
+  title: "みんなで協力",
+  description: "はじめてグループチャットを作成する",
+  difficulty: 2,
+  batch: "fas fa-users"
+)
+
+Achievement.create!(
+  title: "三日坊主卒業",
+  description: "日記を5回投稿",
+  difficulty: 3,
+  batch: "fas fa-chess-pawn"
+)
+
+Achievement.create!(
+  title: "努力家",
+  description: "日記を25回投稿",
+  difficulty: 3,
+  batch: "fas fa-chess-rook"
+)
+
+Achievement.create!(
+  title: "努力の天才",
+  description: "日記を50回投稿",
+  difficulty: 3,
+  batch: "fas fa-chess-king"
+)
+
+Achievement.create!(
+  title: "おめでとうございます！",
+  description: "目標体重を達成する",
+  difficulty: 3,
+  batch: "fas fa-flag-checkered"
+)
+
+Achievement.create!(
+  title: "隠れ○○○○",
+  description: "隠れダンベルをクリックする「ヒント：画面上部のどこか」",
+  difficulty: 3,
+  batch: "fas fa-dumbbell"
+)
