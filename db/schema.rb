@@ -10,7 +10,16 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_04_03_022158) do
+ActiveRecord::Schema.define(version: 2021_04_04_015639) do
+
+  create_table "achievements", force: :cascade do |t|
+    t.string "title", null: false
+    t.string "description", null: false
+    t.integer "difficulty", null: false
+    t.string "batch", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
 
   create_table "admins", force: :cascade do |t|
     t.string "email", default: "", null: false
@@ -63,6 +72,14 @@ ActiveRecord::Schema.define(version: 2021_04_03_022158) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.text "body"
+  end
+
+  create_table "customer_achievements", force: :cascade do |t|
+    t.integer "customer_id", null: false
+    t.integer "achievement_id", null: false
+    t.boolean "achievement_status", default: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   create_table "customers", force: :cascade do |t|

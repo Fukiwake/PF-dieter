@@ -135,14 +135,20 @@ p.text-muted {
   }
 }
 
+#flash-wrapper {
+  position: sticky;
+  top: 128px;
+  z-index: 1;
+}
+
 .level {
   height: 40px;
-  width: 45px;
+  width: 50px;
   line-height: 40px;
 }
 
 meter {
-  width: 100%;
+  width: 82px;
 }
 
 #slideDownSearchForm {

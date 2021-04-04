@@ -69,7 +69,8 @@ class DietMethod < ApplicationRecord
     end
   end
 
-  def create_notification_comment(current_customer, diet_method_comment_id)
+  def create_notification_reply(current_customer, diet_method_comment_id)
+    #会員の通知設定が有効であるときのみ通知を送る
     if customer.comment_notification == true && customer.all_notification == true
       parent_id = DietMethodComment.find(diet_method_comment_id).parent_id
       # コメントは複数回することが考えられるため、１つの投稿に複数回通知する

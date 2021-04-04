@@ -75,6 +75,13 @@ class DiariesController < ApplicationController
         end
       end
       flash[:notice] = "日記を投稿しました"
+      unless params[:quick]
+        if CustomerAchievement.where(customer_id: current_customer.id, achievement_id: 3, achievement_status: true).blank?
+          CustomerAchievement.create(customer_id: current_customer.id, achievement_id: 3, achievement_status: true)
+          flash[:achievement] = "3"
+          level_up(10, current_customer)
+        end
+      end
       redirect_to(diaries_path) && return
     else
       @diary.check_list_diaries.destroy_all
