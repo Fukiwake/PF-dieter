@@ -28,5 +28,6 @@
               = c.check_box :check_list_id, {name: "diary[check_list_diaries_attributes][#{i}][check_list_id]"}, list.id, nil
               = list.body
             - i += 1
+  = f.hidden_field :quick, value: true
   .actions
     = f.submit "投稿", class: "btn btn-success btn-block"

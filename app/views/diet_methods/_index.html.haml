@@ -3,7 +3,7 @@
     - diet_methods.each do |diet_method|
       .card.mb-3.shadow-sm
         .card-body
-          = link_to diet_method_path(diet_method.id), class: "text-decoration-none text-dark" do
+          = link_to diet_method_path(diet_method.id), data: {"turbolinks" => false}, class: "text-decoration-none text-dark" do
             %object.row.pt-2
               .col-md-6
                 .d-flex

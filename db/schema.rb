@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_04_04_015639) do
+ActiveRecord::Schema.define(version: 2021_04_06_023859) do
 
   create_table "achievements", force: :cascade do |t|
     t.string "title", null: false
@@ -115,6 +115,7 @@ ActiveRecord::Schema.define(version: 2021_04_04_015639) do
     t.string "provider"
     t.string "uid"
     t.integer "age"
+    t.integer "achievement_count", default: 0
     t.index ["email"], name: "index_customers_on_email", unique: true
     t.index ["introduce"], name: "index_customers_on_introduce"
     t.index ["name"], name: "index_customers_on_name"
