@@ -471,16 +471,16 @@ Achievement.create!(
 
 Achievement.create!(
   title: "仲良くしましょう！",
-  description: "はじめてチャットを送信する",
+  description: "はじめて個人チャットルームを作成する",
   difficulty: 2,
   batch: "far fa-comments"
 )
 
 Achievement.create!(
-  title: "みんなで協力",
-  description: "はじめてグループチャットを作成する",
+  title: "検索を活用しよう！",
+  description: "はじめて検索機能を利用する",
   difficulty: 2,
-  batch: "fas fa-users"
+  batch: "fas fa-search"
 )
 
 Achievement.create!(
@@ -493,27 +493,27 @@ Achievement.create!(
 Achievement.create!(
   title: "努力家",
   description: "日記を25回投稿",
-  difficulty: 3,
+  difficulty: 4,
   batch: "fas fa-chess-rook"
 )
 
 Achievement.create!(
   title: "努力の天才",
   description: "日記を50回投稿",
-  difficulty: 3,
+  difficulty: 5,
   batch: "fas fa-chess-king"
 )
 
 Achievement.create!(
   title: "おめでとうございます！",
   description: "目標体重を達成する",
-  difficulty: 3,
+  difficulty: 5,
   batch: "fas fa-flag-checkered"
 )
 
 Achievement.create!(
   title: "隠れ○○○○",
   description: "隠れダンベルをクリックする「ヒント：画面上部のどこか」",
-  difficulty: 3,
+  difficulty: 5,
   batch: "fas fa-dumbbell"
 )

@@ -8,11 +8,7 @@ class RelationshipsController < ApplicationController
       redirect_to request.referer
     else
       current_customer.follow(params[:customer_id])
-      if CustomerAchievement.where(customer_id: current_customer.id, achievement_id: 4, achievement_status: true).blank?
-        CustomerAchievement.create(customer_id: current_customer.id, achievement_id: 4, achievement_status: true)
-        flash[:achievement] = "4"
-        level_up(10, current_customer)
-      end
+      get_achievement(current_customer, 4)
       @customer.create_notification_follow(current_customer)
       @relationship = Relationship.find_by(followed_id: params[:customer_id], follower_id: current_customer.id)
     end

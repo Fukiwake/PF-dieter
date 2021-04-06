@@ -15,6 +15,7 @@ class DiariesController < ApplicationController
       @diaries = Diary.includes(:customer, :check_list_diaries, :diary_images, :diary_favorites, :diary_comments).where.not(customer_id: withdraw_ids).order("created_at DESC")
     end
     if params[:q].present?
+      get_achievement(current_customer, 10)
       unless params[:q][:title_or_body_or_customer_name_cont_any].instance_of?(Array) || params[:q][:title_or_body_or_customer_name_cont_any].empty?
         params[:q][:title_or_body_or_customer_name_cont_any] = params[:q][:title_or_body_or_customer_name_cont_any].split(/[\p{blank}\s]+/)
       end
@@ -39,7 +40,7 @@ class DiariesController < ApplicationController
 
   def create
     if current_customer.diaries.find_by(post_date: "#{params[:diary]["post_date(1i)"]}-#{params[:diary]["post_date(2i)"]}-#{params[:diary]["post_date(3i)"]}").present?
-      flash[:alert] = "同じ日付の日記がすでに投稿されています"
+      flash.now[:alert] = "同じ日付の日記がすでに投稿されています"
       render(:new) && return
     else
       @diary = current_customer.diaries.new(diary_params)
@@ -75,12 +76,20 @@ class DiariesController < ApplicationController
         end
       end
       flash[:notice] = "日記を投稿しました"
-      unless params[:quick]
-        if CustomerAchievement.where(customer_id: current_customer.id, achievement_id: 3, achievement_status: true).blank?
-          CustomerAchievement.create(customer_id: current_customer.id, achievement_id: 3, achievement_status: true)
-          flash[:achievement] = "3"
-          level_up(10, current_customer)
-        end
+      if params[:diary][:quick]
+        get_achievement(current_customer, 8)
+      end
+      if @diary.weight <= current_customer.target_weight
+        get_achievement(current_customer, 14)
+      end
+      if current_customer.diaries.count == 5
+        get_achievement(current_customer, 11)
+      elsif current_customer.diaries.count == 25
+        get_achievement(current_customer, 12)
+      elsif current_customer.diaries.count == 50
+        get_achievement(current_customer, 13)
+      else
+        get_achievement(current_customer, 3)
       end
       redirect_to(diaries_path) && return
     else

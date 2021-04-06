@@ -58,4 +58,13 @@ class ApplicationController < ActionController::Base
     flash[:alert] = "このアカウントはすでに退会されています。"
     redirect_to new_customer_session_path
   end
+
+  def get_achievement(current_customer, n)
+    if CustomerAchievement.where(customer_id: current_customer.id, achievement_id: n, achievement_status: true).blank?
+      CustomerAchievement.create(customer_id: current_customer.id, achievement_id: n, achievement_status: true)
+      flash[:achievement] = n
+      level_up(10, current_customer)
+      current_customer.update(achievement_count: current_customer.achievement_count + 1)
+    end
+  end
 end

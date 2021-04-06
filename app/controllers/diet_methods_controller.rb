@@ -19,6 +19,7 @@ class DietMethodsController < ApplicationController
       @diet_methods = @diet_methods.tagged_with(params[:tag]).page(params[:page]).per(20)
     end
     if params[:q].present?
+      get_achievement(current_customer, 10)
       unless params[:q][:title_or_way_or_customer_name_cont_any].instance_of?(Array) || params[:q][:title_or_way_or_customer_name_cont_any].empty?
         params[:q][:title_or_way_or_customer_name_cont_any] = params[:q][:title_or_way_or_customer_name_cont_any].split(/[[:blank:]]+/)
       end
@@ -51,7 +52,6 @@ class DietMethodsController < ApplicationController
           check_list.destroy
         end
       end
-      level_up(20, current_customer)
       #投稿の通知を設定している会員に通知
       customer_ids = Relationship.where(followed_id: current_customer.id, notification: true).pluck(:follower_id)
       Customer.where(id: customer_ids).each do |customer|
@@ -60,11 +60,8 @@ class DietMethodsController < ApplicationController
         end
       end
       flash[:notice] = "ダイエット方法を投稿しました"
-      if CustomerAchievement.where(customer_id: current_customer.id, achievement_id: 2, achievement_status: true).blank?
-        CustomerAchievement.create(customer_id: current_customer.id, achievement_id: 2, achievement_status: true)
-        flash[:achievement] = "2"
-        level_up(10, current_customer)
-      end
+      level_up(20, current_customer)
+      get_achievement(current_customer, 2)
       redirect_to diet_methods_path
     else
       render :new

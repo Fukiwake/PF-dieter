@@ -24,6 +24,8 @@
             .col-md-3.text-center
               %a.navbar-brand{href: "/"}
                 = image_tag "logo.jpg", size: "110x110"
+              = link_to achievements_hidden_dumbbell_customers_path, class: "text-white" do
+                %i.fas.fa-dumbbell.hidden-dumbbell
             .col-md-9
               - if admin_signed_in? && request.fullpath.include?("admin")
                 = render "layouts/admin_signed_in_nav"

@@ -3,7 +3,7 @@
     - diaries.each do |diary|
       .card.mb-3.shadow-sm
         .card-body
-          = link_to diary_path(diary.id), class: "text-decoration-none text-dark" do
+          = link_to diary_path(diary.id), data: {"turbolinks" => false}, class: "text-decoration-none text-dark" do
             %object.row.pt-2
               .col-md-6
                 .d-flex

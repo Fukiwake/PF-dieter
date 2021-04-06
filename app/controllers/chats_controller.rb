@@ -9,6 +9,7 @@ class ChatsController < ApplicationController
       @room = Room.create
       Entry.create(customer_id: current_customer.id, room_id: @room.id)
       Entry.create(customer_id: @customer.id, room_id: @room.id)
+      get_achievement(current_customer, 9)
     else
       @room = entries.room
     end

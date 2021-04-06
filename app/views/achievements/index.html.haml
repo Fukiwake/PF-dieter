@@ -12,42 +12,106 @@
             バッチをクリックで詳細を表示
         %tr
           - Achievement.where(id: 1..5).each do |achievement|
-            %td
+            %td{style: "width:20%"}
               - if CustomerAchievement.where(customer_id: current_customer.id, achievement_id: achievement.id).present?
-                %i.achievement-icon.text-danger{class: "#{achievement.batch}", "data-toggle": "tooltip", title: "#{achievement.title}"}
+                %i.achievement-icon.achievement-button.text-danger{class: "#{achievement.batch}", "data-toggle": "tooltip", title: "#{achievement.title}", id: "#{achievement.id}"}
               - else
-                %i.achievement-icon{class: "#{achievement.batch}", "data-toggle": "tooltip", title: "#{achievement.title}"}
+                %i.achievement-icon.achievement-button{class: "#{achievement.batch}", "data-toggle": "tooltip", title: "#{achievement.title}", id: "#{achievement.id}"}
         %tr
           - Achievement.where(id: 6..10).each do |achievement|
-            %td
-              %i.achievement-icon{class: "#{achievement.batch}", "data-toggle": "tooltip", title: "#{achievement.title}"}
+            %td{style: "width:20%"}
+              - if CustomerAchievement.where(customer_id: current_customer.id, achievement_id: achievement.id, achievement_status: true).present?
+                %i.achievement-icon.achievement-button.text-danger{class: "#{achievement.batch}", "data-toggle": "tooltip", title: "#{achievement.title}", id: "#{achievement.id}"}
+              - elsif CustomerAchievement.where(customer_id: current_customer.id, achievement_id: achievement.id, achievement_status: false).present?
+                %i.achievement-icon.achievement-button{class: "#{achievement.batch}", "data-toggle": "tooltip", title: "#{achievement.title}", id: "#{achievement.id}"}
+              - else
+                %i.achievement-icon.achievement-button.fas.fa-question{id: "#{achievement.id}"}
         %tr
           - Achievement.where(id: 11..15).each do |achievement|
-            %td
-              %i.achievement-icon{class: "#{achievement.batch}", "data-toggle": "tooltip", title: "#{achievement.title}"}
+            %td{style: "width:20%"}
+              - if CustomerAchievement.where(customer_id: current_customer.id, achievement_id: achievement.id, achievement_status: true).present?
+                %i.achievement-icon.achievement-button.text-danger{class: "#{achievement.batch}", "data-toggle": "tooltip", title: "#{achievement.title}", id: "#{achievement.id}"}
+              - elsif CustomerAchievement.where(customer_id: current_customer.id, achievement_id: achievement.id, achievement_status: false).present?
+                %i.achievement-icon.achievement-button{class: "#{achievement.batch}", "data-toggle": "tooltip", title: "#{achievement.title}", id: "#{achievement.id}"}
+              - else
+                %i.achievement-icon.achievement-button.fas.fa-question{id: "#{achievement.id}"}
+        %tr
+          %td{colspan: 5}
+            %h5
+              所持バッチ数：
+              = current_customer.achievement_count
+            %span.small
+              （所持バッチを消費することで、？の条件をアンロックすることができます）
       - Achievement.where(id: 1..5).each do |achievement|
-        .card.mb-3.shadow-sm
+        .card.mb-3.shadow-sm.d-none.achievement-area{id: "achievement-area-#{achievement.id}"}
           .card-header
             %h3
+              %i.achievement-icon{class: "#{achievement.batch}"}
               = achievement.title
           .card-body.d-flex.justify-content-between.align-items-center
             %span
               = achievement.description
             %span
               難易度：
-              = achievement.difficulty
-            .btn.btn-danger
-              達成済み
+              - achievement.difficulty.times do |n|
+                ★
+              - (5 - achievement.difficulty).times do |n|
+                ☆
+            - if CustomerAchievement.where(customer_id: current_customer.id, achievement_id: achievement.id, achievement_status: true).present?
+              .btn.btn-danger
+                達成済み
+            - else
+              .btn.btn-success
+                未達成
       - Achievement.where(id: 6..15).each do |achievement|
-        .card.mb-3.shadow-sm
-          .card-header
-            %h3
-              = achievement.title
-          .card-body.d-flex.justify-content-between.align-items-center
-            %span
-              = achievement.description
-            %span
-              難易度：
-              = achievement.difficulty
-            .btn.btn-danger
-              達成済み
+        .card.mb-3.shadow-sm.d-none.achievement-area{id: "achievement-area-#{achievement.id}"}
+          - if CustomerAchievement.where(customer_id: current_customer.id, achievement_id: achievement.id, achievement_status: true).present?
+            .card-header
+              %h3
+                %i.achievement-icon{class: "#{achievement.batch}"}
+                = achievement.title
+            .card-body.d-flex.justify-content-between.align-items-center
+              %span
+                = achievement.description
+              %span
+                難易度：
+                - achievement.difficulty.times do |n|
+                  ★
+                - (5 - achievement.difficulty).times do |n|
+                  ☆
+              .btn.btn-danger
+                達成済み
+          - elsif CustomerAchievement.where(customer_id: current_customer.id, achievement_id: achievement.id, achievement_status: false).present?
+            .card-header
+              %h3
+                %i.achievement-icon{class: "#{achievement.batch}"}
+                = achievement.title
+            .card-body.d-flex.justify-content-between.align-items-center
+              %span
+                = achievement.description
+              %span
+                難易度：
+                - achievement.difficulty.times do |n|
+                  ★
+                - (5 - achievement.difficulty).times do |n|
+                  ☆
+              .btn.btn-success
+                未達成
+          - else
+            .card-header
+              %h3
+                = achievement.id
+                ：???
+            .card-body.d-flex.justify-content-between.align-items-center
+              %span
+                ???
+              %span
+                難易度：
+                - achievement.difficulty.times do |n|
+                  ★
+                - (5 - achievement.difficulty).times do |n|
+                  ☆
+              = link_to achievements_unlock_customer_path(achievement.id), class: "btn btn-danger" do
+                バッチ
+                = achievement.difficulty
+                枚でアンロック

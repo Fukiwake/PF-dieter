@@ -6,6 +6,7 @@ class CustomersController < ApplicationController
   def index
     @customers = Customer.includes(:diaries).where(is_deleted: false).order("created_at DESC")
     if params[:q].present?
+      get_achievement(current_customer, 10)
       unless params[:q][:name_or_introduce_cont_any].instance_of?(Array) || params[:q][:name_or_introduce_cont_any].empty?
         params[:q][:name_or_introduce_cont_any] = params[:q][:name_or_introduce_cont_any].split(/[\p{blank}\s]+/)
       end

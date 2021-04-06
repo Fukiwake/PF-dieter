@@ -14,10 +14,8 @@ class DiaryCommentsController < ApplicationController
       @diary.create_notification_comment(current_customer, @diary_comment.id)
     end
     all_comment_count = current_customer.diary_comments.count + current_customer.diet_method_comments.count
-    if CustomerAchievement.where(customer_id: current_customer.id, achievement_id: 7, achievement_status: true).blank? && all_comment_count == 5
-      CustomerAchievement.create(customer_id: current_customer.id, achievement_id: 7, achievement_status: true)
-      flash.now[:achievement] = "7"
-      level_up(10, current_customer)
+    if all_comment_count == 5
+      get_achievement(current_customer, 7)
     end
     respond_to do |format|
       format.html { redirect_to request.referer }

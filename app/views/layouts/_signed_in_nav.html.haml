@@ -29,7 +29,7 @@
       %div
         = link_to customer_achievements_path(current_customer) , class: "p-0 text-dark", title: "達成項目" do
           %i.fas.fa-medal.header-icon
-    .d-flex.mt-3.align-items-center
+    .d-flex.mt-3.align-items-center.justify-content-between
       .dropdown
         #dropdownMenuButton.dropdown-toggle{"data-toggle": "dropdown", "aria-haspopup": "true", "aria-expanded": "false"}
           = attachment_image_tag(current_customer, :profile_image, :fill, 40, 40, fallback: "no_image.png", size: "40x40")
