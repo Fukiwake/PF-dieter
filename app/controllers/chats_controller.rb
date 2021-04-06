@@ -9,11 +9,11 @@ class ChatsController < ApplicationController
       @room = Room.create
       Entry.create(customer_id: current_customer.id, room_id: @room.id)
       Entry.create(customer_id: @customer.id, room_id: @room.id)
+      get_achievement(current_customer, 9)
     else
       @room = entries.room
     end
     @chats = @room.chats.includes(:customer)
-    chat_last_page = (@chats.count / 30).ceil
     @chat = Chat.new(room_id: @room.id)
     @other_rooms = current_customer.rooms.includes(:chats).where.not(id: @room.id).order("chats.created_at DESC")
     #チャットがないルームを削除

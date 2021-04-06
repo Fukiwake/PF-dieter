@@ -45,7 +45,7 @@
               = f.submit "返信", class: "btn btn-success"
               %span.ml-2.close-reply-button.text-danger.font-weight-bold{"data-comment_id": "#{diet_method_comment.id}"} キャンセル
     .reply-wrapper.d-none{id: "reply-field-#{diet_method_comment.id}"}
-      - diet_method_comment.replies.includes(:diet_method, :customer).each do |reply|
+      - diet_method_comment.replies.includes(:customer).each do |reply|
         .row
           .col-md-10.mx-auto
             = link_to customer_path(diet_method.customer), data: {"turbolinks" => false}, class: "text-dark font-weight-bold text-decoration-none " do

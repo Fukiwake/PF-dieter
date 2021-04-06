@@ -18,5 +18,6 @@ class FindersController < ApplicationController
     @diaries = @diary_search.result(distinct: true).order("created_at DESC").page(params[:page]).per(20)
     @diet_method_search = DietMethod.includes(:customer, :diet_method_images, :diet_method_favorites, :diet_method_comments, :tag_taggings, :tags).ransack(params[:q])
     @diet_methods = @diet_method_search.result(distinct: true).order("created_at DESC").page(params[:page]).per(20)
+    get_achievement(current_customer, 10)
   end
 end

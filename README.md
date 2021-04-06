@@ -62,3 +62,5 @@ https://docs.google.com/spreadsheets/d/11LIolmiFtRGLq7ztpPtjBHQx8L5_c0DKgPxQUITL
 ## 画像解析テスト用画像
 <img src="https://user-images.githubusercontent.com/75518740/113121670-d8a8a480-924d-11eb-9b6e-e068af90c96d.png">
 <img src="https://user-images.githubusercontent.com/75518740/113121766-eeb66500-924d-11eb-9b26-fa0b9dff0bc3.jpg">
+<img src="https://user-images.githubusercontent.com/75518740/113643510-7290a700-96bd-11eb-9328-2688a899761d.jpg">
+

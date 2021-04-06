@@ -18,17 +18,20 @@ Rails.application.routes.draw do
   root "homes#top"
   get 'setting' => "settings#setting", as: "setting"
   resources :notifications, only: [:index]
-  patch "notifications/checked" => "notifications#checked"
-  patch "customers/withdraw" => "customers#withdraw"
-  patch "customers/notification_setting" => "customers#notification_setting"
+  patch "notifications/checked", to: "notifications#checked"
+  patch "customers/withdraw", to: "customers#withdraw"
+  patch "customers/notification_setting", to: "customers#notification_setting"
   resources :customers, only: [:show, :update, :index] do
     resource :relationships, only: [:create, :destroy, :update]
+    resource :blocks, only: [:create, :destroy]
+    resources :achievements, only: [:index]
     member do
       get :followings, :followers
+      get 'achievements/unlock', to: 'achievements#unlock'
     end
-    resource :blocks, only: [:create, :destroy]
     collection do
       get :ranking
+      get 'achievements/hidden_dumbbell', to: 'achievements#hidden_dumbbell'
     end
   end
   resources :diaries do

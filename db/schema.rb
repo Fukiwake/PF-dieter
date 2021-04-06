@@ -10,7 +10,16 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_04_03_022158) do
+ActiveRecord::Schema.define(version: 2021_04_06_023859) do
+
+  create_table "achievements", force: :cascade do |t|
+    t.string "title", null: false
+    t.string "description", null: false
+    t.integer "difficulty", null: false
+    t.string "batch", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
 
   create_table "admins", force: :cascade do |t|
     t.string "email", default: "", null: false
@@ -65,6 +74,14 @@ ActiveRecord::Schema.define(version: 2021_04_03_022158) do
     t.text "body"
   end
 
+  create_table "customer_achievements", force: :cascade do |t|
+    t.integer "customer_id", null: false
+    t.integer "achievement_id", null: false
+    t.boolean "achievement_status", default: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
   create_table "customers", force: :cascade do |t|
     t.string "email", default: "", null: false
     t.string "encrypted_password", default: "", null: false
@@ -98,6 +115,7 @@ ActiveRecord::Schema.define(version: 2021_04_03_022158) do
     t.string "provider"
     t.string "uid"
     t.integer "age"
+    t.integer "achievement_count", default: 0
     t.index ["email"], name: "index_customers_on_email", unique: true
     t.index ["introduce"], name: "index_customers_on_introduce"
     t.index ["name"], name: "index_customers_on_name"

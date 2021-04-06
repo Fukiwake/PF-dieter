@@ -13,6 +13,10 @@ class DiaryCommentsController < ApplicationController
     else
       @diary.create_notification_comment(current_customer, @diary_comment.id)
     end
+    all_comment_count = current_customer.diary_comments.count + current_customer.diet_method_comments.count
+    if all_comment_count == 5
+      get_achievement(current_customer, 7)
+    end
     respond_to do |format|
       format.html { redirect_to request.referer }
       format.js

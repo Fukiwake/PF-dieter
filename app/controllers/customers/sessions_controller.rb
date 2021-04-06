@@ -39,12 +39,14 @@ class Customers::SessionsController < Devise::SessionsController
 
   def new_guest
     customer = Customer.guest
+    get_achievement(customer, 1)
     sign_in customer
     redirect_to diaries_path, notice: 'ゲストユーザーとしてログインしました。'
   end
 
   def new_guest2
     customer = Customer.guest2
+    get_achievement(customer, 1)
     sign_in customer
     redirect_to diaries_path, notice: 'ゲストユーザー2としてログインしました。'
   end

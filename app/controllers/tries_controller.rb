@@ -5,6 +5,7 @@ class TriesController < ApplicationController
     @diet_method = DietMethod.find(params[:diet_method_id])
     try = current_customer.tries.new(diet_method_id: @diet_method.id)
     try.save
+    get_achievement(current_customer, 5)
     @diary = Diary.new
     @check_list_diary = @diary.check_list_diaries.new
   end

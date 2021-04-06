@@ -8,6 +8,7 @@ class RelationshipsController < ApplicationController
       redirect_to request.referer
     else
       current_customer.follow(params[:customer_id])
+      get_achievement(current_customer, 4)
       @customer.create_notification_follow(current_customer)
       @relationship = Relationship.find_by(followed_id: params[:customer_id], follower_id: current_customer.id)
     end

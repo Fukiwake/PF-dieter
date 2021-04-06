@@ -31,7 +31,7 @@ class Customers::RegistrationsController < Devise::RegistrationsController
     @customer.update(sign_up_params)
     if @customer.save
       NotificationMailer.complete_mail(@customer).deliver_now
-      flash[:notice] = "新規登録が完了しました"
+      get_achievement(@customer, 1)
       session["devise.regist_data"] = nil
       sign_in(:customer, @customer)
       redirect_to diaries_path
