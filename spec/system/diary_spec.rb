@@ -15,6 +15,14 @@ describe 'ログイン後のテスト：日記' do
         threshold: 10 + n * 10
       )
     end
+    15.times do |n|
+      Achievement.create(
+        title: Faker::Lorem.characters(number: 5),
+        description: Faker::Lorem.characters(number: 5),
+        difficulty: rand(1..5),
+        batch: Faker::Lorem.characters(number: 5)
+      )
+    end
     Try.create(diet_method_id: diet_method.id, customer_id: customer.id)
     visit new_customer_session_path
     fill_in 'customer[email]', with: customer.email

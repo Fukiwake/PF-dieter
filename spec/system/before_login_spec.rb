@@ -5,6 +5,14 @@ require 'rails_helper'
 describe 'ログイン前のテスト' do
   before do
     visit root_path
+    15.times do |n|
+      Achievement.create(
+        title: Faker::Lorem.characters(number: 5),
+        description: Faker::Lorem.characters(number: 5),
+        difficulty: rand(1..5),
+        batch: Faker::Lorem.characters(number: 5)
+      )
+    end
   end
 
   context 'ヘッダーの表示の確認' do
@@ -54,9 +62,6 @@ describe 'ログイン前のテスト' do
         click_button '新規登録'
       end
 
-      it '新規登録後、メッセージが表示される' do
-        expect(page).to have_content('新規登録が完了しました')
-      end
       it '新規登録後、日記一覧へ遷移する' do
         expect(current_path).to eq '/diaries'
       end

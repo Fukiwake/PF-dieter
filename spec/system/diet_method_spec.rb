@@ -14,6 +14,14 @@ describe 'ログイン後のテスト：ダイエット方法' do
         threshold: 10 + n * 10
       )
     end
+    15.times do |n|
+      Achievement.create(
+        title: Faker::Lorem.characters(number: 5),
+        description: Faker::Lorem.characters(number: 5),
+        difficulty: rand(1..5),
+        batch: Faker::Lorem.characters(number: 5)
+      )
+    end
     visit new_customer_session_path
     fill_in 'customer[email]', with: customer.email
     fill_in 'customer[password]', with: customer.password
