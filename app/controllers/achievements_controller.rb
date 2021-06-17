@@ -21,4 +21,5 @@ class AchievementsController < ApplicationController
     end
     redirect_to customer_achievements_path(current_customer)
   end
+
 end
